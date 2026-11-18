@@ -6,7 +6,20 @@
   "brand": {
     "name": "Tiflisi 1898",
     "logo": "../../assets/icon.png",
-    "backgrounds": [],
+    "backgrounds": [
+      "../../assets/backgrounds/tiflisi-254.jpg",
+      "../../assets/backgrounds/tiflisi-255.jpg",
+      "../../assets/backgrounds/tiflisi-258.jpg",
+      "../../assets/backgrounds/tiflisi-259.jpg",
+      "../../assets/backgrounds/tiflisi-260.jpg",
+      "../../assets/backgrounds/tiflisi-256.jpg",
+      "../../assets/backgrounds/tiflisi-257.jpg",
+      "../../assets/backgrounds/tiflisi-252.jpg",
+      "../../assets/backgrounds/tiflisi-247.jpg",
+      "../../assets/backgrounds/tiflisi-261.jpg",
+      "../../assets/backgrounds/tiflisi-251.jpg",
+      "../../assets/backgrounds/tiflisi-253.jpg"
+    ],
     "primaryColor": "#c41e1e",
     "secondaryColor": "#c41e1e",
     "accentColor": "#ffffff",
