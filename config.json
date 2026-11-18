@@ -4,17 +4,19 @@
   "defaultLanguage": "en",
   "discordClientId": "",
   "brand": {
-    "name": "My RedM Server",
-    "logo": "",
+    "name": "Tiflisi 1898",
+    "logo": "../../assets/icon.png",
     "backgrounds": [],
-    "primaryColor": "#d8402f",
-    "secondaryColor": "#d8402f",
-    "accentColor": "#fff6ee",
+    "primaryColor": "#c41e1e",
+    "secondaryColor": "#c41e1e",
+    "accentColor": "#ffffff",
     "welcomeMessage": "",
-    "cfxCode": ""
+    "cfxCode": "dg346jd"
   },
   "branches": [],
-  "servers": [],
+  "servers": [
+    { "name": "", "address": "cfx.re/join/dg346jd" }
+  ],
   "news": [],
   "changelogs": [],
   "rules": ""

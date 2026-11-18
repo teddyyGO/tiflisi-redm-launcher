@@ -35,7 +35,7 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 
 ## Make it yours
 
-Edit `config.json`:
+Out of the box this is the [Tiflisi 1898](https://cfx.re/join/dg346jd) launcher: its logo, colors and server. To build one for your own server, replace `assets/icon.png` (512×512 PNG) and edit `config.json`:
 
 | Key | What it does |
 |---|---|
