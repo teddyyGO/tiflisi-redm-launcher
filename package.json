@@ -34,7 +34,7 @@
         "provider": "github",
         "owner": "teddyyGO",
         "repo": "open-redm-launcher",
-        "releaseType": "release"
+        "releaseType": "draft"
       }
     ],
     "files": [

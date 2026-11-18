@@ -27,3 +27,9 @@ jobs:
           # Code signing (removes the SmartScreen "unknown publisher" warning): add these repo secrets.
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+      # The build uploads into a draft. Publish only now that every file (installer, latest.yml,
+      # blockmap) is there, so no launcher can see a release whose update file is still missing.
+      - name: Publish the release
+        run: gh release edit "${{ github.ref_name }}" --draft=false --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

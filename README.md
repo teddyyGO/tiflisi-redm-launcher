@@ -75,7 +75,7 @@ Or all at once: `npm test`.
 
 ## Updates
 
-Installed launchers check your GitHub releases every 30 minutes. A new version downloads in the background (only the changed parts), then a small "Update to x.y.z" button appears in the title bar. One click restarts into the new version in a few seconds, with no installer window. If nobody clicks, it installs the next time the launcher closes.
+Installed launchers check your GitHub releases at start, every 10 minutes, and when the window comes back to the front. A new version downloads in the background (only the changed parts), then a small "Update to x.y.z" button appears in the title bar. One click restarts into the new version in a few seconds, with no installer window. If nobody clicks, it installs the next time the launcher closes.
 
 To release: bump `version` in `package.json`, then push a tag:
 
@@ -84,7 +84,7 @@ git tag v1.1.0
 git push --tags
 ```
 
-The `Release` GitHub Action builds the installer and publishes it. Point `build.publish` in `package.json` at your own repository if you fork this.
+The `Release` GitHub Action builds the installer, uploads it to a draft release, and publishes the release once every file is uploaded. If a player reports update trouble, ask for `%APPDATA%\open-redm-launcher\updater.log`. Point `build.publish` in `package.json` at your own repository if you fork this.
 
 Unsigned builds show Windows SmartScreen's "unknown publisher" warning on first install. Add a code-signing certificate as the `CSC_LINK` and `CSC_KEY_PASSWORD` repository secrets to remove it.
 
