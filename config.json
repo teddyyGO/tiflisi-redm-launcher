@@ -1,0 +1,21 @@
+{
+  "apiUrl": "",
+  "slug": "",
+  "defaultLanguage": "en",
+  "discordClientId": "",
+  "brand": {
+    "name": "My RedM Server",
+    "logo": "",
+    "backgrounds": [],
+    "primaryColor": "#d8402f",
+    "secondaryColor": "#d8402f",
+    "accentColor": "#fff6ee",
+    "welcomeMessage": "",
+    "cfxCode": ""
+  },
+  "branches": [],
+  "servers": [],
+  "news": [],
+  "changelogs": [],
+  "rules": ""
+}

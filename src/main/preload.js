@@ -1,0 +1,36 @@
+const { contextBridge, ipcRenderer } = require("electron")
+
+const call = (ch) => (...a) => ipcRenderer.invoke(ch, ...a)
+
+contextBridge.exposeInMainWorld("launcher", {
+  getConfig: call("get-config"),
+  minimize: call("minimize-window"),
+  maximize: call("maximize-window"),
+  close: call("close-window"),
+  openExternal: call("open-external"),
+  joinServer: call("join-server"),
+  setAutoStart: call("set-auto-start"),
+  pingServer: call("ping-server"),
+  serverStatus: call("server-status"),
+  serverList: call("server-list"),
+  getVersion: call("get-app-version"),
+  openGame: call("open-game"),
+  redmInfo: call("redm-info"),
+  setChannel: call("set-channel"),
+  killRedm: call("kill-redm"),
+  restartRedm: call("restart-redm"),
+  cleanupMeta: call("cleanup-meta"),
+  cleanupScanOne: call("cleanup-scan-one"),
+  cleanupRun: call("cleanup-run"),
+  graphicsInfo: call("graphics-info"),
+  setGpu: call("set-gpu"),
+  setFso: call("set-fso"),
+  setPriorityBoost: call("set-priority-boost"),
+  resetGraphics: call("reset-graphics"),
+  updateState: call("update-state"),
+  checkUpdate: call("update-check"),
+  installUpdate: call("update-install"),
+  onUpdateState: (cb) => ipcRenderer.on("update-state", (_, s) => cb(s)),
+  setUsage: call("set-usage"),
+  openFolder: call("open-folder"),
+})

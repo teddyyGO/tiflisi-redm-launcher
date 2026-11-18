@@ -1,0 +1,59 @@
+{
+  "name": "open-redm-launcher",
+  "version": "1.0.0",
+  "description": "Open-source RedM server launcher: featured server, server browser, client branch switch and fix tools",
+  "author": "Open RedM Launcher contributors",
+  "homepage": "https://github.com/teddyyGO/open-redm-launcher",
+  "repository": "github:teddyyGO/open-redm-launcher",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js"
+  },
+  "build": {
+    "appId": "io.github.openredmlauncher",
+    "productName": "RedM Launcher",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "artifactName": "${name}-Setup-${version}.${ext}"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "teddyyGO",
+        "repo": "open-redm-launcher",
+        "releaseType": "release"
+      }
+    ],
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "config.json"
+    ]
+  },
+  "dependencies": {
+    "@fontsource-variable/big-shoulders-display": "^5.3.0",
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
+    "@fontsource-variable/noto-sans-georgian": "^5.3.0",
+    "@phosphor-icons/web": "^2.1.2",
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "fengari": "^0.1.4"
+  },
+  "license": "MIT"
+}

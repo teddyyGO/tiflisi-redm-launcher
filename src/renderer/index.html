@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Only the launcher's own files may run scripts; remote content (news, server names) can never execute code. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file:; style-src 'self' file: 'unsafe-inline'; img-src 'self' file: https: data:; font-src 'self' file: data:; connect-src 'self' https:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <title>Launcher</title>
+  <link rel="stylesheet" href="../../node_modules/@fontsource-variable/big-shoulders-display/index.css">
+  <link rel="stylesheet" href="../../node_modules/@fontsource-variable/hanken-grotesk/index.css">
+  <link rel="stylesheet" href="../../node_modules/@fontsource-variable/noto-sans-georgian/standard.css">
+  <link rel="stylesheet" href="../../node_modules/@phosphor-icons/web/src/regular/style.css">
+  <link rel="stylesheet" href="../../node_modules/@phosphor-icons/web/src/fill/style.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-view="home">
+  <!-- Art layer: two stacked images crossfade; .ambient = blurred server banner fallback -->
+  <div class="art" id="art" aria-hidden="true">
+    <div class="art-img" id="art-a"></div>
+    <div class="art-img" id="art-b"></div>
+  </div>
+  <div class="scrim" aria-hidden="true"></div>
+
+  <header class="titlebar">
+    <div class="titlebar-brand">
+      <span class="titlebar-logo" id="titlebar-logo"></span>
+      <span class="titlebar-name" id="titlebar-name"></span>
+    </div>
+    <nav class="tabs" aria-label="Sections">
+      <button class="nav-item active" data-nav="home" data-act="nav" data-arg="home"><i class="ph ph-house"></i><span data-i18n="nav.home">Home</span></button>
+      <button class="nav-item" data-nav="news" data-act="nav" data-arg="news"><i class="ph ph-newspaper"></i><span data-i18n="nav.news">News</span></button>
+      <button class="nav-item" data-nav="changelog" data-act="nav" data-arg="changelog"><i class="ph ph-scroll"></i><span data-i18n="nav.changelog">Devlog</span></button>
+      <button class="nav-item" data-nav="gallery" data-act="nav" data-arg="gallery"><i class="ph ph-images"></i><span data-i18n="nav.gallery">Gallery</span></button>
+      <button class="nav-item" data-nav="rules" data-act="nav" data-arg="rules"><i class="ph ph-book-open-text"></i><span data-i18n="nav.rules">Rules</span></button>
+      <button class="nav-item" data-nav="staff" data-act="nav" data-arg="staff"><i class="ph ph-users-three"></i><span data-i18n="nav.staff">Staff</span></button>
+      <button class="nav-item" data-nav="servers" data-act="nav" data-arg="servers"><i class="ph ph-hard-drives"></i><span data-i18n="nav.servers">Servers</span></button>
+      <button class="nav-item" data-nav="tools" data-act="nav" data-arg="tools"><i class="ph ph-wrench"></i><span data-i18n="nav.tools">Tools</span></button>
+      <button class="nav-item" data-nav="settings" data-act="nav" data-arg="settings"><i class="ph ph-gear-six"></i><span data-i18n="nav.settings">Settings</span></button>
+    </nav>
+    <button type="button" class="update-pill" id="update-pill" data-act="update" hidden></button>
+    <div class="win-controls">
+      <button class="win-btn" aria-label="Minimize" data-act="min"><i class="ph ph-minus"></i></button>
+      <button class="win-btn" aria-label="Maximize" data-act="max"><i class="ph ph-square"></i></button>
+      <button class="win-btn close" aria-label="Close" data-act="close"><i class="ph ph-x"></i></button>
+    </div>
+  </header>
+
+  <main class="view">
+    <!-- Home: the featured server over its art -->
+    <section class="content-area active" id="content-home">
+      <div class="hero">
+        <div class="hero-id">
+          <div class="hero-mark" id="logo-wrapper"></div>
+          <h1 class="hero-name" id="server-name"></h1>
+        </div>
+        <p class="hero-welcome" id="welcome-msg"></p>
+        <div class="status-chip">
+          <span id="status-badge" class="status offline"><span class="status-dot"></span><span>--</span></span>
+          <span class="chip-part"><b id="stat-players">--</b> <span data-i18n="chip.players">players</span></span>
+          <span class="chip-part"><i class="ph ph-cell-signal-high"></i><b id="stat-ping">--</b></span>
+        </div>
+        <div class="hero-actions">
+          <button class="join-btn" id="join-btn" data-act="join"><i class="ph-fill ph-play"></i><span data-i18n="join.default">Join server</span></button>
+          <button class="btn glass" id="open-game-btn"><i class="ph ph-game-controller"></i><span data-i18n="settings.openGame">Open RedM</span></button>
+        </div>
+        <div class="hero-empty">
+          <p class="hero-empty-title" data-i18n="featured.none">No featured server set</p>
+          <p class="hero-empty-desc" data-i18n="featured.noneDesc"></p>
+          <button class="btn glass" data-act="nav" data-arg="servers"><i class="ph ph-hard-drives"></i><span data-i18n="featured.browse">Browse servers</span></button>
+        </div>
+      </div>
+
+      <div class="home-columns">
+        <div class="tile-row" id="news-list"></div>
+        <div class="tile devlog-tile">
+          <h2 class="tile-heading" data-i18n="section.changelog">Devlog</h2>
+          <div id="devlog-home-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-area" id="content-news">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.news">News</h1></header>
+      <div class="sheet"><div id="news-list-full" class="entry-list"></div></div>
+    </section>
+
+    <section class="content-area" id="content-changelog">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.changelog">Devlog</h1></header>
+      <div class="sheet"><div id="changelog-list" class="entry-list"></div></div>
+    </section>
+
+    <section class="content-area" id="content-gallery">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.gallery">Gallery</h1></header>
+      <div id="gallery-grid" class="gallery-grid"></div>
+    </section>
+
+    <section class="content-area" id="content-rules">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.rules">Rules</h1></header>
+      <div class="sheet"><div id="rules-content" class="prose"></div></div>
+    </section>
+
+    <section class="content-area" id="content-staff">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.staff">Staff</h1></header>
+      <div id="staff-grid" class="staff-grid"></div>
+    </section>
+
+    <section class="content-area" id="content-servers">
+      <header class="page-head">
+        <h1 class="page-title" data-i18n="nav.servers">Servers</h1>
+        <div class="segmented" id="servers-seg" role="radiogroup" aria-label="Server list">
+          <button role="radio" data-view="fav" aria-checked="true"><i class="ph ph-star"></i><span data-i18n="servers.favorites">Favorites</span></button>
+          <button role="radio" data-view="browse"><i class="ph ph-globe-hemisphere-west"></i><span data-i18n="servers.browse">All servers</span></button>
+        </div>
+      </header>
+
+      <div id="servers-fav">
+        <form class="server-add">
+          <label class="field grow">
+            <i class="ph ph-link-simple"></i>
+            <input id="server-add-input" data-i18n-placeholder="servers.placeholder" placeholder="cfx.re/join/abc123 or ip:port" aria-label="Server address">
+          </label>
+          <button type="button" class="btn accent" id="server-add-btn"><i class="ph ph-plus"></i><span data-i18n="servers.add">Add server</span></button>
+        </form>
+        <div id="server-list" class="server-list"></div>
+      </div>
+
+      <div id="servers-browse" hidden>
+        <div class="filter-bar">
+          <label class="field grow">
+            <i class="ph ph-magnifying-glass"></i>
+            <input id="browse-q" data-i18n-placeholder="browse.search" placeholder="Search servers" aria-label="Search servers">
+          </label>
+          <div class="select-wrap"><select id="browse-lang" class="select" aria-label="Language"></select><i class="ph ph-caret-down"></i></div>
+          <div class="select-wrap"><select id="browse-sort" class="select" aria-label="Sort">
+            <option value="players" data-i18n="browse.sortPlayers">Most players</option>
+            <option value="name" data-i18n="browse.sortName">Name</option>
+          </select><i class="ph ph-caret-down"></i></div>
+          <button class="icon-btn" id="browse-refresh" aria-label="Refresh list" title="Refresh list"><i class="ph ph-arrows-clockwise"></i></button>
+        </div>
+        <div class="chip-bar" id="browse-chips"></div>
+        <p class="browse-count" id="browse-count" role="status"></p>
+        <div id="browse-list" class="browse-list"></div>
+        <button class="btn glass browse-more" id="browse-more" hidden data-i18n="browse.more">Show more</button>
+      </div>
+    </section>
+
+    <section class="content-area" id="content-tools">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.tools">Tools</h1></header>
+      <div class="tool-grid">
+        <div class="tool tool-wide">
+          <div class="tool-icon"><i class="ph ph-git-branch"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="tools.branch">Client branch</p>
+            <p class="tool-desc" data-i18n="tools.branchDesc">Switch RedM update channel.</p>
+          </div>
+          <div class="tool-ctl branch-ctl">
+            <div class="segmented" id="branch-seg" role="radiogroup" aria-label="Client branch">
+              <button role="radio" data-channel="production">Production</button>
+              <button role="radio" data-channel="beta">Beta</button>
+              <button role="radio" data-channel="canary">Canary</button>
+              <button role="radio" data-channel="custom" data-i18n="tools.custom">Custom</button>
+            </div>
+            <label class="field" id="branch-custom-wrap" hidden>
+              <i class="ph ph-code"></i>
+              <input id="branch-custom" placeholder="specific/feature/..." aria-label="Custom branch">
+            </label>
+            <button class="btn accent" id="branch-apply"><span data-i18n="tools.apply">Apply</span></button>
+          </div>
+        </div>
+        <div class="tool tool-wide tool-panel">
+          <div class="tool-icon"><i class="ph ph-broom"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="clean.title">Clean up</p>
+            <p class="tool-desc" data-i18n="clean.desc">Frees space and fixes most loading, texture and stutter problems.</p>
+          </div>
+          <button class="btn accent" id="clean-btn"><i class="ph ph-broom"></i><span id="clean-btn-label">Clean</span></button>
+          <div class="check-grid" id="clean-list"></div>
+        </div>
+        <div class="tool tool-wide tool-panel">
+          <div class="tool-icon"><i class="ph ph-monitor"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="gfx.title">Graphics and performance</p>
+            <p class="tool-desc" id="gfx-gpus"></p>
+          </div>
+          <span></span>
+          <div class="switch-list">
+            <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.gpu">Use the high-performance GPU</span><span class="check-desc" data-i18n="gfx.gpuDesc">Stops Windows running the game on built-in graphics.</span></span><span class="toggle"><input type="checkbox" id="gfx-gpu"><span class="toggle-track"></span></span></label>
+            <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.fso">Turn off fullscreen optimizations</span><span class="check-desc" data-i18n="gfx.fsoDesc">Can reduce stutter and input lag in fullscreen.</span></span><span class="toggle"><input type="checkbox" id="gfx-fso"><span class="toggle-track"></span></span></label>
+            <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.prio">High priority while playing</span><span class="check-desc" data-i18n="gfx.prioDesc">Gives the game more CPU time than background apps while the launcher is open.</span></span><span class="toggle"><input type="checkbox" id="gfx-prio"><span class="toggle-track"></span></span></label>
+            <div class="switch-row" id="gfx-reset-row" hidden><span class="row-text"><span class="check-label" data-i18n="gfx.reset">Reset graphics settings</span><span class="check-desc" data-i18n="gfx.resetDesc">Fixes crashes after a driver or settings change. Your old settings are kept as a backup.</span></span><button class="btn glass" id="gfx-reset" data-i18n="gfx.resetBtn">Reset</button></div>
+          </div>
+        </div>
+        <div class="tool">
+          <div class="tool-icon danger"><i class="ph ph-power"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="tools.process">RedM process</p>
+            <p class="tool-desc" data-i18n="tools.processDesc">Frozen game or stuck in the background.</p>
+          </div>
+          <div class="tool-ctl">
+            <button class="btn glass" id="restart-btn" data-i18n="tools.restartBtn">Restart</button>
+            <button class="btn glass danger" id="kill-btn" data-i18n="tools.close">Force close</button>
+          </div>
+        </div>
+        <div class="tool">
+          <div class="tool-icon"><i class="ph ph-folder-open"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="tools.folders">Logs and crashes</p>
+            <p class="tool-desc" data-i18n="tools.foldersDesc">Open the folders to send to staff.</p>
+          </div>
+          <div class="tool-ctl">
+            <button class="btn glass" id="logs-btn" data-i18n="tools.logs">Logs</button>
+            <button class="btn glass" id="crashes-btn" data-i18n="tools.crashes">Crashes</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-area" id="content-settings">
+      <header class="page-head"><h1 class="page-title" data-i18n="nav.settings">Settings</h1></header>
+      <div class="sheet rows">
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="settings.language">Language</p><p class="row-desc" data-i18n="settings.languageDesc">Select your preferred language</p></div><div class="select-wrap"><select id="lang-select" class="select" aria-label="Language"></select><i class="ph ph-caret-down"></i></div></div>
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="settings.autoStart">Start with Windows</p><p class="row-desc" data-i18n="settings.autoStartDesc">Launch automatically when Windows starts</p></div><label class="toggle"><input type="checkbox" id="toggle-autostart"><span class="toggle-track"></span></label></div>
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="upd.title">Updates</p><p class="row-desc" id="upd-desc"></p></div><button type="button" class="btn glass" id="upd-btn"></button></div>
+        <div class="row" id="row-stats" hidden><div class="row-text"><p class="row-label" data-i18n="usage.title">Share anonymous launcher stats</p><p class="row-desc" id="usage-desc"></p></div><label class="toggle"><input type="checkbox" id="toggle-usage"><span class="toggle-track"></span></label></div>
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="about.title">About</p><p class="row-desc" id="about-desc"></p></div><button type="button" class="btn glass" data-act="source"><i class="ph ph-github-logo"></i><span data-i18n="about.source">Source code</span></button></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Short confirmations ("Done.", "Freed 7.5 GB.") from any page. -->
+  <p id="tools-status" class="toast" role="status"></p>
+
+  <div class="lightbox-overlay" id="lightbox" style="display:none">
+    <button class="lightbox-close" aria-label="Close" data-act="lightbox-close"><i class="ph ph-x"></i></button>
+    <button class="lightbox-arrow lightbox-prev" aria-label="Previous" data-act="lightbox-nav" data-arg="-1"><i class="ph ph-caret-left"></i></button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-arrow lightbox-next" aria-label="Next" data-act="lightbox-nav" data-arg="1"><i class="ph ph-caret-right"></i></button>
+    <div class="lightbox-info" id="lightbox-info"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
