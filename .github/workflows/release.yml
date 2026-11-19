@@ -30,6 +30,7 @@ jobs:
       # The build uploads into a draft. Publish only now that every file (installer, latest.yml,
       # blockmap) is there, so no launcher can see a release whose update file is still missing.
       - name: Publish the release
-        run: gh release edit "${{ github.ref_name }}" --draft=false --latest
+        # The notes link the code signing and privacy policies (SignPath wants both on every release page).
+        run: gh release edit "${{ github.ref_name }}" --draft=false --latest --notes-file .github/release-notes.md
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

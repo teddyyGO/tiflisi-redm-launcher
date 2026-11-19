@@ -84,6 +84,8 @@ npx electron test/shortcuts.check.js   # Start Menu / Desktop / taskbar shortcut
 
 Or all at once: `npm test`.
 
+The installer shows a privacy page before installing. Edit `installer/privacy.txt`, then run `node installer/make-rtf.js` (the page needs RTF so Georgian draws correctly).
+
 ## Updates
 
 Installed launchers check your GitHub releases at start, every 10 minutes, and when the window comes back to the front. A new version downloads in the background (only the changed parts), then a small "Update to x.y.z" button appears in the title bar. One click restarts into the new version in a few seconds, with no installer window. If nobody clicks, it installs the next time the launcher closes.
@@ -112,6 +114,8 @@ set launcher_check_dashboard_password "a-long-unique-password"
 `http://<server-ip>:<port>/launcher_check/dashboard` (user `admin`). It shows, live: launchers open and how many of them are in game, players who joined with and without the launcher, launcher versions and languages. FXServer serves it over plain HTTP, so use a password you don't use anywhere else. The `launcherstats` console command prints the same numbers.
 
 ## Privacy and security
+
+Full privacy policy (English and Georgian): [PRIVACY.md](PRIVACY.md).
 
 - The launcher never sends anything anywhere except: the Cfx server list, your configured servers, your panel API (if set), GitHub (update checks) and, if enabled, the anonymous heartbeat above.
 - The window is locked down: sandboxed renderer, no Node access, a strict Content-Security-Policy (only the launcher's own scripts run, so server names or news text can never execute code), no pop-ups, no navigating away.
@@ -148,6 +152,10 @@ Limits: matching is by IP, so players behind the same NAT share a hello. It also
 
 ## Code signing policy
 
+Free code signing provided by [SignPath.io](https://about.signpath.io/), certificate by [SignPath Foundation](https://signpath.org/).
+
+Status: applied in November 2026. Until SignPath approves the project, installers are unsigned and Windows shows its "unknown publisher" warning on first install.
+
 Windows installers are built only from this repository, by the `Release` GitHub Action ([release.yml](.github/workflows/release.yml)), never on a personal machine. Every release is approved by hand before it is signed and published.
 
 Team roles:
@@ -155,7 +163,7 @@ Team roles:
 - Committers and reviewers: [teddyyGO](https://github.com/teddyyGO). Changes from anyone else come in as pull requests and are reviewed before merging.
 - Approvers (approve each release for signing): [teddyyGO](https://github.com/teddyyGO).
 
-Privacy: this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. The only exceptions are listed under [Privacy and security](#privacy-and-security): the Cfx server list, the servers you add, GitHub for update checks, and, if left on, the anonymous heartbeat to the featured server described in [Live usage dashboard](#live-usage-dashboard), which players can switch off in Settings.
+Privacy policy: [PRIVACY.md](PRIVACY.md) lists everything the launcher sends and where. The installer shows it before installing, and the only optional part, the anonymous usage stats, can be switched off in Settings.
 
 ## License
 
