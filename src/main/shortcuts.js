@@ -11,15 +11,25 @@ function targetOf(shell, lnk) {
   try { return shell.readShortcutLink(lnk).target || "" } catch (e) { return "" }
 }
 
+// Windows can spell one folder two ways (C:\Users\RUNNER~1\... vs C:\Users\runneradmin\...):
+// compare full, real paths, case-insensitively.
+function real(p) {
+  try { return fs.realpathSync.native(p).toLowerCase() } catch (e) { return path.resolve(p).toLowerCase() }
+}
+const same = (a, b) => !!a && !!b && real(a) === real(b)
+
 // Ours = points into our install folder, or at an exe that no longer exists (removed by an update).
 function isOurs(shell, lnk, installDir) {
   const t = targetOf(shell, lnk)
   if (!t) return false
-  return path.dirname(t).toLowerCase() === installDir.toLowerCase() || !fs.existsSync(t)
+  return same(path.dirname(t), installDir) || !fs.existsSync(t)
 }
 
 function ensure(o) {
-  const { shell, exe, appId, startMenuDir, desktopDir, pinnedDir, oldNames, stateFile } = o
+  const { shell, appId, startMenuDir, desktopDir, pinnedDir, oldNames, stateFile } = o
+  // Full spelling of our own exe, so the shortcut is named "Tiflisi Launcher", never "TIFLIS~1".
+  let exe = o.exe
+  try { exe = fs.realpathSync.native(o.exe) } catch (e) {}
   const name = o.name || path.basename(exe, ".exe")
   const installDir = path.dirname(exe)
   const link = { target: exe, cwd: installDir, icon: exe, iconIndex: 0, appUserModelId: appId, description: name }
@@ -28,7 +38,7 @@ function ensure(o) {
   try { state = JSON.parse(fs.readFileSync(stateFile, "utf8")) } catch (e) {}
 
   const write = (lnk) => {
-    if (targetOf(shell, lnk).toLowerCase() === exe.toLowerCase()) return false // already right
+    if (same(targetOf(shell, lnk), exe)) return false // already right
     fs.mkdirSync(path.dirname(lnk), { recursive: true })
     return shell.writeShortcutLink(lnk, "create", link)
   }
@@ -52,7 +62,7 @@ function ensure(o) {
       if (fs.existsSync(l) && isOurs(shell, l, installDir)) { fs.rmSync(l, { force: true }); done.push("removed old " + path.basename(dir)) }
     }
     const pin = path.join(pinnedDir, old + ".lnk")
-    if (fs.existsSync(pin) && isOurs(shell, pin, installDir) && targetOf(shell, pin).toLowerCase() !== exe.toLowerCase()) {
+    if (fs.existsSync(pin) && isOurs(shell, pin, installDir) && !same(targetOf(shell, pin), exe)) {
       if (shell.writeShortcutLink(pin, "update", link)) done.push("taskbar pin repointed")
     }
   }
