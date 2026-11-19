@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, ipcMain, clipboard } = require("electron")
+const { app, BrowserWindow, shell, ipcMain, clipboard, session } = require("electron")
 const path = require("path")
 const fs = require("fs")
 const net = require("net")
@@ -83,6 +83,9 @@ if (!app.requestSingleInstanceLock()) {
     mainWindow.focus()
   })
   app.whenReady().then(() => {
+    // The CSP has to allow file: for the launcher's own files, which also matches file://server/share.
+    // Windows opens those over SMB and sends the player's login hash, so block any file URL with a host.
+    session.defaultSession.webRequest.onBeforeRequest((d, cb) => cb({ cancel: d.url.startsWith("file:") && new URL(d.url).host !== "" }))
     createWindow()
     if (config.discordClientId) rpc.start(config.discordClientId)
     if (app.isPackaged && process.platform === "win32") {
@@ -349,7 +352,7 @@ ipcMain.handle("graphics-info", async () => ({
   exes: exes().length,
   hasSettings: fs.existsSync(systemXml()),
 }))
-ipcMain.handle("undo-gpu", () => graphics.undoGpu(exes()))
+ipcMain.handle("undo-gpu", () => graphics.undoGpu(path.dirname(redmDir), gameDir()))
 ipcMain.handle("set-fso", (_, on) => graphics.setFso(exes(), !!on))
 ipcMain.handle("set-priority-boost", (_, on) => graphics.setPriorityBoost(!!on))
 

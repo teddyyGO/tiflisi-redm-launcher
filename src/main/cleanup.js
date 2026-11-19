@@ -14,13 +14,26 @@ async function list(dir, keep) {
   }
 }
 
+// Newest mtime anywhere under p: a folder's own mtime only changes when its direct children do,
+// so an old folder can still hold files written today. Unreadable counts as "now" (keep it).
+async function newest(p) {
+  let st
+  try { st = await fsp.lstat(p) } catch (e) { return Date.now() }
+  if (!st.isDirectory()) return st.mtimeMs
+  let names = []
+  try { names = await fsp.readdir(p) } catch (e) { return Date.now() }
+  const times = await Promise.all(names.map((n) => newest(path.join(p, n))))
+  return times.reduce((a, b) => Math.max(a, b), st.mtimeMs)
+}
+
 async function olderThan(paths, ms) {
   const out = []
-  for (const p of paths) {
-    try { if (Date.now() - (await fsp.lstat(p)).mtimeMs > ms) out.push(p) } catch (e) {}
-  }
+  for (const p of paths) if (Date.now() - (await newest(p)) > ms) out.push(p)
   return out
 }
+
+// With TMP/TEMP unset Windows falls back to the user profile: never empty a folder not named Temp/Tmp.
+const isTempDir = (p) => /^te?mp$/i.test(path.basename(p || ""))
 
 // env: { redmDir, local (LOCALAPPDATA), temp }
 function targets(env) {
@@ -48,8 +61,8 @@ function targets(env) {
     { id: "nui", redm: true, on: true, entries: () => list(path.join(data, "nui-storage")) },
     // GPU driver shader caches: rebuilt on next launch (first minutes may stutter).
     { id: "shaders", redm: true, on: true, entries: async () => (await Promise.all(gpu.map((g) => list(path.join(env.local, g))))).flat() },
-    // Same rule as Windows Disk Cleanup (older than 2 days), so running installers keep their files.
-    { id: "temp", redm: false, on: true, entries: async () => olderThan(await list(env.temp), 2 * DAY) },
+    // Untouched for 2 days (like Windows Disk Cleanup), judged by the newest file inside, so running installers keep their files.
+    { id: "temp", redm: false, on: true, entries: async () => isTempDir(env.temp) ? olderThan(await list(env.temp), 2 * DAY) : [] },
   ]
 }
 
