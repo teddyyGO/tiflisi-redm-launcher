@@ -41,8 +41,7 @@ Object.assign(i18nTranslations.en, {
   "clean.empty": "Empty", "clean.btn": "Clean {size}", "clean.nothing": "Nothing selected", "clean.running": "Cleaning…",
   "clean.confirmTitle": "Delete {size}?", "clean.confirmMsg": "This can't be undone.", "clean.confirmOk": "Delete",
   "clean.done": "Freed {size}.", "clean.skipped": "{n} items were in use and skipped.",
-  "gfx.title": "Graphics and performance", "gfx.desc": "Settings Windows applies to the game.", "gfx.gpus": "Your graphics: {list}",
-  "gfx.gpu": "Use the high-performance GPU", "gfx.gpuDesc": "Stops Windows running the game on built-in graphics.",
+  "gfx.title": "Graphics and performance", "gfx.desc": "Settings Windows applies to the game.",
   "gfx.fso": "Turn off fullscreen optimizations", "gfx.fsoDesc": "Can reduce stutter and input lag in fullscreen.",
   "gfx.prio": "High priority while playing", "gfx.prioDesc": "Gives the game more CPU time than background apps while the launcher is open.",
   "gfx.reset": "Reset graphics settings", "gfx.resetDesc": "Fixes crashes after a driver or settings change. Your old settings are kept as a backup.", "gfx.resetBtn": "Reset",
@@ -61,7 +60,6 @@ Object.assign(i18nTranslations.en, {
   "ready.redm": "RedM is installed", "ready.redmBad": "RedM is not installed", "ready.get": "Get RedM",
   "ready.game": "Red Dead Redemption 2 found", "ready.gameBad": "RedM doesn't know where your game is yet. Open RedM once and pick the game folder.",
   "ready.branch": "Game version matches {server} ({b})", "ready.branchBad": "{server} uses the {b} game version", "ready.switch": "Switch",
-  "ready.gpu": "The game uses your fast graphics card", "ready.gpuBad": "The game may run on your slower built-in graphics", "ready.turnOn": "Turn on",
   "ready.disk": "{size} free on the RedM drive", "ready.diskBad": "Only {size} free on the RedM drive. Server downloads can fail.", "ready.freeUp": "Free up space",
   "ready.trouble": "Still having trouble?",
   "ready.links": "Join links from Discord and websites open RedM", "ready.linksBad": "Join links from Discord and websites can't open RedM", "ready.repair": "Repair",
@@ -69,7 +67,7 @@ Object.assign(i18nTranslations.en, {
   "fix.title": "Fix my game", "fix.btn": "Fix my game",
   "fix.desc": "Not loading, stuck or crashing? This closes RedM, clears the server and RedM caches and applies the recommended settings. Your game files and characters are not touched.",
   "fix.confirmTitle": "Fix my game?", "fix.confirmMsg": "RedM will close. Server files download again the next time you join.",
-  "fix.stepClose": "Close RedM", "fix.stepCache": "Clear the server and RedM caches", "fix.stepBranch": "Switch to the {b} game version", "fix.stepGpu": "Use the fast graphics card",
+  "fix.stepClose": "Close RedM", "fix.stepCache": "Clear the server and RedM caches", "fix.stepBranch": "Switch to the {b} game version",
   "fix.done": "Done. Join the server again.", "fix.partly": "Some steps didn't work. Close RedM fully and try again, or ask staff for help.",
   "crash.title": "RedM crashed", "crash.copy": "Copy report for staff", "crash.copied": "Report copied. Paste it to staff on Discord.",
   "crash.cause.memory": "Your PC ran out of memory. Close other programs (browser, recording apps) and try again. If it keeps happening, lower Texture Quality.",
@@ -80,7 +78,7 @@ Object.assign(i18nTranslations.en, {
   "crash.cause.unknown": "We couldn't tell what caused it. Copy the report and send it to staff.",
   "welcome.title": "Welcome to {server}", "welcome.sub": "Set up for you, nothing else to do:",
   "welcome.lang": "Language: {lang}", "welcome.server": "{server} is your server, ready to join",
-  "welcome.gpu": "The game uses your fast graphics card", "welcome.links": "Join links from Discord and websites repaired",
+  "welcome.links": "Join links from Discord and websites repaired",
   "welcome.shortcut": "Shortcuts on your Desktop and in the Start Menu",
   "name.label": "Your name in game", "name.desc": "What other players and staff see. Saved straight into RedM.", "name.save": "Save",
   "name.madeUp": "RedM made this name up. Change it to the name you want others to see.", "name.current": "This is the name other players see.",
@@ -123,8 +121,7 @@ Object.assign(i18nTranslations.ka, {
   "clean.empty": "ცარიელია", "clean.btn": "გასუფთავება ({size})", "clean.nothing": "არაფერია მონიშნული", "clean.running": "სუფთავდება…",
   "clean.confirmTitle": "წაიშალოს {size}?", "clean.confirmMsg": "ამის დაბრუნება შეუძლებელია.", "clean.confirmOk": "წაშლა",
   "clean.done": "გათავისუფლდა {size}.", "clean.skipped": "{n} ფაილი გამოყენებაშია და გამოტოვდა.",
-  "gfx.title": "გრაფიკა და წარმადობა", "gfx.desc": "პარამეტრები, რომლებსაც Windows თამაშზე იყენებს.", "gfx.gpus": "თქვენი ვიდეოკარტები: {list}",
-  "gfx.gpu": "ძლიერი ვიდეოკარტის გამოყენება", "gfx.gpuDesc": "Windows აღარ გაუშვებს თამაშს ჩაშენებულ გრაფიკაზე.",
+  "gfx.title": "გრაფიკა და წარმადობა", "gfx.desc": "პარამეტრები, რომლებსაც Windows თამაშზე იყენებს.",
   "gfx.fso": "სრული ეკრანის ოპტიმიზაციის გამორთვა", "gfx.fsoDesc": "შეიძლება შეამციროს ლაგი და შეყოვნება სრულ ეკრანზე.",
   "gfx.prio": "მაღალი პრიორიტეტი თამაშისას", "gfx.prioDesc": "სანამ ლაუნჩერი ღიაა, თამაში ფონურ პროგრამებზე მეტ პროცესორის დროს იღებს.",
   "gfx.reset": "გრაფიკის პარამეტრების განულება", "gfx.resetDesc": "აგვარებს კრაშებს დრაივერის ან პარამეტრების შეცვლის შემდეგ. ძველი პარამეტრები სარეზერვოდ შეინახება.", "gfx.resetBtn": "განულება",
@@ -143,7 +140,6 @@ Object.assign(i18nTranslations.ka, {
   "ready.redm": "RedM დაინსტალირებულია", "ready.redmBad": "RedM არ არის დაინსტალირებული", "ready.get": "RedM-ის ჩამოტვირთვა",
   "ready.game": "Red Dead Redemption 2 ნაპოვნია", "ready.gameBad": "RedM-მა ჯერ არ იცის, სადაა თამაში. ერთხელ გახსენით RedM და მიუთითეთ თამაშის საქაღალდე.",
   "ready.branch": "თამაშის ვერსია ემთხვევა {server}-ს ({b})", "ready.branchBad": "{server} იყენებს თამაშის {b} ვერსიას", "ready.switch": "გადართვა",
-  "ready.gpu": "თამაში ძლიერ ვიდეოკარტას იყენებს", "ready.gpuBad": "თამაში შეიძლება სუსტ, ჩაშენებულ გრაფიკაზე გაეშვას", "ready.turnOn": "ჩართვა",
   "ready.disk": "RedM-ის დისკზე თავისუფალია {size}", "ready.diskBad": "RedM-ის დისკზე მხოლოდ {size} არის თავისუფალი. სერვერის ჩამოტვირთვა შეიძლება ჩავარდეს.", "ready.freeUp": "ადგილის გათავისუფლება",
   "ready.trouble": "ისევ პრობლემაა?",
   "ready.links": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ხსნის", "ready.linksBad": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ვერ ხსნის", "ready.repair": "შეკეთება",
@@ -151,7 +147,7 @@ Object.assign(i18nTranslations.ka, {
   "fix.title": "თამაშის გამოსწორება", "fix.btn": "გამოსწორება",
   "fix.desc": "არ იტვირთება, გაჭედა ან ითიშება? ეს დახურავს RedM-ს, გაასუფთავებს სერვერის და RedM-ის ქეშს და ჩართავს რეკომენდებულ პარამეტრებს. თამაშის ფაილები და პერსონაჟები ხელუხლებელი რჩება.",
   "fix.confirmTitle": "გამოვასწოროთ თამაში?", "fix.confirmMsg": "RedM დაიხურება. სერვერის ფაილები შემდეგ შესვლაზე თავიდან ჩამოიტვირთება.",
-  "fix.stepClose": "RedM-ის დახურვა", "fix.stepCache": "სერვერის და RedM-ის ქეშის გასუფთავება", "fix.stepBranch": "{b} ვერსიაზე გადართვა", "fix.stepGpu": "ძლიერი ვიდეოკარტის ჩართვა",
+  "fix.stepClose": "RedM-ის დახურვა", "fix.stepCache": "სერვერის და RedM-ის ქეშის გასუფთავება", "fix.stepBranch": "{b} ვერსიაზე გადართვა",
   "fix.done": "მზადაა. შედით სერვერზე თავიდან.", "fix.partly": "ზოგიერთი ნაბიჯი ვერ შესრულდა. სრულად დახურეთ RedM და სცადეთ თავიდან, ან მიმართეთ ადმინისტრაციას.",
   "crash.title": "RedM გაითიშა", "crash.copy": "ანგარიშის კოპირება", "crash.copied": "ანგარიში დაკოპირდა. ჩასვით Discord-ზე ადმინისტრაციისთვის.",
   "crash.cause.memory": "კომპიუტერს მეხსიერება ამოეწურა. დახურეთ სხვა პროგრამები (ბრაუზერი, ჩამწერი აპები) და სცადეთ თავიდან. თუ განმეორდა, შეამცირეთ Texture Quality.",
@@ -162,7 +158,7 @@ Object.assign(i18nTranslations.ka, {
   "crash.cause.unknown": "მიზეზი ვერ დავადგინეთ. დააკოპირეთ ანგარიში და გაუგზავნეთ ადმინისტრაციას.",
   "welcome.title": "კეთილი იყოს თქვენი მობრძანება {server}-ში", "welcome.sub": "ყველაფერი მოწყობილია, სხვა არაფერია გასაკეთებელი:",
   "welcome.lang": "ენა: {lang}", "welcome.server": "{server} თქვენი სერვერია, მზადაა შესასვლელად",
-  "welcome.gpu": "თამაში ძლიერ ვიდეოკარტას იყენებს", "welcome.links": "Discord-ისა და საიტების შესვლის ბმულები შეკეთდა",
+  "welcome.links": "Discord-ისა და საიტების შესვლის ბმულები შეკეთდა",
   "welcome.shortcut": "მალსახმობები სამუშაო მაგიდაზე და Start მენიუში",
   "name.label": "თქვენი სახელი თამაშში", "name.desc": "რასაც სხვა მოთამაშეები და ადმინისტრაცია ხედავს. პირდაპირ RedM-ში ინახება.", "name.save": "შენახვა",
   "name.madeUp": "ეს სახელი RedM-მა შემთხვევით შეარჩია. შეცვალეთ იმ სახელით, რომლითაც გინდათ, რომ გიცნობდნენ.", "name.current": "ამ სახელს ხედავენ სხვა მოთამაშეები.",
@@ -1257,10 +1253,8 @@ async function refreshGraphics() {
 
 function renderGraphics(g) {
   lastGfx = g
-  document.getElementById("gfx-gpus").textContent = g.gpus.length ? t("gfx.gpus").replace("{list}", g.gpus.join(", ")) : t("gfx.desc")
-  document.getElementById("gfx-gpu").checked = g.gpuHigh
   document.getElementById("gfx-fso").checked = g.fsoOff
-  document.getElementById("gfx-gpu").disabled = document.getElementById("gfx-fso").disabled = !g.exes
+  document.getElementById("gfx-fso").disabled = !g.exes
   document.getElementById("gfx-prio").checked = localStorage.getItem("gfxPrio") === "true"
   document.getElementById("gfx-reset-row").hidden = !g.hasSettings
 }
@@ -1273,7 +1267,6 @@ function initGraphics(fail) {
       say(t("tools.done"))
     })
   }
-  bind("gfx-gpu", "gfxGpu", window.launcher.setGpu)
   bind("gfx-fso", "gfxFso", window.launcher.setFso)
   bind("gfx-prio", "gfxPrio", window.launcher.setPriorityBoost)
   document.getElementById("gfx-reset").onclick = async function () {
@@ -1283,7 +1276,9 @@ function initGraphics(fail) {
     refreshGraphics()
   }
   // Re-apply on every launch: a new RedM game build brings a new exe that needs the same settings.
-  if (localStorage.getItem("gfxGpu") === "true") window.launcher.setGpu(true)
+  // Up to 1.1.6 the launcher could turn on "High performance GPU" for the game (see graphics.js undoGpu).
+  // Undo it once, only where the launcher itself turned it on: a setting the player made in Windows stays.
+  if (localStorage.getItem("gfxGpu") === "true") window.launcher.undoGpu().then(function () { localStorage.removeItem("gfxGpu") })
   if (localStorage.getItem("gfxFso") === "true") window.launcher.setFso(true)
   if (localStorage.getItem("gfxPrio") === "true") window.launcher.setPriorityBoost(true)
 }
@@ -1328,7 +1323,6 @@ function readyItems() {
     var okB = r.channel === config.recommendedBranch
     items.push({ ok: okB, text: t(okB ? "ready.branch" : "ready.branchBad").replace("{server}", brand.name).replace("{b}", branchLabel(config.recommendedBranch)), fix: "set-branch", fixLabel: t("ready.switch") })
   }
-  if (r.gpus > 1) items.push({ ok: r.gpuHigh, text: t(r.gpuHigh ? "ready.gpu" : "ready.gpuBad"), fix: "set-gpu", fixLabel: t("ready.turnOn") })
   if (nameInfo && r.redm) items.push({ ok: !nameInfo.madeUp, text: nameInfo.madeUp ? t("ready.nameBad").replace("{name}", nameInfo.name || "?") : t("ready.name").replace("{name}", nameInfo.name), fix: "name", fixLabel: t("ready.change") })
   if (r.freeBytes != null) {
     var okD = r.freeBytes > 15 * GB
@@ -1366,7 +1360,6 @@ async function readyFix(what) {
   if (what === "free-space") { toggleReady(false); return switchNav("tools") }
   if (what === "name") { toggleReady(false); switchNav("settings"); return document.getElementById("settings-name").focus() }
   if (what === "set-branch") await window.launcher.setChannel(config.recommendedBranch)
-  if (what === "set-gpu") { localStorage.setItem("gfxGpu", "true"); await window.launcher.setGpu(true) }
   if (what === "repair-links") await window.launcher.repairLinks()
   say(t("tools.done"))
   refreshReady()
@@ -1405,9 +1398,6 @@ async function fixMyGame() {
       var x = await window.launcher.setChannel(config.recommendedBranch)
       if (!x.success) throw new Error(x.error)
     } })
-  }
-  if (r.gpus > 1 && !r.gpuHigh) {
-    steps.push({ label: t("fix.stepGpu"), run: async function () { localStorage.setItem("gfxGpu", "true"); await window.launcher.setGpu(true) } })
   }
   var o = document.createElement("div")
   o.className = "error-overlay"
@@ -1532,11 +1522,6 @@ async function firstRun() {
   if (!localStorage.getItem("firstRunDone")) {
     var r = ready || (await window.launcher.readiness().catch(function () { return null }))
     var done = ["lang", "server"]
-    if (r && r.gpus > 1 && !r.gpuHigh) {
-      localStorage.setItem("gfxGpu", "true")
-      await window.launcher.setGpu(true)
-      done.push("gpu")
-    }
     if (r && r.redm && !r.links) {
       var x = await window.launcher.repairLinks().catch(function () { return null })
       if (x && x.success) done.push("links")
@@ -1552,6 +1537,7 @@ function renderWelcome() {
   var done = []
   try { done = JSON.parse(localStorage.getItem("firstRunDone")) || [] } catch (e) {}
   if (!Array.isArray(done) || localStorage.getItem("welcomeClosed")) return
+  done = done.filter(function (k) { return k !== "gpu" }) // listed by 1.1.4–1.1.6; undone since
   document.getElementById("welcome-title").textContent = t("welcome.title").replace("{server}", brand.name)
   document.getElementById("welcome-done").innerHTML = done.map(function (k) {
     // Native name from the launcher's own list (the system's language names don't cover Georgian).

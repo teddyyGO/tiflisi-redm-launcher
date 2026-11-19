@@ -1,5 +1,4 @@
 // Graphics and performance tweaks, all per-user and reversible:
-//  - GPU preference: the same per-app setting as Windows Settings > Display > Graphics (HKCU).
 //  - Fullscreen optimizations: the same per-app compatibility flag as the exe's Properties > Compatibility tab (HKCU).
 //  - High priority: raises the running game process's priority while the launcher is open.
 const { execFile, exec } = require("child_process")
@@ -44,20 +43,17 @@ function gameExes(redmRoot, gamePath) {
 }
 
 async function state(exes) {
-  if (!exes.length) return { gpuHigh: false, fsoOff: false }
-  const gpu = await Promise.all(exes.map((e) => regGet(GPU_KEY, e)))
+  if (!exes.length) return { fsoOff: false }
   const fso = await Promise.all(exes.map((e) => regGet(LAYERS_KEY, e)))
-  return {
-    gpuHigh: gpu.every((v) => v === HIGH_GPU),
-    fsoOff: fso.every((v) => String(v || "").split(/\s+/).includes(FSO_FLAG)),
-  }
+  return { fsoOff: fso.every((v) => String(v || "").split(/\s+/).includes(FSO_FLAG)) }
 }
 
-async function setGpu(exes, on) {
-  for (const e of exes) {
-    if (on) await regSet(GPU_KEY, e, HIGH_GPU)
-    else if ((await regGet(GPU_KEY, e)) === HIGH_GPU) await regDel(GPU_KEY, e) // only undo what we set
-  }
+// Launchers up to 1.1.6 could set "High performance GPU" (Windows Settings > Display > Graphics) for the game.
+// Removed: it changes which graphics card counts as number 0, so RedM's saved adapterIndex can point at the
+// wrong card, and a PC with the monitor in the motherboard port can stop starting the game. This only
+// removes the exact value those launchers wrote.
+async function undoGpu(exes) {
+  for (const e of exes) if ((await regGet(GPU_KEY, e)) === HIGH_GPU) await regDel(GPU_KEY, e)
 }
 
 async function setFso(exes, on) {
@@ -74,11 +70,6 @@ async function registerProtocol(name, title, exe) {
   await reg(["add", key, "/ve", "/t", "REG_SZ", "/d", title, "/f"])
   await reg(["add", key, "/v", "URL Protocol", "/t", "REG_SZ", "/d", "", "/f"])
   await reg(["add", key + "\\shell\\open\\command", "/ve", "/t", "REG_SZ", "/d", '"' + exe + '" "%1"', "/f"])
-}
-
-function gpuNames() {
-  return new Promise((r) => exec('powershell -NoProfile -Command "(Get-CimInstance Win32_VideoController).Name"', { windowsHide: true }, (err, out) =>
-    r(err ? [] : out.split(/\r?\n/).map((s) => s.trim()).filter(Boolean))))
 }
 
 // High priority while playing: every 15 s, raise any running RedM game process.
@@ -100,4 +91,4 @@ function setPriorityBoost(on) {
   boostTimer = setInterval(tick, 15000)
 }
 
-module.exports = { gameExes, state, setGpu, setFso, gpuNames, setPriorityBoost, mergeLayers, registerProtocol, regGet }
+module.exports = { gameExes, state, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet }

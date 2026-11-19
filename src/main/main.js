@@ -341,27 +341,25 @@ ipcMain.handle("cleanup-run", async (_, ids) => {
 
 const gameDir = () => ((readIni() || "").match(/^IVPath=(.*)$/m) || [])[1]?.trim()
 const exes = () => graphics.gameExes(path.dirname(redmDir), gameDir())
-const systemXml = () => path.join(app.getPath("documents"), "Rockstar Games", "Red Dead Redemption 2", "Settings", "system.xml")
+// RedM keeps its own graphics settings here, not in Documents\Rockstar Games (that one is story mode's).
+const systemXml = () => path.join(app.getPath("appData"), "CitizenFX", "rdr3_settings", "system.xml")
 
 ipcMain.handle("graphics-info", async () => ({
   ...(await graphics.state(exes())),
-  gpus: await graphics.gpuNames(),
   exes: exes().length,
   hasSettings: fs.existsSync(systemXml()),
 }))
-ipcMain.handle("set-gpu", (_, on) => graphics.setGpu(exes(), !!on))
+ipcMain.handle("undo-gpu", () => graphics.undoGpu(exes()))
 ipcMain.handle("set-fso", (_, on) => graphics.setFso(exes(), !!on))
 ipcMain.handle("set-priority-boost", (_, on) => graphics.setPriorityBoost(!!on))
 
 // ── Ready to play: the checks behind the Home checklist ──
 
-let gpuCount = null // graphics cards don't change while the launcher runs
 ipcMain.handle("readiness", async () => {
   const ini = readIni() || ""
   const channel = ((ini.match(/^UpdateChannel=(.*)$/m) || [])[1] || "production").trim()
   const game = gameDir()
-  if (gpuCount === null) gpuCount = (await graphics.gpuNames()).length
-  const [exe, protocol, gfx] = await Promise.all([redmExe(), getProtocolExe(), graphics.state(exes())])
+  const [exe, protocol] = await Promise.all([redmExe(), getProtocolExe()])
   let freeBytes = null
   try { const s = await fs.promises.statfs(fs.existsSync(redmDir) ? redmDir : app.getPath("home")); freeBytes = s.bavail * s.bsize } catch (e) {}
   return {
@@ -369,8 +367,6 @@ ipcMain.handle("readiness", async () => {
     links: !!protocol && fs.existsSync(protocol), // redm:// links from Discord and websites open RedM
     game: !!game && fs.existsSync(path.join(game, "RDR2.exe")),
     channel,
-    gpus: gpuCount,
-    gpuHigh: gfx.gpuHigh,
     freeBytes,
   }
 })

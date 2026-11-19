@@ -1,6 +1,6 @@
 # Tiflisi Launcher
 
-A free, open-source launcher for RedM servers. One server is featured on the home page (yours), and players can still browse and join any other server. It also fixes the usual player problems: wrong client branch, broken caches, the game running on the wrong GPU.
+A free, open-source launcher for RedM servers. One server is featured on the home page (yours), and players can still browse and join any other server. It also fixes the usual player problems: wrong client branch, broken caches, broken join links.
 
 **Download: [launcher.tiflisi.cloud](https://launcher.tiflisi.cloud)** (Windows 10 / 11) · [Code signing policy](#code-signing-policy)
 
@@ -13,7 +13,7 @@ A free, open-source launcher for RedM servers. One server is featured on the hom
 | ![All public RedM servers with search and filters](docs/screenshots/servers-browse.jpg) | ![Favorite servers with their Cfx banners](docs/screenshots/servers-favorites.jpg) |
 | **All servers**: every public RedM server, with search, language and tag filters. | **Favorites**: your saved servers with live players and ping. |
 | ![Tools: client branch and cleanup](docs/screenshots/tools.jpg) | ![Tools: graphics and performance](docs/screenshots/tools-graphics.jpg) |
-| **Tools**: switch the client branch and clean caches, with live sizes. | **Graphics and performance**: high-performance GPU, fullscreen optimizations, priority. |
+| **Tools**: switch the client branch and clean caches, with live sizes. | **Graphics and performance**: fullscreen optimizations, priority, reset RedM's graphics settings. |
 | ![Settings: language, updates, usage stats, about](docs/screenshots/settings.jpg) | ![Home in Georgian](docs/screenshots/home-georgian.jpg) |
 | **Settings**: one-click updates, privacy switch, source code link. | **31 languages**. English and Georgian cover every screen; the others fall back to English for the newest ones. |
 
@@ -22,9 +22,9 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 ## Features
 
 - **Featured server**: live status, players, your own ping, one-click join.
-- **Nothing to set up**: on first start the launcher opens in Georgian on the Tiflisi server, turns on the fast graphics card on PCs with two, repairs broken `redm://` join links, and adds Start Menu and Desktop shortcuts. A small welcome card says what it did and asks for your name in game. It never accepts RedM's or Rockstar's terms for you: those stay your own choice.
+- **Nothing to set up**: on first start the launcher opens in Georgian on the Tiflisi server, repairs broken `redm://` join links, and adds Start Menu and Desktop shortcuts. A small welcome card says what it did and asks for your name in game. It never accepts RedM's or Rockstar's terms for you: those stay your own choice.
 - **Name in game**: set your RedM player name right in the launcher (welcome card or Settings). It's written into RedM's own settings, so there's no need to open RedM first.
-- **Ready to play**: one line under Join says "Ready to play" or how many things need fixing (RedM installed, game found, join links working, right game version, fast graphics card, free disk space). Every problem has a Fix button.
+- **Ready to play**: one line under Join says "Ready to play" or how many things need fixing (RedM installed, game found, join links working, right game version, free disk space). Every problem has a Fix button.
 - **Fix my game**: one button that closes RedM, clears the server and RedM caches and applies the recommended settings, with a plain list of what it did.
 - **Crash helper**: when RedM crashes, the launcher reads RedM's log, explains the likely cause in plain words and offers "Copy report for staff".
 - **Alerts and auto-join**: a Windows notification when the server is back online; on a full server, Join waits and joins as soon as a slot opens.
@@ -34,7 +34,8 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 - **Tools tab** (fixes for the usual player problems):
   - Switch the client branch (production / beta / canary / your own presets / custom). It edits `CitizenFX.ini` and keeps a `.bak` copy.
   - Clean up, with live sizes: server cache, RedM app cache, GPU shader cache, crash dumps, old logs, in-game UI storage, Windows temp (older than 2 days). The sign-in session and the newest logs are kept.
-  - Graphics and performance: use the high-performance GPU, turn off fullscreen optimizations (both per-app Windows settings, reversible), high priority while playing, and reset graphics settings (keeps a backup).
+  - Graphics and performance: turn off fullscreen optimizations (a per-app Windows setting, reversible), high priority while playing, and reset RedM's graphics settings (`%APPDATA%\CitizenFX\rdr3_settings\system.xml`, keeps a backup).
+  - The launcher never changes which graphics card the game uses. Versions up to 1.1.6 could turn on Windows' "High performance" GPU setting for RedM (since 1.1.4 even by themselves on first start). That reorders the graphics cards, so RedM's saved card number can point at the wrong one, and on a PC with the monitor in the motherboard port the game may not start. 1.1.7 removes the setting wherever the launcher turned it on, and leaves it alone if you set it yourself in Windows.
   - Restart or force-close RedM, open the logs and crashes folders.
 - **Launcher-join detection**: the `server-resource/launcher_check` resource tells you who joined through the launcher, and can require it.
 - **Discord Rich Presence**: set `discordClientId` to show "Playing on <server>" (no extra dependency).

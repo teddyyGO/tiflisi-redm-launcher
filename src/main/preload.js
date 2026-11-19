@@ -23,7 +23,7 @@ contextBridge.exposeInMainWorld("launcher", {
   cleanupScanOne: call("cleanup-scan-one"),
   cleanupRun: call("cleanup-run"),
   graphicsInfo: call("graphics-info"),
-  setGpu: call("set-gpu"),
+  undoGpu: call("undo-gpu"),
   setFso: call("set-fso"),
   setPriorityBoost: call("set-priority-boost"),
   resetGraphics: call("reset-graphics"),
