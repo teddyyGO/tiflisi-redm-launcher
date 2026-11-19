@@ -1,4 +1,4 @@
-# Open RedM Launcher
+# Tiflisi Launcher
 
 A free, open-source launcher for RedM servers. One server is featured on the home page (yours), and players can still browse and join any other server. It also fixes the usual player problems: wrong client branch, broken caches, the game running on the wrong GPU.
 

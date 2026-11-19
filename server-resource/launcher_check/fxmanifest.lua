@@ -2,5 +2,5 @@ fx_version 'cerulean'
 game 'rdr3'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
 
-description 'Detects players who join through the open RedM launcher'
+description 'Detects players who join through the Tiflisi Launcher'
 server_script 'server.lua'

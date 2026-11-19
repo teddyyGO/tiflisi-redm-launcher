@@ -1,10 +1,10 @@
 {
   "name": "open-redm-launcher",
   "version": "1.1.0",
-  "description": "Open-source RedM server launcher: featured server, server browser, client branch switch and fix tools",
-  "author": "Open RedM Launcher contributors",
-  "homepage": "https://github.com/teddyyGO/open-redm-launcher",
-  "repository": "github:teddyyGO/open-redm-launcher",
+  "description": "Tiflisi Launcher: the Tiflisi 1898 RedM launcher. Featured server, server browser, branch switch and fix tools. Open source.",
+  "author": "Tiflisi Launcher contributors",
+  "homepage": "https://github.com/teddyyGO/tiflisi-redm-launcher",
+  "repository": "github:teddyyGO/tiflisi-redm-launcher",
   "main": "src/main/main.js",
   "scripts": {
     "start": "electron .",
@@ -14,7 +14,7 @@
   },
   "build": {
     "appId": "io.github.openredmlauncher",
-    "productName": "RedM Launcher",
+    "productName": "Tiflisi Launcher",
     "directories": {
       "output": "dist"
     },
@@ -27,13 +27,13 @@
     "nsis": {
       "oneClick": true,
       "perMachine": false,
-      "artifactName": "${name}-Setup-${version}.${ext}"
+      "artifactName": "Tiflisi-Launcher-Setup-${version}.${ext}"
     },
     "publish": [
       {
         "provider": "github",
         "owner": "teddyyGO",
-        "repo": "open-redm-launcher",
+        "repo": "tiflisi-redm-launcher",
         "releaseType": "draft"
       }
     ],

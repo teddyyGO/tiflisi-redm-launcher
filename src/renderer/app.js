@@ -329,7 +329,7 @@ function setStatusOffline() {
 // All launcher branding lives in config.json under "brand". The values below
 // are fallback defaults, used only when config.json omits a field.
 var brand = {
-  name: "RedM Launcher",
+  name: "Tiflisi Launcher",
   logo: "",            // blank = the server's Cfx icon
   backgrounds: [],     // images that rotate behind Home; blank = panel gallery, then Cfx banner
   primaryColor: "#d8402f",
@@ -607,7 +607,7 @@ function showErrorDialog(title, message, downloadUrl) {
 // ── Updates (GitHub Releases via electron-updater in the main process) ──
 // The new version downloads in the background; a small pill in the title bar offers a one-click restart.
 
-var SOURCE_URL = "https://github.com/teddyyGO/open-redm-launcher"
+var SOURCE_URL = "https://github.com/teddyyGO/tiflisi-redm-launcher"
 var appVersion = ""
 var updState = { state: "idle" }
 
