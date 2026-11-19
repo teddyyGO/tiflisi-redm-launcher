@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- Source of site/og.jpg, the 1200x630 link-preview image (Discord, Facebook, X, search).
+     Re-render after edits (Chrome, from the repo root), then convert to JPEG:
+     chrome --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=3000 --screenshot=og.png docs/share-card.html -->
+<html lang="en">
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Display"; font-weight: 100 900; src: url(../site/fonts/big-shoulders-display-latin-wght-normal.woff2); }
+  @font-face { font-family: "UI"; font-weight: 100 900; src: url(../site/fonts/hanken-grotesk-latin-wght-normal.woff2); }
+  @font-face { font-family: "UI"; font-weight: 100 900; src: url(../site/fonts/noto-sans-georgian-georgian-wght-normal.woff2); unicode-range: U+10A0-10FF; }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { position: relative; background: #15110f url(../assets/backgrounds/tiflisi-255.jpg) 62% center / cover; color: #f3eee6; font-family: UI, sans-serif; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(16,12,10,0.95) 0%, rgba(16,12,10,0.82) 38%, rgba(16,12,10,0.2) 72%, rgba(16,12,10,0) 100%),
+    linear-gradient(0deg, rgba(16,12,10,0.7) 0%, rgba(16,12,10,0) 40%); }
+  body::after { content: ""; position: absolute; inset: 0; opacity: 0.08; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .card { position: relative; z-index: 1; height: 100%; padding: 48px 72px 54px; display: flex; flex-direction: column; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .brand img { width: 76px; height: 76px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5)); }
+  .brand span { font: 700 30px/1 Display; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(243,238,230,0.78); }
+  h1 { margin-top: 18px; font: 800 140px/0.84 Display; letter-spacing: 0.005em; text-shadow: 0 4px 40px rgba(0,0,0,0.4); }
+  .en { margin-top: 22px; font-size: 33px; font-weight: 560; color: rgba(243,238,230,0.88); }
+  .ka { margin-top: 6px; font-size: 27px; font-weight: 500; color: rgba(243,238,230,0.66); }
+  .foot { margin-top: auto; display: flex; align-items: center; gap: 26px; }
+  .btn { display: inline-flex; align-items: center; gap: 14px; height: 66px; padding: 0 30px; border-radius: 14px; background: #c41e1e;
+    font: 700 31px/1 Display; letter-spacing: 0.02em; color: #fff6ee; box-shadow: 0 16px 40px -14px #c41e1e, inset 0 1px 0 rgba(255,255,255,0.22); }
+  .btn svg { width: 28px; height: 28px; }
+  .url { font-size: 25px; font-weight: 600; color: rgba(243,238,230,0.6); }
+</style>
+<div class="card">
+  <div class="brand"><img src="../assets/icon.png" alt=""><span>Tiflisi 1898 · RedM</span></div>
+  <h1>Tiflisi<br>Launcher</h1>
+  <p class="en">Join Tiflisi 1898 in one click.</p>
+  <p class="ka">შედით სერვერზე ერთი დაჭერით.</p>
+  <div class="foot">
+    <span class="btn"><svg viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"><path d="M128 40v112M80 108l48 44 48-44M40 168v32a16 16 0 0 0 16 16h144a16 16 0 0 0 16-16v-32"/></svg>Download for Windows</span>
+    <span class="url">launcher.tiflisi.cloud</span>
+  </div>
+</div>
+</html>
