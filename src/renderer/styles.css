@@ -181,6 +181,42 @@ body[data-view="home"] .titlebar-name { opacity: 0; }
 .btn.danger:hover { color: var(--danger); border-color: rgba(255, 138, 122, 0.5); }
 .hero-actions .btn { height: 60px; padding: 0 22px; font-size: 15px; }
 
+/* Ready to play: a quiet line under Join; turns amber with a count when something needs fixing. */
+.ready { position: relative; margin-top: 14px; }
+.ready-btn { display: inline-flex; align-items: center; gap: 7px; padding: 4px 0; color: var(--text-2); font-weight: 600; font-size: 13.5px; }
+.ready-btn i { font-size: 17px; }
+.ready-btn.ok i { color: var(--online); }
+.ready-btn.warn { color: #f2c14e; }
+.ready-btn:hover { color: var(--text); }
+.ready-panel {
+  position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 30; width: min(520px, 80vw);
+  padding: 8px; border-radius: var(--r);
+  background: var(--glass-strong); border: 1px solid var(--line-2); backdrop-filter: blur(22px);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.75);
+  animation: rise 0.25s var(--ease);
+}
+.ready-item { display: flex; align-items: center; gap: 12px; padding: 10px 10px; border-radius: 9px; }
+.ready-item + .ready-item { border-top: 1px solid var(--line); }
+.ready-item > i { font-size: 20px; flex-shrink: 0; }
+.ready-item.ok > i { color: var(--online); }
+.ready-item.bad > i { color: #f2c14e; }
+.ready-item .row-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ready-item .btn { height: 34px; padding: 0 12px; font-size: 13px; }
+.ready-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 10px 4px; border-top: 1px solid var(--line); color: var(--text-3); font-size: 12.5px; }
+
+/* Fix my game + crash dialogs: a short list of steps with their status. */
+.steps { list-style: none; margin: 14px 0 4px; display: grid; gap: 8px; }
+.steps li { display: flex; align-items: center; gap: 10px; color: var(--text-2); }
+.steps li i { font-size: 18px; width: 18px; text-align: center; color: var(--text-3); }
+.steps li.done { color: var(--text); }
+.steps li.done i { color: var(--online); }
+.steps li.fail i { color: var(--danger); }
+.steps li .join-spinner { width: 15px; height: 15px; border-width: 2px; }
+.crash-msg { margin-top: 12px; padding: 10px 12px; border-radius: 9px; background: rgba(0, 0, 0, 0.3); font: 12px/1.5 Consolas, monospace; color: var(--text-2); white-space: pre-wrap; word-break: break-word; max-height: 110px; overflow: auto; user-select: text; }
+.error-dialog.wide { width: min(520px, 92vw); }
+.tool-icon.accent { background: color-mix(in srgb, var(--primary) 28%, transparent); color: #fff; }
+.tool-fix { border-color: color-mix(in srgb, var(--primary) 35%, var(--line)); }
+
 /* No featured server configured. */
 .hero-empty { display: none; margin-top: 24px; max-width: 56ch; }
 .hero-empty-title { font: 700 26px/1.1 var(--display); }

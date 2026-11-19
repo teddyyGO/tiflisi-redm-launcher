@@ -63,6 +63,11 @@
           <button class="join-btn" id="join-btn" data-act="join"><i class="ph-fill ph-play"></i><span data-i18n="join.default">Join server</span></button>
           <button class="btn glass" id="open-game-btn"><i class="ph ph-game-controller"></i><span data-i18n="settings.openGame">Open RedM</span></button>
         </div>
+        <!-- Ready to play: one line, opens a checklist where every problem has a Fix button. -->
+        <div class="ready" id="ready" hidden>
+          <button type="button" class="ready-btn" id="ready-btn" data-act="ready-toggle" aria-expanded="false" aria-controls="ready-panel"></button>
+          <div class="ready-panel" id="ready-panel" hidden></div>
+        </div>
         <div class="hero-empty">
           <p class="hero-empty-title" data-i18n="featured.none">No featured server set</p>
           <p class="hero-empty-desc" data-i18n="featured.noneDesc"></p>
@@ -147,6 +152,14 @@
     <section class="content-area" id="content-tools">
       <header class="page-head"><h1 class="page-title" data-i18n="nav.tools">Tools</h1></header>
       <div class="tool-grid">
+        <div class="tool tool-wide tool-fix">
+          <div class="tool-icon accent"><i class="ph ph-first-aid-kit"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="fix.title">Fix my game</p>
+            <p class="tool-desc" data-i18n="fix.desc">Not loading, stuck or crashing? This closes RedM, clears the server and RedM caches and applies the recommended settings. Your game files and characters are not touched.</p>
+          </div>
+          <button type="button" class="btn accent" data-act="fix-game"><i class="ph ph-first-aid-kit"></i><span data-i18n="fix.btn">Fix my game</span></button>
+        </div>
         <div class="tool tool-wide">
           <div class="tool-icon"><i class="ph ph-git-branch"></i></div>
           <div class="tool-text">

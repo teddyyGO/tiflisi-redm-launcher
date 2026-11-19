@@ -10,7 +10,7 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
-    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js"
+    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js"
   },
   "build": {
     "appId": "io.github.openredmlauncher",

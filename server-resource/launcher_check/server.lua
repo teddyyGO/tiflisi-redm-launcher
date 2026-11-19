@@ -79,6 +79,7 @@ local function snapshot()
   return {
     time = now, launchersOpen = open, launchersInGame = playing, uniqueSinceStart = uniqueSinceStart,
     versions = versions, languages = langs, players = players, playersViaLauncher = via,
+    launcherPlayersEver = GetResourceKvpInt('stat:ever'),
     mode = GetConvar('launcher_check_mode', 'log'),
   }
 end
@@ -102,6 +103,7 @@ th,td{text-align:left;padding:9px 14px;border-bottom:1px solid #3a2f29}th{color:
 <div class="card"><div class="num" id="via">-</div><div class="lbl">Players who joined via launcher</div></div>
 <div class="card"><div class="num" id="without">-</div><div class="lbl">Players who joined without</div></div>
 <div class="card"><div class="num" id="unique">-</div><div class="lbl">Different launchers since server start</div></div>
+<div class="card"><div class="num" id="ever">-</div><div class="lbl">Players who ever joined via launcher</div></div>
 </div>
 <p class="lbl">Launcher versions</p><div class="chips" id="versions"></div>
 <p class="lbl">Languages</p><div class="chips" id="langs"></div>
@@ -112,7 +114,7 @@ function chips(el, o){el.textContent='';Object.keys(o).sort(function(a,b){return
 function load(){fetch('stats.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(d){
 document.getElementById('open').textContent=d.launchersOpen;document.getElementById('ingame').textContent=d.launchersInGame;
 document.getElementById('via').textContent=d.playersViaLauncher;document.getElementById('without').textContent=d.players.length-d.playersViaLauncher;
-document.getElementById('unique').textContent=d.uniqueSinceStart;
+document.getElementById('unique').textContent=d.uniqueSinceStart;document.getElementById('ever').textContent=d.launcherPlayersEver;
 document.getElementById('sub').textContent='Live, refreshes every 5 seconds. Join check mode: '+d.mode+'. Updated '+new Date().toLocaleTimeString();
 chips(document.getElementById('versions'),d.versions||{});chips(document.getElementById('langs'),d.languages||{});
 var tb=document.getElementById('players');tb.textContent='';(d.players||[]).sort(function(a,b){return a.id-b.id}).forEach(function(p){
@@ -206,11 +208,26 @@ AddEventHandler('playerConnecting', function(name, _, deferrals)
   end
 end)
 
+local function licenseOf(src)
+  for _, id in ipairs(GetPlayerIdentifiers(src) or {}) do
+    if id:sub(1, 8) == 'license:' then return id end
+  end
+end
+
 -- The connecting id changes once the player is fully joined, so tag on join.
 AddEventHandler('playerJoining', function()
   local src = source
   viaLauncher[src] = lookup(src)
   Player(src).state:set('viaLauncher', viaLauncher[src] ~= nil, true)
+  if not viaLauncher[src] then return end
+  -- Count each Rockstar license once, ever (KVP survives restarts).
+  local lic = licenseOf(src)
+  if lic and GetResourceKvpInt('seen:' .. lic) ~= 1 then
+    SetResourceKvpInt('seen:' .. lic, 1)
+    SetResourceKvpInt('stat:ever', GetResourceKvpInt('stat:ever') + 1)
+  end
+  -- Other resources can react: AddEventHandler('launcher_check:joined', function(src, version) ... end)
+  TriggerEvent('launcher_check:joined', src, viaLauncher[src].version)
 end)
 
 AddEventHandler('playerDropped', function() viaLauncher[source] = nil end)
@@ -219,6 +236,19 @@ AddEventHandler('playerDropped', function() viaLauncher[source] = nil end)
 exports('UsedLauncher', function(src)
   local h = viaLauncher[tonumber(src)]
   return h ~= nil, h and h.version or nil
+end)
+
+-- exports.launcher_check:ClaimOnce(src, key) -> true only the first time this Rockstar license claims `key`
+-- while playing through the launcher. Use it for one-time rewards; every later call returns false.
+exports('ClaimOnce', function(src, key)
+  src = tonumber(src)
+  if not viaLauncher[src] then return false end
+  local lic = licenseOf(src)
+  if not lic then return false end
+  local k = 'claim:' .. tostring(key or 'reward') .. ':' .. lic
+  if GetResourceKvpInt(k) == 1 then return false end
+  SetResourceKvpInt(k, 1)
+  return true
 end)
 
 -- Console: launcherstats

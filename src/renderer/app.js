@@ -53,7 +53,31 @@ Object.assign(i18nTranslations.en, {
   "upd.restart": "Restart now", "upd.check": "Check now", "upd.done": "Updated to {v}.",
   "usage.title": "Share anonymous launcher stats",
   "usage.desc": "Tells {server} that the launcher is open and whether you're playing, with its version and language. No names, no files.",
-  "about.title": "About", "about.desc": "Version {v}. Free and open source (MIT license).", "about.source": "Source code"
+  "about.title": "About", "about.desc": "Version {v}. Free and open source (MIT license).", "about.source": "Source code",
+  "join.full": "Join when a slot opens", "join.waiting": "Waiting for a slot…",
+  "join.waitingToast": "The server is full. You'll join as soon as a slot opens. Click again to stop waiting.",
+  "alert.online": "{server} is back online", "alert.onlineBody": "Open the launcher to join.", "alert.slot": "A slot opened on {server}. Joining now.",
+  "ready.ok": "Ready to play", "ready.issue1": "1 thing to fix before you play", "ready.issues": "{n} things to fix before you play",
+  "ready.redm": "RedM is installed", "ready.redmBad": "RedM is not installed", "ready.get": "Get RedM",
+  "ready.game": "Red Dead Redemption 2 found", "ready.gameBad": "RedM doesn't know where your game is yet. Open RedM once and pick the game folder.",
+  "ready.branch": "Game version matches {server} ({b})", "ready.branchBad": "{server} uses the {b} game version", "ready.switch": "Switch",
+  "ready.gpu": "The game uses your fast graphics card", "ready.gpuBad": "The game may run on your slower built-in graphics", "ready.turnOn": "Turn on",
+  "ready.disk": "{size} free on the RedM drive", "ready.diskBad": "Only {size} free on the RedM drive. Server downloads can fail.", "ready.freeUp": "Free up space",
+  "ready.trouble": "Still having trouble?",
+  "ready.links": "Join links from Discord and websites open RedM", "ready.linksBad": "Join links from Discord and websites can't open RedM", "ready.repair": "Repair",
+  "branch.switchTitle": "Switch to the {b} game version?", "branch.switchMsg": "{server} uses the {b} game version. RedM closes, switches, and then joins.", "branch.switchOk": "Switch and join",
+  "fix.title": "Fix my game", "fix.btn": "Fix my game",
+  "fix.desc": "Not loading, stuck or crashing? This closes RedM, clears the server and RedM caches and applies the recommended settings. Your game files and characters are not touched.",
+  "fix.confirmTitle": "Fix my game?", "fix.confirmMsg": "RedM will close. Server files download again the next time you join.",
+  "fix.stepClose": "Close RedM", "fix.stepCache": "Clear the server and RedM caches", "fix.stepBranch": "Switch to the {b} game version", "fix.stepGpu": "Use the fast graphics card",
+  "fix.done": "Done. Join the server again.", "fix.partly": "Some steps didn't work. Close RedM fully and try again, or ask staff for help.",
+  "crash.title": "RedM crashed", "crash.copy": "Copy report for staff", "crash.copied": "Report copied. Paste it to staff on Discord.",
+  "crash.cause.memory": "Your PC ran out of memory. Close other programs (browser, recording apps) and try again. If it keeps happening, lower Texture Quality.",
+  "crash.cause.graphics": "The graphics driver stopped responding. Update your graphics driver and make sure the game uses your fast graphics card.",
+  "crash.cause.pool": "The game ran out of room for objects. This is usually a server limit, so tell staff.",
+  "crash.cause.files": "Some game files look damaged. Verify the game files in Steam, Epic or the Rockstar Games Launcher.",
+  "crash.cause.start": "RedM didn't start correctly. Close RedM and the Rockstar Games Launcher fully, then join again from here.",
+  "crash.cause.unknown": "We couldn't tell what caused it. Copy the report and send it to staff."
 });
 
 Object.assign(i18nTranslations.ka, {
@@ -102,7 +126,31 @@ Object.assign(i18nTranslations.ka, {
   "upd.restart": "გადატვირთვა", "upd.check": "შემოწმება", "upd.done": "განახლდა {v}-მდე.",
   "usage.title": "ანონიმური სტატისტიკის გაზიარება",
   "usage.desc": "{server}-ს ატყობინებს, რომ ლაუნჩერი ღიაა და თამაშობთ თუ არა, ვერსიითა და ენით. სახელები და ფაილები არ იგზავნება.",
-  "about.title": "შესახებ", "about.desc": "ვერსია {v}. უფასო და ღია კოდი (MIT ლიცენზია).", "about.source": "წყაროს კოდი"
+  "about.title": "შესახებ", "about.desc": "ვერსია {v}. უფასო და ღია კოდი (MIT ლიცენზია).", "about.source": "წყაროს კოდი",
+  "join.full": "შესვლა, როცა ადგილი გათავისუფლდება", "join.waiting": "ადგილის მოლოდინი…",
+  "join.waitingToast": "სერვერი სავსეა. შეხვალთ, როგორც კი ადგილი გათავისუფლდება. მოლოდინის შესაწყვეტად ისევ დააჭირეთ.",
+  "alert.online": "{server} ისევ ონლაინაა", "alert.onlineBody": "შესასვლელად გახსენით ლაუნჩერი.", "alert.slot": "{server}-ზე ადგილი გათავისუფლდა. შედიხართ.",
+  "ready.ok": "თამაშისთვის მზად ხართ", "ready.issue1": "თამაშამდე 1 რამ უნდა გასწორდეს", "ready.issues": "თამაშამდე {n} რამ უნდა გასწორდეს",
+  "ready.redm": "RedM დაინსტალირებულია", "ready.redmBad": "RedM არ არის დაინსტალირებული", "ready.get": "RedM-ის ჩამოტვირთვა",
+  "ready.game": "Red Dead Redemption 2 ნაპოვნია", "ready.gameBad": "RedM-მა ჯერ არ იცის, სადაა თამაში. ერთხელ გახსენით RedM და მიუთითეთ თამაშის საქაღალდე.",
+  "ready.branch": "თამაშის ვერსია ემთხვევა {server}-ს ({b})", "ready.branchBad": "{server} იყენებს თამაშის {b} ვერსიას", "ready.switch": "გადართვა",
+  "ready.gpu": "თამაში ძლიერ ვიდეოკარტას იყენებს", "ready.gpuBad": "თამაში შეიძლება სუსტ, ჩაშენებულ გრაფიკაზე გაეშვას", "ready.turnOn": "ჩართვა",
+  "ready.disk": "RedM-ის დისკზე თავისუფალია {size}", "ready.diskBad": "RedM-ის დისკზე მხოლოდ {size} არის თავისუფალი. სერვერის ჩამოტვირთვა შეიძლება ჩავარდეს.", "ready.freeUp": "ადგილის გათავისუფლება",
+  "ready.trouble": "ისევ პრობლემაა?",
+  "ready.links": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ხსნის", "ready.linksBad": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ვერ ხსნის", "ready.repair": "შეკეთება",
+  "branch.switchTitle": "გადავიდეთ {b} ვერსიაზე?", "branch.switchMsg": "{server} იყენებს თამაშის {b} ვერსიას. RedM დაიხურება, გადაირთვება და შემდეგ შეხვალთ.", "branch.switchOk": "გადართვა და შესვლა",
+  "fix.title": "თამაშის გამოსწორება", "fix.btn": "გამოსწორება",
+  "fix.desc": "არ იტვირთება, გაჭედა ან ითიშება? ეს დახურავს RedM-ს, გაასუფთავებს სერვერის და RedM-ის ქეშს და ჩართავს რეკომენდებულ პარამეტრებს. თამაშის ფაილები და პერსონაჟები ხელუხლებელი რჩება.",
+  "fix.confirmTitle": "გამოვასწოროთ თამაში?", "fix.confirmMsg": "RedM დაიხურება. სერვერის ფაილები შემდეგ შესვლაზე თავიდან ჩამოიტვირთება.",
+  "fix.stepClose": "RedM-ის დახურვა", "fix.stepCache": "სერვერის და RedM-ის ქეშის გასუფთავება", "fix.stepBranch": "{b} ვერსიაზე გადართვა", "fix.stepGpu": "ძლიერი ვიდეოკარტის ჩართვა",
+  "fix.done": "მზადაა. შედით სერვერზე თავიდან.", "fix.partly": "ზოგიერთი ნაბიჯი ვერ შესრულდა. სრულად დახურეთ RedM და სცადეთ თავიდან, ან მიმართეთ ადმინისტრაციას.",
+  "crash.title": "RedM გაითიშა", "crash.copy": "ანგარიშის კოპირება", "crash.copied": "ანგარიში დაკოპირდა. ჩასვით Discord-ზე ადმინისტრაციისთვის.",
+  "crash.cause.memory": "კომპიუტერს მეხსიერება ამოეწურა. დახურეთ სხვა პროგრამები (ბრაუზერი, ჩამწერი აპები) და სცადეთ თავიდან. თუ განმეორდა, შეამცირეთ Texture Quality.",
+  "crash.cause.graphics": "ვიდეოკარტის დრაივერმა პასუხი შეწყვიტა. განაახლეთ დრაივერი და დარწმუნდით, რომ თამაში ძლიერ ვიდეოკარტას იყენებს.",
+  "crash.cause.pool": "თამაშს ობიექტებისთვის ადგილი ამოეწურა. ეს ჩვეულებრივ სერვერის ლიმიტია, აცნობეთ ადმინისტრაციას.",
+  "crash.cause.files": "თამაშის ზოგიერთი ფაილი დაზიანებული ჩანს. შეამოწმეთ ფაილები Steam-ში, Epic-ში ან Rockstar Games Launcher-ში.",
+  "crash.cause.start": "RedM სწორად ვერ ჩაირთო. სრულად დახურეთ RedM და Rockstar Games Launcher, შემდეგ ისევ შედით აქედან.",
+  "crash.cause.unknown": "მიზეზი ვერ დავადგინეთ. დააკოპირეთ ანგარიში და გაუგზავნეთ ადმინისტრაციას."
 });
 
 function detectLanguage() {
@@ -154,9 +202,13 @@ function setLanguage(lang) {
   renderUpdate()
   renderAbout()
   syncUsage()
+  renderReady()
+  refreshJoinButton()
 }
 
 function getJoinBtnDefault() {
+  if (waitingSlot) return '<span class="join-spinner"></span><span>' + esc(t("join.waiting")) + '</span>';
+  if (serverFull()) return '<i class="ph ph-hourglass"></i><span>' + esc(t("join.full")) + '</span>';
   return '<i class="ph-fill ph-play"></i><span>' + esc(t("join.default")) + '</span>';
 }
 
@@ -184,6 +236,7 @@ async function init() {
     initServers()
     initBrowse()
     initTools()
+    initHelpers()
     applyLanguage()
     dataInterval = setInterval(fetchLauncherData, 60000)
     statusInterval = setInterval(fetchServerStatus, 30000)
@@ -231,6 +284,7 @@ async function fetchServerStatus() {
   featuredEndpoint = (data && data.endpoint) || null
   featuredLive = data
   syncUsage()
+  onFeaturedStatus(data)
   renderStats(data)
   // Fill gaps in the branding from what the server publishes on Cfx.
   if (data && data.online) {
@@ -493,6 +547,10 @@ function switchNav(nav) {
 var joining = false
 async function joinServer() {
   if (joining) return
+  // Full server: wait for a free slot instead; clicking again stops waiting.
+  if (waitingSlot) { stopWaiting(); return }
+  if (serverFull()) { startWaiting(); return }
+  if (!(await branchCheckBeforeJoin())) return
   var btn = document.getElementById("join-btn")
   joining = true
   btn.innerHTML = '<span class="join-spinner"></span><span>' + esc(t("join.connecting")) + '</span>'
@@ -1060,12 +1118,12 @@ function initTools() {
 }
 
 async function refreshTools() {
+  refreshCleanup() // draws its rows straight away; sizes fill in as they're measured
+  refreshGraphics()
   var info = await window.launcher.redmInfo()
   var known = CHANNELS.indexOf(info.channel) !== -1
   setBranchChoice(known ? info.channel : "custom")
   document.getElementById("branch-custom").value = known ? "" : info.channel
-  refreshCleanup()
-  refreshGraphics()
 }
 
 // Confirmation in the launcher's own (translated) style. Resolves true when confirmed.
@@ -1211,6 +1269,241 @@ function initGraphics(fail) {
   if (localStorage.getItem("gfxPrio") === "true") window.launcher.setPriorityBoost(true)
 }
 
+// ── Helpers that solve player problems: ready-to-play checklist, Fix my game, crash helper,
+//    back-online alert and auto-join when full ──
+
+var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms) }) }
+var GB = 1073741824
+
+function branchLabel(channel) {
+  var p = (config.branches || []).find(function (b) { return b.channel === channel })
+  return p ? p.label : channel
+}
+
+// Windows notification, only when the launcher isn't the window you're looking at.
+function notify(title, body) {
+  if (document.hasFocus()) { say(title); return }
+  try {
+    var n = new Notification(title, { body: body || "", icon: brand.logo || "../../assets/icon.png" })
+    n.onclick = function () { window.launcher.focusWindow(); switchNav("home") }
+  } catch (e) {}
+}
+
+// Ready to play
+
+var ready = null
+var readyAt = 0
+
+async function refreshReady() {
+  try { ready = await window.launcher.readiness() } catch (e) { return }
+  readyAt = Date.now()
+  renderReady()
+}
+
+function readyItems() {
+  var r = ready, items = []
+  items.push({ ok: r.redm, text: t(r.redm ? "ready.redm" : "ready.redmBad"), fix: "get-redm", fixLabel: t("ready.get") })
+  if (r.redm) items.push({ ok: r.game, text: t(r.game ? "ready.game" : "ready.gameBad"), fix: "open-redm", fixLabel: t("settings.openGame") })
+  if (r.redm) items.push({ ok: r.links, text: t(r.links ? "ready.links" : "ready.linksBad"), fix: "repair-links", fixLabel: t("ready.repair") })
+  if (config.recommendedBranch) {
+    var okB = r.channel === config.recommendedBranch
+    items.push({ ok: okB, text: t(okB ? "ready.branch" : "ready.branchBad").replace("{server}", brand.name).replace("{b}", branchLabel(config.recommendedBranch)), fix: "set-branch", fixLabel: t("ready.switch") })
+  }
+  if (r.gpus > 1) items.push({ ok: r.gpuHigh, text: t(r.gpuHigh ? "ready.gpu" : "ready.gpuBad"), fix: "set-gpu", fixLabel: t("ready.turnOn") })
+  if (r.freeBytes != null) {
+    var okD = r.freeBytes > 15 * GB
+    items.push({ ok: okD, text: t(okD ? "ready.disk" : "ready.diskBad").replace("{size}", fmtBytes(r.freeBytes)), fix: "free-space", fixLabel: t("ready.freeUp") })
+  }
+  return items
+}
+
+function renderReady() {
+  if (!ready) return
+  var items = readyItems()
+  var bad = items.filter(function (i) { return !i.ok }).length
+  document.getElementById("ready").hidden = false
+  var btn = document.getElementById("ready-btn")
+  btn.className = "ready-btn " + (bad ? "warn" : "ok")
+  btn.innerHTML = '<i class="ph ' + (bad ? "ph-warning-circle" : "ph-check-circle") + '"></i><span>' +
+    esc(bad ? (bad === 1 ? t("ready.issue1") : t("ready.issues").replace("{n}", bad)) : t("ready.ok")) + '</span><i class="ph ph-caret-up"></i>'
+  document.getElementById("ready-panel").innerHTML = items.map(function (i) {
+    return '<div class="ready-item ' + (i.ok ? "ok" : "bad") + '"><i class="ph ' + (i.ok ? "ph-check-circle" : "ph-warning-circle") + '"></i>' +
+      '<span class="row-text">' + esc(i.text) + '</span>' +
+      (i.ok ? '' : '<button type="button" class="btn accent" data-act="ready-fix" data-arg="' + i.fix + '">' + esc(i.fixLabel) + '</button>') + '</div>'
+  }).join("") +
+    '<div class="ready-foot"><span>' + esc(t("ready.trouble")) + '</span><button type="button" class="btn glass" data-act="fix-game"><i class="ph ph-first-aid-kit"></i>' + esc(t("fix.btn")) + '</button></div>'
+}
+
+function toggleReady(open) {
+  var panel = document.getElementById("ready-panel")
+  panel.hidden = open === undefined ? !panel.hidden : !open
+  document.getElementById("ready-btn").setAttribute("aria-expanded", String(!panel.hidden))
+}
+
+async function readyFix(what) {
+  if (what === "get-redm") return window.launcher.openExternal("https://redm.net")
+  if (what === "open-redm") return window.launcher.openGame()
+  if (what === "free-space") { toggleReady(false); return switchNav("tools") }
+  if (what === "set-branch") await window.launcher.setChannel(config.recommendedBranch)
+  if (what === "set-gpu") { localStorage.setItem("gfxGpu", "true"); await window.launcher.setGpu(true) }
+  if (what === "repair-links") await window.launcher.repairLinks()
+  say(t("tools.done"))
+  refreshReady()
+}
+
+// Before joining: offer to switch to the server's game version if it's set and different.
+async function branchCheckBeforeJoin() {
+  var want = config.recommendedBranch
+  if (!want) return true
+  if (!ready || Date.now() - readyAt > 30000) await refreshReady()
+  if (!ready || ready.channel === want) return true
+  var label = branchLabel(want)
+  if (!(await confirmDialog(t("branch.switchTitle").replace("{b}", label), t("branch.switchMsg").replace("{server}", brand.name).replace("{b}", label), t("branch.switchOk")))) return false
+  await window.launcher.setChannel(want)
+  await window.launcher.killRedm() // a running RedM keeps its old version until restarted
+  await wait(1500)
+  refreshReady()
+  return true
+}
+
+// Fix my game: the safe fixes, in order, with a visible list of what happened.
+
+async function fixMyGame() {
+  if (!(await confirmDialog(t("fix.confirmTitle"), t("fix.confirmMsg"), t("fix.btn")))) return
+  var r = ready || await window.launcher.readiness()
+  var steps = [
+    { label: t("fix.stepClose"), run: async function () { await window.launcher.killRedm(); await wait(2000) } },
+    { label: t("fix.stepCache"), run: async function () {
+      var x = await window.launcher.cleanupRun(["server", "app"])
+      if (!x.success) throw new Error(x.error)
+      return fmtBytes(x.freed || 0)
+    } },
+  ]
+  if (config.recommendedBranch && r.channel !== config.recommendedBranch) {
+    steps.push({ label: t("fix.stepBranch").replace("{b}", branchLabel(config.recommendedBranch)), run: async function () {
+      var x = await window.launcher.setChannel(config.recommendedBranch)
+      if (!x.success) throw new Error(x.error)
+    } })
+  }
+  if (r.gpus > 1 && !r.gpuHigh) {
+    steps.push({ label: t("fix.stepGpu"), run: async function () { localStorage.setItem("gfxGpu", "true"); await window.launcher.setGpu(true) } })
+  }
+  var o = document.createElement("div")
+  o.className = "error-overlay"
+  o.innerHTML = '<div class="error-dialog wide" role="dialog" aria-modal="true"><h3 class="error-title">' + esc(t("fix.title")) + '</h3>' +
+    '<ul class="steps">' + steps.map(function (s) { return '<li><i class="ph ph-circle"></i><span>' + esc(s.label) + '</span></li>' }).join("") + '</ul>' +
+    '<p class="error-msg" data-role="result" aria-live="polite"></p>' +
+    '<div class="error-actions" data-role="actions" hidden><button class="error-btn secondary" data-act="dialog-close">' + esc(t("dialog.ok")) + '</button>' +
+    '<button class="error-btn" data-act="fix-join">' + esc(t("join.default")) + '</button></div></div>'
+  document.body.appendChild(o)
+  var lis = o.querySelectorAll(".steps li"), failed = 0
+  for (var i = 0; i < steps.length; i++) {
+    lis[i].firstChild.outerHTML = '<span class="join-spinner"></span>'
+    try {
+      var extra = await steps[i].run()
+      lis[i].className = "done"
+      lis[i].firstChild.outerHTML = '<i class="ph ph-check-circle"></i>'
+      if (extra) lis[i].lastChild.textContent += " (" + extra + ")"
+    } catch (e) {
+      failed++
+      lis[i].className = "fail"
+      lis[i].firstChild.outerHTML = '<i class="ph ph-x-circle"></i>'
+    }
+  }
+  o.querySelector('[data-role="result"]').textContent = failed ? t("fix.partly") : t("fix.done")
+  o.querySelector('[data-role="actions"]').hidden = false
+  refreshReady()
+  if (document.body.dataset.view === "tools") refreshTools()
+}
+
+// Crash helper: main.js reads RedM's log when the game closes and tells us if it crashed.
+
+var lastCrash = null
+function showCrash(c) {
+  lastCrash = c
+  document.querySelectorAll(".error-overlay.crash").forEach(function (x) { x.remove() })
+  var o = document.createElement("div")
+  o.className = "error-overlay crash"
+  o.innerHTML = '<div class="error-dialog wide" role="alertdialog" aria-modal="true"><h3 class="error-title">' + esc(t("crash.title")) + '</h3>' +
+    '<p class="error-msg">' + esc(t("crash.cause." + c.cause)) + '</p>' +
+    '<div class="crash-msg">' + esc(c.message) + '</div>' +
+    '<div class="error-actions"><button class="error-btn secondary" data-act="dialog-close">' + esc(t("dialog.ok")) + '</button>' +
+    '<button class="error-btn secondary" data-act="crash-copy"><i class="ph ph-copy"></i> ' + esc(t("crash.copy")) + '</button>' +
+    '<button class="error-btn" data-act="fix-game">' + esc(t("fix.btn")) + '</button></div></div>'
+  document.body.appendChild(o)
+  notify(t("crash.title"), t("crash.cause." + c.cause))
+}
+
+function crashReport() {
+  var c = lastCrash || {}
+  return [
+    brand.name + " launcher " + appVersion,
+    "Time: " + new Date().toString(),
+    "RedM version (branch): " + (ready ? ready.channel : "?"),
+    "Log file: " + (c.log || "?"),
+    "",
+    "Crash message:",
+    c.message || "",
+    "",
+    "Last log lines before the crash:",
+    c.context || "",
+  ].join("\n")
+}
+
+// Back-online alert + auto-join when full
+
+var lastOnline = null
+var waitingSlot = false
+var slotTimer = null
+
+function serverFull() {
+  var d = featuredLive
+  return !!(d && d.online && d.maxClients && d.clients >= d.maxClients)
+}
+
+function refreshJoinButton() {
+  if (!joining) document.getElementById("join-btn").innerHTML = getJoinBtnDefault()
+}
+
+function onFeaturedStatus(data) {
+  var online = !!(data && data.online)
+  if (lastOnline === false && online) notify(t("alert.online").replace("{server}", brand.name), t("alert.onlineBody"))
+  if (data) lastOnline = online
+  refreshJoinButton()
+}
+
+function startWaiting() {
+  waitingSlot = true
+  refreshJoinButton()
+  say(t("join.waitingToast"))
+  slotTimer = setInterval(async function () {
+    await fetchServerStatus()
+    if (featuredLive && featuredLive.online && !serverFull()) {
+      stopWaiting()
+      notify(t("alert.slot").replace("{server}", brand.name))
+      joinServer()
+    }
+  }, 10000)
+}
+
+function stopWaiting() {
+  waitingSlot = false
+  clearInterval(slotTimer)
+  refreshJoinButton()
+}
+
+function initHelpers() {
+  refreshReady()
+  window.launcher.onGameCrashed(showCrash)
+  // Re-check readiness when you come back to the launcher (you may have fixed something outside it).
+  window.addEventListener("focus", function () { if (Date.now() - readyAt > 30000) refreshReady() })
+  // Close the checklist when clicking anywhere else.
+  document.addEventListener("click", function (e) {
+    var panel = document.getElementById("ready-panel")
+    if (!panel.hidden && !e.target.closest(".ready")) toggleReady(false)
+  })
+}
+
 // One click handler for the whole UI. There are no inline onclick attributes, so the strict
 // Content-Security-Policy in index.html can refuse any script that isn't the launcher's own.
 document.addEventListener("click", function (e) {
@@ -1231,6 +1524,11 @@ document.addEventListener("click", function (e) {
     case "dialog-close": el.closest(".error-overlay").remove(); break
     case "dialog-download": window.launcher.openExternal(a); el.closest(".error-overlay").remove(); break
     case "update": window.launcher.installUpdate(); break
+    case "ready-toggle": toggleReady(); break
+    case "ready-fix": readyFix(a); break
+    case "fix-game": { var ov = el.closest(".error-overlay"); if (ov) ov.remove(); toggleReady(false); fixMyGame(); break }
+    case "fix-join": el.closest(".error-overlay").remove(); joinServer(); break
+    case "crash-copy": window.launcher.copyText(crashReport()).then(function () { say(t("crash.copied")) }); break
     case "source": window.launcher.openExternal(SOURCE_URL); break
   }
 })

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, ipcMain } = require("electron")
+const { app, BrowserWindow, shell, ipcMain, clipboard } = require("electron")
 const path = require("path")
 const fs = require("fs")
 const net = require("net")
@@ -9,6 +9,7 @@ const { getRedmServers } = require("./server-list")
 const cleanup = require("./cleanup")
 const graphics = require("./graphics")
 const updater = require("./updater")
+const crash = require("./crash")
 
 let mainWindow = null
 
@@ -205,8 +206,13 @@ ipcMain.handle("join-server", async (_, opts) => {
       signal: AbortSignal.timeout(2500),
     }).catch(() => {})
   }
+  // Start RedM.exe with the connect link directly: works even when the redm:// link registration
+  // is broken (then joining from websites fails, but the launcher still joins).
+  const url = "redm://connect/" + addr
   try {
-    await shell.openExternal("redm://connect/" + addr)
+    const exe = await redmExe()
+    if (exe) spawn(exe, [url], { detached: true, stdio: "ignore" }).unref()
+    else await shell.openExternal(url)
     rpc.setActivity({ details: "Playing on " + (name || addr), startTimestamp: Date.now() })
     return { success: true }
   } catch (e) {
@@ -251,6 +257,14 @@ function getProtocolExe() {
   })
 }
 
+// RedM.exe: from the redm:// registration when it's intact, else RedM's standard install location.
+async function redmExe() {
+  const fromProtocol = await getProtocolExe()
+  if (fromProtocol && fs.existsSync(fromProtocol)) return fromProtocol
+  const standard = path.join(process.env.LOCALAPPDATA || "", "RedM", "RedM.exe")
+  return fs.existsSync(standard) ? standard : null
+}
+
 // Game processes look like RedM.exe / RedM_b1491_GameProcess.exe (not RedMLauncher etc.).
 function redmPids() {
   return new Promise((resolve) => {
@@ -262,8 +276,8 @@ function redmPids() {
 }
 
 async function openGame() {
-  const exe = await getProtocolExe()
-  if (exe && fs.existsSync(exe)) {
+  const exe = await redmExe()
+  if (exe) {
     spawn(exe, [], { detached: true, stdio: "ignore" }).unref()
     return { success: true }
   }
@@ -313,6 +327,81 @@ ipcMain.handle("graphics-info", async () => ({
 ipcMain.handle("set-gpu", (_, on) => graphics.setGpu(exes(), !!on))
 ipcMain.handle("set-fso", (_, on) => graphics.setFso(exes(), !!on))
 ipcMain.handle("set-priority-boost", (_, on) => graphics.setPriorityBoost(!!on))
+
+// ── Ready to play: the checks behind the Home checklist ──
+
+let gpuCount = null // graphics cards don't change while the launcher runs
+ipcMain.handle("readiness", async () => {
+  const ini = readIni() || ""
+  const channel = ((ini.match(/^UpdateChannel=(.*)$/m) || [])[1] || "production").trim()
+  const game = gameDir()
+  if (gpuCount === null) gpuCount = (await graphics.gpuNames()).length
+  const [exe, protocol, gfx] = await Promise.all([redmExe(), getProtocolExe(), graphics.state(exes())])
+  let freeBytes = null
+  try { const s = await fs.promises.statfs(fs.existsSync(redmDir) ? redmDir : app.getPath("home")); freeBytes = s.bavail * s.bsize } catch (e) {}
+  return {
+    redm: !!exe,
+    links: !!protocol && fs.existsSync(protocol), // redm:// links from Discord and websites open RedM
+    game: !!game && fs.existsSync(path.join(game, "RDR2.exe")),
+    channel,
+    gpus: gpuCount,
+    gpuHigh: gfx.gpuHigh,
+    freeBytes,
+  }
+})
+
+// Rewrite the redm:// link registration the way RedM itself does (per user, HKCU).
+ipcMain.handle("repair-links", async () => {
+  const exe = await redmExe()
+  if (!exe) return { success: false, error: "not_installed" }
+  await graphics.registerProtocol("redm", "RedM", exe)
+  return { success: !!(await getProtocolExe()) }
+})
+
+ipcMain.handle("copy-text", (_, text) => clipboard.writeText(String(text || "").slice(0, 20000)))
+ipcMain.handle("focus-window", () => {
+  if (!mainWindow) return
+  if (mainWindow.isMinimized()) mainWindow.restore()
+  mainWindow.show()
+  mainWindow.focus()
+})
+
+// ── Crash helper: when the game process goes away, check RedM's newest log for a crash ──
+
+function gameRunning() {
+  return new Promise((resolve) => exec("tasklist /fo csv /nh", { windowsHide: true }, (err, out) =>
+    resolve(!err && /"RedM_b\d+_GTAProcess\.exe"/i.test(out))))
+}
+
+let gameWasRunning = false
+const reported = new Set()
+function checkCrash() {
+  const logs = path.join(redmDir, "logs")
+  let newest = null
+  try {
+    for (const n of fs.readdirSync(logs)) {
+      const f = path.join(logs, n)
+      const t = fs.statSync(f).mtimeMs
+      if (/\.log$/i.test(n) && (!newest || t > newest.t)) newest = { f, t }
+    }
+  } catch (e) { return }
+  if (!newest || Date.now() - newest.t > 5 * 60 * 1000) return // only this session's log
+  const c = crash.parseCrash(fs.readFileSync(newest.f, "utf8"))
+  if (!c) return
+  const key = newest.f + ":" + c.at
+  if (reported.has(key)) return
+  reported.add(key)
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("game-crashed", { message: c.message, cause: c.cause, context: c.context, log: path.basename(newest.f) })
+    mainWindow.show()
+    mainWindow.flashFrame(true)
+  }
+}
+setInterval(async () => {
+  const running = await gameRunning()
+  if (gameWasRunning && !running) setTimeout(checkCrash, 3000) // give the dump server a moment to write
+  gameWasRunning = running
+}, 5000)
 
 // Classic fix for crashes after a driver or settings change: the game rebuilds defaults on next start.
 ipcMain.handle("reset-graphics", async () => {

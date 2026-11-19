@@ -20,7 +20,6 @@ function SetHttpHandler(f) handler = f end
 EVENTS = {}
 function AddEventHandler(n, f) EVENTS[n] = f end
 function RegisterCommand() end
-function exports() end
 function Wait() end
 PLAYERS = {}
 function GetPlayers() local t = {} for id in pairs(PLAYERS) do t[#t + 1] = tostring(id) end return t end
@@ -28,6 +27,19 @@ function GetPlayerName(id) return PLAYERS[tonumber(id)].name end
 function GetPlayerPing(id) return 42 end
 function GetPlayerEndpoint(id) return PLAYERS[tonumber(id)].endpoint end
 function Player() return { state = { set = function() end } } end
+function GetPlayerIdentifiers(id) return PLAYERS[tonumber(id)].ids or {} end
+KVP = {}
+function GetResourceKvpInt(k) return KVP[k] or 0 end
+function SetResourceKvpInt(k, v) KVP[k] = v end
+FIRED = {}
+function TriggerEvent(name, ...) FIRED[#FIRED + 1] = { name = name, args = { ... } } end
+-- exports('Name', fn) registers; exports.resource:Name(...) calls another resource (colon call passes self).
+EXPORTS = {}
+RESOURCES = {}
+exports = setmetatable({}, {
+  __call = function(_, name, fn) EXPORTS[name] = fn end,
+  __index = function(_, res) return RESOURCES[res] end,
+})
 json = {}
 function json.decode(s)
   if not s:match('^%s*{') then error('bad json') end
@@ -73,8 +85,8 @@ check(r.code == 200 and r.body:find('Launcher usage', 1, true), 'dashboard page 
 
 -- join matching: hello from an IP, then that IP connects
 request('POST', '/hello', '{"id":"abc-123","version":"1.0.0"}', nil, '9.9.9.9:4000')
-PLAYERS[1] = { name = 'Giorgi', endpoint = '9.9.9.9:1234' }
-PLAYERS[2] = { name = 'Nika', endpoint = '8.8.8.8:1234' }
+PLAYERS[1] = { name = 'Giorgi', endpoint = '9.9.9.9:1234', ids = { 'steam:1', 'license:aaa' } }
+PLAYERS[2] = { name = 'Nika', endpoint = '8.8.8.8:1234', ids = { 'license:bbb' } }
 for _, id in ipairs({ 1, 2 }) do source = id EVENTS.playerJoining() end
 request('GET', '/stats.json', nil, { Authorization = 'Basic ${b64("admin:hunter22pass")}' })
 check(LAST.playersViaLauncher == 1, 'one player matched to a launcher hello')
@@ -83,12 +95,58 @@ for _, p in ipairs(LAST.players) do
   if p.name == 'Nika' then check(not p.launcher, 'Nika without launcher') end
 end
 check(request('GET', '/nope').code == 404, 'unknown path 404')
+
+-- rewards and lifetime tracking
+check(#FIRED == 1 and FIRED[1].name == 'launcher_check:joined' and FIRED[1].args[1] == 1, 'joined event fired for the launcher player only')
+check(EXPORTS.ClaimOnce(1, 'welcome') == true, 'first claim succeeds')
+check(EXPORTS.ClaimOnce(1, 'welcome') == false, 'second claim refused')
+check(EXPORTS.ClaimOnce(2, 'welcome') == false, 'non-launcher player cannot claim')
+check(EXPORTS.ClaimOnce(1, 'other') == true, 'different reward keys are separate')
+check(LAST.launcherPlayersEver == 1, 'one license ever via launcher')
+source = 1 EVENTS.playerJoining() -- same player rejoins
+request('GET', '/stats.json', nil, { Authorization = 'Basic ${b64("admin:hunter22pass")}' })
+check(LAST.launcherPlayersEver == 1, 'rejoining does not count twice')
+check(EXPORTS.ClaimOnce(1, 'welcome') == false, 'claim stays used after rejoining')
 print('launcher_check ok')
+
+-- set up the world for launcher_reward_vorp
+RESOURCES.launcher_check = {
+  UsedLauncher = function(_, s) return EXPORTS.UsedLauncher(s) end,
+  ClaimOnce = function(_, s, k) return EXPORTS.ClaimOnce(s, k) end,
+}
+MONEY, NOTES, CHARS = {}, {}, { [1] = true, [2] = true }
+RESOURCES.vorp_core = { GetCore = function() return {
+  getUser = function(s) return { getUsedCharacter = CHARS[s] and { addCurrency = function(cur, n) MONEY[s] = (MONEY[s] or 0) + (cur == 0 and n or 0) end } or nil } end,
+  NotifyRightTip = function(s, text) NOTES[#NOTES + 1] = text end,
+} end }
 `
+
+const rewardTests = `
+local paid = function(s) return MONEY[s] or 0 end
+CHARS[1] = nil
+EVENTS['vorp:SelectedCharacter'](1)
+check(paid(1) == 0 and EXPORTS.ClaimOnce ~= nil, 'no character loaded: nothing paid')
+CHARS[1] = true
+EVENTS['vorp:SelectedCharacter'](1)
+check(paid(1) == 10, 'launcher player paid the default $10 (claim was not burned while no character was loaded)')
+check(NOTES[1]:find('+$10', 1, true), 'player told about the bonus')
+EVENTS['vorp:SelectedCharacter'](1)
+check(paid(1) == 10, 'paid only once')
+EVENTS['vorp:SelectedCharacter'](2)
+check(paid(2) == 0, 'player without the launcher gets nothing')
+CONVARS.launcher_reward_money = '0'
+PLAYERS[3] = { name = 'Ana', endpoint = '9.9.9.9:2', ids = { 'license:ccc' } }
+request('POST', '/hello', '{"id":"q","version":"1.0.3"}', nil, '9.9.9.9:4001')
+source = 3 EVENTS.playerJoining() CHARS[3] = true
+EVENTS['vorp:SelectedCharacter'](3)
+check(paid(3) == 0, 'amount 0 turns the reward off')
+print('launcher_reward_vorp ok')
+`
+const reward = fs.readFileSync(path.join(__dirname, "../server-resource/launcher_reward_vorp/server.lua"), "utf8")
 
 const L = lauxlib.luaL_newstate()
 lualib.luaL_openlibs(L)
-for (const [name, code] of [["mocks", mocks], ["server.lua", server], ["tests", tests]]) {
+for (const [name, code] of [["mocks", mocks], ["server.lua", server], ["tests", tests], ["reward server.lua", reward], ["reward tests", rewardTests]]) {
   if (lauxlib.luaL_loadbuffer(L, to_luastring(code), null, to_luastring(name)) !== lua.LUA_OK || lua.lua_pcall(L, 0, 0, 0) !== lua.LUA_OK) {
     console.error(name + ": " + lua.lua_tojsstring(L, -1))
     process.exit(1)

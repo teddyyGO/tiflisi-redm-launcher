@@ -68,6 +68,14 @@ async function setFso(exes, on) {
   }
 }
 
+// URL-protocol registration (e.g. redm://), per user: the same keys RedM writes itself.
+async function registerProtocol(name, title, exe) {
+  const key = "HKCU\\Software\\Classes\\" + name
+  await reg(["add", key, "/ve", "/t", "REG_SZ", "/d", title, "/f"])
+  await reg(["add", key, "/v", "URL Protocol", "/t", "REG_SZ", "/d", "", "/f"])
+  await reg(["add", key + "\\shell\\open\\command", "/ve", "/t", "REG_SZ", "/d", '"' + exe + '" "%1"', "/f"])
+}
+
 function gpuNames() {
   return new Promise((r) => exec('powershell -NoProfile -Command "(Get-CimInstance Win32_VideoController).Name"', { windowsHide: true }, (err, out) =>
     r(err ? [] : out.split(/\r?\n/).map((s) => s.trim()).filter(Boolean))))
@@ -92,4 +100,4 @@ function setPriorityBoost(on) {
   boostTimer = setInterval(tick, 15000)
 }
 
-module.exports = { gameExes, state, setGpu, setFso, gpuNames, setPriorityBoost, mergeLayers }
+module.exports = { gameExes, state, setGpu, setFso, gpuNames, setPriorityBoost, mergeLayers, registerProtocol, regGet }

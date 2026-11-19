@@ -20,6 +20,10 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 ## Features
 
 - **Featured server**: live status, players, your own ping, one-click join.
+- **Ready to play**: one line under Join says "Ready to play" or how many things need fixing (RedM installed, game found, join links working, right game version, fast graphics card, free disk space). Every problem has a Fix button.
+- **Fix my game**: one button that closes RedM, clears the server and RedM caches and applies the recommended settings, with a plain list of what it did.
+- **Crash helper**: when RedM crashes, the launcher reads RedM's log, explains the likely cause in plain words and offers "Copy report for staff".
+- **Alerts and auto-join**: a Windows notification when the server is back online; on a full server, Join waits and joins as soon as a slot opens.
 - **Servers tab**:
   - Favorites: add any server by `cfx.re/join/xxxx` or `ip:port`, with its Cfx banner, icon, players and ping.
   - All servers: every public RedM server from the Cfx list, with search, language, tag, hide empty/full and sort filters.
@@ -43,6 +47,7 @@ Out of the box this is the [Tiflisi 1898](https://cfx.re/join/dg346jd) launcher:
 | `brand.cfxCode` | Featured server (`abc123` or `ip:port`) |
 | `servers` | Default entries for the Servers tab: `[{ "name": "", "address": "cfx.re/join/abc123" }]` |
 | `branches` | Extra branch buttons in Tools: `[{ "label": "128", "channel": "specific/feature/..." }]` |
+| `recommendedBranch` | The game version your server needs. Players on another one get a "Switch" fix and a prompt before joining. Leave empty if any version works. |
 | `news`, `changelogs`, `rules` | Static content when you don't run an API |
 | `apiUrl`, `slug` | Optional panel API (`GET {apiUrl}/{slug}`, `/gallery`, `/staff`) |
 | `defaultLanguage` | e.g. `en`, `ka`, `de` |
@@ -117,8 +122,21 @@ set launcher_check_url  "https://your-site/download"
 ```
 
 - `exports.launcher_check:UsedLauncher(src)` returns `true/false, version`
+- `exports.launcher_check:ClaimOnce(src, "my_reward")` returns `true` only the first time a Rockstar license claims that reward while using the launcher, for one-time rewards
+- the server event `launcher_check:joined` (`src`, `version`) fires when a launcher player joins
 - the state bag `Player(src).state.viaLauncher` holds the same answer
 - the console command `launcherstats` shows the counts
+
+### Reward launcher players (VORP)
+
+`server-resource/launcher_reward_vorp` pays a one-time money bonus, once per Rockstar license (not per character), when a launcher player's character loads, with an in-game message. `ensure` it after `launcher_check` and `vorp_core`:
+
+```
+set launcher_reward_money 10
+set launcher_reward_message "Thanks for playing with the launcher! +$%s"
+```
+
+Keep rewards modest: the join signal can be imitated by someone who reads this code.
 
 Limits: matching is by IP, so players behind the same NAT share a hello. It also only works when the server's real `ip:port` is public (not hidden behind a Cfx proxy).
 

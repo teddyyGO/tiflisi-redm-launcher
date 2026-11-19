@@ -32,5 +32,10 @@ contextBridge.exposeInMainWorld("launcher", {
   installUpdate: call("update-install"),
   onUpdateState: (cb) => ipcRenderer.on("update-state", (_, s) => cb(s)),
   setUsage: call("set-usage"),
+  readiness: call("readiness"),
+  repairLinks: call("repair-links"),
+  copyText: call("copy-text"),
+  focusWindow: call("focus-window"),
+  onGameCrashed: (cb) => ipcRenderer.on("game-crashed", (_, c) => cb(c)),
   openFolder: call("open-folder"),
 })
