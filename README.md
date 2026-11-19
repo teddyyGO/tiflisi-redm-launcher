@@ -74,6 +74,7 @@ node test/server-list.check.js   # add --live to hit the real Cfx list
 node test/cleanup.check.js
 node test/graphics.check.js
 node test/launcher_check.check.js   # runs the server resource in a Lua VM
+npx electron test/shortcuts.check.js   # Start Menu / Desktop / taskbar shortcut repair, in temp folders
 ```
 
 Or all at once: `npm test`.

@@ -10,6 +10,12 @@ const cleanup = require("./cleanup")
 const graphics = require("./graphics")
 const updater = require("./updater")
 const crash = require("./crash")
+const shortcuts = require("./shortcuts")
+
+// Same id the installer gives its shortcuts (build.appId): keeps taskbar pins, grouping and
+// Windows notifications tied to this app.
+const APP_ID = "io.github.openredmlauncher"
+app.setAppUserModelId(APP_ID)
 
 let mainWindow = null
 
@@ -78,6 +84,24 @@ if (!app.requestSingleInstanceLock()) {
   app.whenReady().then(() => {
     createWindow()
     if (config.discordClientId) rpc.start(config.discordClientId)
+    if (app.isPackaged && process.platform === "win32") {
+      try {
+        const appData = app.getPath("appData")
+        const fixed = shortcuts.ensure({
+          shell,
+          exe: process.execPath,
+          appId: APP_ID,
+          startMenuDir: path.join(appData, "Microsoft", "Windows", "Start Menu", "Programs"),
+          desktopDir: app.getPath("desktop"),
+          pinnedDir: path.join(appData, "Microsoft", "Internet Explorer", "Quick Launch", "User Pinned", "TaskBar"),
+          oldNames: ["RedM Launcher"], // the name before 1.1.1
+          stateFile: path.join(app.getPath("userData"), "shortcuts.json"),
+        })
+        if (fixed.length) console.log("shortcuts:", fixed.join(", "))
+      } catch (e) {
+        console.error("shortcuts:", e.message)
+      }
+    }
   })
 }
 app.on("window-all-closed", () => app.quit())
