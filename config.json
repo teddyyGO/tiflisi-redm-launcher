@@ -26,7 +26,9 @@
     "welcomeMessage": "",
     "cfxCode": "dg346jd"
   },
-  "branches": [],
+  "branches": [
+    { "label": "128", "channel": "specific/feature/redm-physical-player-extension" }
+  ],
   "servers": [
     { "name": "", "address": "cfx.re/join/dg346jd" }
   ],
