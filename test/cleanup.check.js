@@ -36,7 +36,7 @@ put("Temp/fresh.tmp", 80)                          // kept: too new
   assert.strictEqual(s.logs.count, 2, "three newest logs are kept")
   assert.strictEqual(s.shaders.bytes, 660)
   assert.strictEqual(s.temp.bytes, 70, "only temp items older than 2 days")
-  assert.strictEqual(s.nui.on, false, "risky targets are off by default")
+  assert.deepStrictEqual(Object.keys(s).filter((k) => !s[k].on), ["server"], "only the server cache is off by default (it costs a full re-download)")
   assert.strictEqual(needsRedmClosed(env, ["logs", "crashes"]), false)
   assert.strictEqual(needsRedmClosed(env, ["logs", "server"]), true)
 

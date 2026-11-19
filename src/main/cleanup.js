@@ -27,8 +27,9 @@ function targets(env) {
   const data = path.join(env.redmDir, "data")
   const gpu = ["NVIDIA/DXCache", "NVIDIA/GLCache", "AMD/DxCache", "AMD/DxcCache", "AMD/GLCache", "AMD/VkCache", "Intel/ShaderCache", "D3DSCache"]
   return [
-    // redm: true = RedM must be closed (it holds these files open).
-    { id: "server", redm: true, on: true, entries: async () => [
+    // redm: true = RedM must be closed (it holds these files open). on = ticked by default.
+    // Server cache starts unticked: clearing it re-downloads every server's files on the next join.
+    { id: "server", redm: true, on: false, entries: async () => [
       ...(await list(path.join(data, "server-cache"))),
       ...(await list(path.join(data, "server-cache-priv"))),
       ...(await list(path.join(data, "cache", "servers"))),
@@ -44,11 +45,11 @@ function targets(env) {
       return withTime.sort((a, b) => b[1] - a[1]).slice(3).map((x) => x[0])
     } },
     // In-game UI storage: resets UI settings and web logins inside servers.
-    { id: "nui", redm: true, on: false, entries: () => list(path.join(data, "nui-storage")) },
+    { id: "nui", redm: true, on: true, entries: () => list(path.join(data, "nui-storage")) },
     // GPU driver shader caches: rebuilt on next launch (first minutes may stutter).
-    { id: "shaders", redm: true, on: false, entries: async () => (await Promise.all(gpu.map((g) => list(path.join(env.local, g))))).flat() },
+    { id: "shaders", redm: true, on: true, entries: async () => (await Promise.all(gpu.map((g) => list(path.join(env.local, g))))).flat() },
     // Same rule as Windows Disk Cleanup (older than 2 days), so running installers keep their files.
-    { id: "temp", redm: false, on: false, entries: async () => olderThan(await list(env.temp), 2 * DAY) },
+    { id: "temp", redm: false, on: true, entries: async () => olderThan(await list(env.temp), 2 * DAY) },
   ]
 }
 
