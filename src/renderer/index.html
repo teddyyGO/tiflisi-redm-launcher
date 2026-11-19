@@ -75,6 +75,17 @@
         </div>
       </div>
 
+      <!-- First start: what the launcher set up by itself, and the player's name in game. -->
+      <aside class="welcome" id="welcome" hidden aria-labelledby="welcome-title">
+        <button type="button" class="welcome-x" data-act="welcome-close" aria-label="Close"><i class="ph ph-x"></i></button>
+        <p class="welcome-title" id="welcome-title"></p>
+        <p class="welcome-sub" data-i18n="welcome.sub">Set up for you, nothing else to do:</p>
+        <ul class="welcome-done" id="welcome-done"></ul>
+        <label class="welcome-label" for="welcome-name" data-i18n="name.label">Your name in game</label>
+        <p class="welcome-hint" id="welcome-hint"></p>
+        <div class="name-ctl"><input id="welcome-name" class="name-input" maxlength="32" autocomplete="off" spellcheck="false"><button type="button" class="btn accent" data-act="name-save" data-arg="welcome-name" data-i18n="name.save">Save</button></div>
+      </aside>
+
       <div class="home-columns">
         <div class="tile-row" id="news-list"></div>
         <div class="tile devlog-tile">
@@ -231,6 +242,7 @@
     <section class="content-area" id="content-settings">
       <header class="page-head"><h1 class="page-title" data-i18n="nav.settings">Settings</h1></header>
       <div class="sheet rows">
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="name.label">Your name in game</p><p class="row-desc" data-i18n="name.desc">What other players and staff see. Saved straight into RedM.</p></div><div class="name-ctl"><input id="settings-name" class="name-input" maxlength="32" autocomplete="off" spellcheck="false" aria-label="Your name in game"><button type="button" class="btn glass" data-act="name-save" data-arg="settings-name" data-i18n="name.save">Save</button></div></div>
         <div class="row"><div class="row-text"><p class="row-label" data-i18n="settings.language">Language</p><p class="row-desc" data-i18n="settings.languageDesc">Select your preferred language</p></div><div class="select-wrap"><select id="lang-select" class="select" aria-label="Language"></select><i class="ph ph-caret-down"></i></div></div>
         <div class="row"><div class="row-text"><p class="row-label" data-i18n="settings.autoStart">Start with Windows</p><p class="row-desc" data-i18n="settings.autoStartDesc">Launch automatically when Windows starts</p></div><label class="toggle"><input type="checkbox" id="toggle-autostart"><span class="toggle-track"></span></label></div>
         <div class="row"><div class="row-text"><p class="row-label" data-i18n="upd.title">Updates</p><p class="row-desc" id="upd-desc"></p></div><button type="button" class="btn glass" id="upd-btn"></button></div>

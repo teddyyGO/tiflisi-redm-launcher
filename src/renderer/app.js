@@ -77,7 +77,16 @@ Object.assign(i18nTranslations.en, {
   "crash.cause.pool": "The game ran out of room for objects. This is usually a server limit, so tell staff.",
   "crash.cause.files": "Some game files look damaged. Verify the game files in Steam, Epic or the Rockstar Games Launcher.",
   "crash.cause.start": "RedM didn't start correctly. Close RedM and the Rockstar Games Launcher fully, then join again from here.",
-  "crash.cause.unknown": "We couldn't tell what caused it. Copy the report and send it to staff."
+  "crash.cause.unknown": "We couldn't tell what caused it. Copy the report and send it to staff.",
+  "welcome.title": "Welcome to {server}", "welcome.sub": "Set up for you, nothing else to do:",
+  "welcome.lang": "Language: {lang}", "welcome.server": "{server} is your server, ready to join",
+  "welcome.gpu": "The game uses your fast graphics card", "welcome.links": "Join links from Discord and websites repaired",
+  "welcome.shortcut": "Shortcuts on your Desktop and in the Start Menu",
+  "name.label": "Your name in game", "name.desc": "What other players and staff see. Saved straight into RedM.", "name.save": "Save",
+  "name.madeUp": "RedM made this name up. Change it to the name you want others to see.", "name.current": "This is the name other players see.",
+  "name.saved": "Saved. You'll be {name} in game.", "name.running": "Close RedM first, then save, or RedM will overwrite it.",
+  "name.invalid": "Use 2 to 32 letters, numbers, spaces, - _ or .",
+  "ready.name": "Your name in game: {name}", "ready.nameBad": "You still have RedM's random name ({name})", "ready.change": "Change"
 });
 
 Object.assign(i18nTranslations.ka, {
@@ -150,7 +159,16 @@ Object.assign(i18nTranslations.ka, {
   "crash.cause.pool": "თამაშს ობიექტებისთვის ადგილი ამოეწურა. ეს ჩვეულებრივ სერვერის ლიმიტია, აცნობეთ ადმინისტრაციას.",
   "crash.cause.files": "თამაშის ზოგიერთი ფაილი დაზიანებული ჩანს. შეამოწმეთ ფაილები Steam-ში, Epic-ში ან Rockstar Games Launcher-ში.",
   "crash.cause.start": "RedM სწორად ვერ ჩაირთო. სრულად დახურეთ RedM და Rockstar Games Launcher, შემდეგ ისევ შედით აქედან.",
-  "crash.cause.unknown": "მიზეზი ვერ დავადგინეთ. დააკოპირეთ ანგარიში და გაუგზავნეთ ადმინისტრაციას."
+  "crash.cause.unknown": "მიზეზი ვერ დავადგინეთ. დააკოპირეთ ანგარიში და გაუგზავნეთ ადმინისტრაციას.",
+  "welcome.title": "კეთილი იყოს თქვენი მობრძანება {server}-ში", "welcome.sub": "ყველაფერი მოწყობილია, სხვა არაფერია გასაკეთებელი:",
+  "welcome.lang": "ენა: {lang}", "welcome.server": "{server} თქვენი სერვერია, მზადაა შესასვლელად",
+  "welcome.gpu": "თამაში ძლიერ ვიდეოკარტას იყენებს", "welcome.links": "Discord-ისა და საიტების შესვლის ბმულები შეკეთდა",
+  "welcome.shortcut": "მალსახმობები სამუშაო მაგიდაზე და Start მენიუში",
+  "name.label": "თქვენი სახელი თამაშში", "name.desc": "რასაც სხვა მოთამაშეები და ადმინისტრაცია ხედავს. პირდაპირ RedM-ში ინახება.", "name.save": "შენახვა",
+  "name.madeUp": "ეს სახელი RedM-მა შემთხვევით შეარჩია. შეცვალეთ იმ სახელით, რომლითაც გინდათ, რომ გიცნობდნენ.", "name.current": "ამ სახელს ხედავენ სხვა მოთამაშეები.",
+  "name.saved": "შენახულია. თამაშში იქნებით {name}.", "name.running": "ჯერ დახურეთ RedM, მერე შეინახეთ, თორემ RedM გადაწერს.",
+  "name.invalid": "გამოიყენეთ 2-დან 32-მდე ასო, ციფრი, გამოტოვება, - _ ან .",
+  "ready.name": "თქვენი სახელი თამაშში: {name}", "ready.nameBad": "ჯერ კიდევ RedM-ის შემთხვევითი სახელი გაქვთ ({name})", "ready.change": "შეცვლა"
 });
 
 function detectLanguage() {
@@ -204,6 +222,7 @@ function setLanguage(lang) {
   syncUsage()
   renderReady()
   refreshJoinButton()
+  renderWelcome()
 }
 
 function getJoinBtnDefault() {
@@ -1310,6 +1329,7 @@ function readyItems() {
     items.push({ ok: okB, text: t(okB ? "ready.branch" : "ready.branchBad").replace("{server}", brand.name).replace("{b}", branchLabel(config.recommendedBranch)), fix: "set-branch", fixLabel: t("ready.switch") })
   }
   if (r.gpus > 1) items.push({ ok: r.gpuHigh, text: t(r.gpuHigh ? "ready.gpu" : "ready.gpuBad"), fix: "set-gpu", fixLabel: t("ready.turnOn") })
+  if (nameInfo && r.redm) items.push({ ok: !nameInfo.madeUp, text: nameInfo.madeUp ? t("ready.nameBad").replace("{name}", nameInfo.name || "?") : t("ready.name").replace("{name}", nameInfo.name), fix: "name", fixLabel: t("ready.change") })
   if (r.freeBytes != null) {
     var okD = r.freeBytes > 15 * GB
     items.push({ ok: okD, text: t(okD ? "ready.disk" : "ready.diskBad").replace("{size}", fmtBytes(r.freeBytes)), fix: "free-space", fixLabel: t("ready.freeUp") })
@@ -1344,6 +1364,7 @@ async function readyFix(what) {
   if (what === "get-redm") return window.launcher.openExternal("https://redm.net")
   if (what === "open-redm") return window.launcher.openGame()
   if (what === "free-space") { toggleReady(false); return switchNav("tools") }
+  if (what === "name") { toggleReady(false); switchNav("settings"); return document.getElementById("settings-name").focus() }
   if (what === "set-branch") await window.launcher.setChannel(config.recommendedBranch)
   if (what === "set-gpu") { localStorage.setItem("gfxGpu", "true"); await window.launcher.setGpu(true) }
   if (what === "repair-links") await window.launcher.repairLinks()
@@ -1492,8 +1513,87 @@ function stopWaiting() {
   refreshJoinButton()
 }
 
+// ── First start: set up everything safe by itself, then say what it did ──
+// Applied once (localStorage firstRunDone). The welcome card stays until it's closed or a name is saved.
+
+var nameInfo = null
+
+async function loadName() {
+  try { nameInfo = await window.launcher.getName() } catch (e) { nameInfo = null }
+  ;["welcome-name", "settings-name"].forEach(function (id) {
+    var el = document.getElementById(id)
+    if (el && nameInfo && document.activeElement !== el) el.value = nameInfo.name || ""
+  })
+  renderWelcomeHint()
+  renderReady()
+}
+
+async function firstRun() {
+  if (!localStorage.getItem("firstRunDone")) {
+    var r = ready || (await window.launcher.readiness().catch(function () { return null }))
+    var done = ["lang", "server"]
+    if (r && r.gpus > 1 && !r.gpuHigh) {
+      localStorage.setItem("gfxGpu", "true")
+      await window.launcher.setGpu(true)
+      done.push("gpu")
+    }
+    if (r && r.redm && !r.links) {
+      var x = await window.launcher.repairLinks().catch(function () { return null })
+      if (x && x.success) done.push("links")
+    }
+    if (updState.state !== "dev") done.push("shortcut") // shortcuts are made by the installed app
+    localStorage.setItem("firstRunDone", JSON.stringify(done))
+    refreshReady()
+  }
+  if (!localStorage.getItem("welcomeClosed")) renderWelcome()
+}
+
+function renderWelcome() {
+  var done = []
+  try { done = JSON.parse(localStorage.getItem("firstRunDone")) || [] } catch (e) {}
+  if (!Array.isArray(done) || localStorage.getItem("welcomeClosed")) return
+  document.getElementById("welcome-title").textContent = t("welcome.title").replace("{server}", brand.name)
+  document.getElementById("welcome-done").innerHTML = done.map(function (k) {
+    // Native name from the launcher's own list (the system's language names don't cover Georgian).
+    var lang = (i18nLanguageList.find(function (l) { return l.code === currentLang }) || {}).name || currentLang
+    return '<li><i class="ph ph-check-circle"></i>' + esc(t("welcome." + k).replace("{server}", brand.name).replace("{lang}", lang)) + '</li>'
+  }).join("")
+  renderWelcomeHint()
+  document.getElementById("welcome").hidden = false
+}
+
+function renderWelcomeHint() {
+  var hint = document.getElementById("welcome-hint")
+  if (!hint) return
+  hint.textContent = !nameInfo ? "" : nameInfo.madeUp ? t("name.madeUp") : t("name.current")
+}
+
+function closeWelcome() {
+  localStorage.setItem("welcomeClosed", "1")
+  document.getElementById("welcome").hidden = true
+}
+
+async function saveName(inputId) {
+  var input = document.getElementById(inputId)
+  var r = await window.launcher.setName(input.value)
+  if (r.success) {
+    say(t("name.saved").replace("{name}", r.name))
+    if (inputId === "welcome-name") closeWelcome()
+    loadName()
+  } else {
+    say(t(r.error === "running" ? "name.running" : "name.invalid"))
+    input.focus()
+  }
+}
+
 function initHelpers() {
   refreshReady()
+  loadName()
+  ;["welcome-name", "settings-name"].forEach(function (id) {
+    document.getElementById(id).addEventListener("keydown", function (e) { if (e.key === "Enter") saveName(id) })
+  })
+  // Let readiness and the update state arrive first, so the setup knows what this PC needs.
+  setTimeout(firstRun, 1200)
   window.launcher.onGameCrashed(showCrash)
   // Re-check readiness when you come back to the launcher (you may have fixed something outside it).
   window.addEventListener("focus", function () { if (Date.now() - readyAt > 30000) refreshReady() })
@@ -1525,6 +1625,8 @@ document.addEventListener("click", function (e) {
     case "dialog-download": window.launcher.openExternal(a); el.closest(".error-overlay").remove(); break
     case "update": window.launcher.installUpdate(); break
     case "ready-toggle": toggleReady(); break
+    case "welcome-close": closeWelcome(); break
+    case "name-save": saveName(a); break
     case "ready-fix": readyFix(a); break
     case "fix-game": { var ov = el.closest(".error-overlay"); if (ov) ov.remove(); toggleReady(false); fixMyGame(); break }
     case "fix-join": el.closest(".error-overlay").remove(); joinServer(); break

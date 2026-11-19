@@ -11,6 +11,7 @@ const graphics = require("./graphics")
 const updater = require("./updater")
 const crash = require("./crash")
 const shortcuts = require("./shortcuts")
+const nickname = require("./nickname")
 
 // Same id the installer gives its shortcuts (build.appId): keeps taskbar pins, grouping and
 // Windows notifications tied to this app.
@@ -380,6 +381,16 @@ ipcMain.handle("repair-links", async () => {
   if (!exe) return { success: false, error: "not_installed" }
   await graphics.registerProtocol("redm", "RedM", exe)
   return { success: !!(await getProtocolExe()) }
+})
+
+// The player's name in RedM (%APPDATA%\CitizenFX\redm.cfg). RedM rewrites that file when it closes,
+// so saving waits until RedM isn't running.
+const redmCfg = () => path.join(app.getPath("appData"), "CitizenFX", "redm.cfg")
+ipcMain.handle("name-get", () => nickname.read(redmCfg()))
+ipcMain.handle("name-set", async (_, name) => {
+  if (!nickname.valid(name)) return { success: false, error: "invalid" }
+  if ((await redmPids()).length) return { success: false, error: "running" }
+  return nickname.write(redmCfg(), name)
 })
 
 ipcMain.handle("copy-text", (_, text) => clipboard.writeText(String(text || "").slice(0, 20000)))

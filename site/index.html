@@ -44,7 +44,7 @@
       "alternateName": ["Tiflisi 1898 Launcher", "Tiflisi RedM Launcher"],
       "description": "Free, open-source Windows launcher for Tiflisi 1898, the Georgian RedM roleplay server. Join in one click, browse every public RedM server, switch the client branch and fix common game problems.",
       "url": "https://launcher.tiflisi.cloud/",
-      "downloadUrl": "https://github.com/teddyyGO/tiflisi-redm-launcher/releases/latest",
+      "downloadUrl": "https://github.com/teddyyGO/tiflisi-redm-launcher/releases/latest/download/Tiflisi-Launcher-Setup.exe",
       "image": "https://launcher.tiflisi.cloud/og.jpg",
       "screenshot": "https://launcher.tiflisi.cloud/launcher.jpg",
       "applicationCategory": "GameApplication",
@@ -157,7 +157,7 @@
     <h1>Tiflisi Launcher</h1>
     <p class="lead" data-i18n="lead">The launcher for Tiflisi 1898, the Georgian RedM roleplay server. Join in one click, browse every public RedM server, and fix the usual game problems. Free and open source.</p>
     <div class="actions">
-      <a class="btn primary" id="dl" href="https://github.com/teddyyGO/tiflisi-redm-launcher/releases/latest">
+      <a class="btn primary" id="dl" href="https://github.com/teddyyGO/tiflisi-redm-launcher/releases/latest/download/Tiflisi-Launcher-Setup.exe">
         <svg viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M128 40v112M80 108l48 44 48-44M40 168v32a16 16 0 0 0 16 16h144a16 16 0 0 0 16-16v-32"/></svg>
         <span data-i18n="dl">Download for Windows</span>
       </a>
@@ -178,7 +178,7 @@
   </footer>
 
 <script>
-  // Installer names carry the version, so resolve the latest .exe at runtime; the href above is the no-JS fallback.
+  // The installer name never changes, so the link above always gets the newest version. This only adds the version and size.
   fetch('https://api.github.com/repos/teddyyGO/tiflisi-redm-launcher/releases/latest')
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .then(rel => {

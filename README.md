@@ -20,6 +20,8 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 ## Features
 
 - **Featured server**: live status, players, your own ping, one-click join.
+- **Nothing to set up**: on first start the launcher opens in Georgian on the Tiflisi server, turns on the fast graphics card on PCs with two, repairs broken `redm://` join links, and adds Start Menu and Desktop shortcuts. A small welcome card says what it did and asks for your name in game. It never accepts RedM's or Rockstar's terms for you: those stay your own choice.
+- **Name in game**: set your RedM player name right in the launcher (welcome card or Settings). It's written into RedM's own settings, so there's no need to open RedM first.
 - **Ready to play**: one line under Join says "Ready to play" or how many things need fixing (RedM installed, game found, join links working, right game version, fast graphics card, free disk space). Every problem has a Fix button.
 - **Fix my game**: one button that closes RedM, clears the server and RedM caches and applies the recommended settings, with a plain list of what it did.
 - **Crash helper**: when RedM crashes, the launcher reads RedM's log, explains the likely cause in plain words and offers "Copy report for staff".

@@ -34,6 +34,8 @@ contextBridge.exposeInMainWorld("launcher", {
   setUsage: call("set-usage"),
   readiness: call("readiness"),
   repairLinks: call("repair-links"),
+  getName: call("name-get"),
+  setName: call("name-set"),
   copyText: call("copy-text"),
   focusWindow: call("focus-window"),
   onGameCrashed: (cb) => ipcRenderer.on("game-crashed", (_, c) => cb(c)),

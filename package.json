@@ -10,7 +10,7 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
-    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && electron test/shortcuts.check.js"
+    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && node test/nickname.check.js && electron test/shortcuts.check.js"
   },
   "build": {
     "appId": "io.github.openredmlauncher",
@@ -27,7 +27,7 @@
     "nsis": {
       "oneClick": true,
       "perMachine": false,
-      "artifactName": "Tiflisi-Launcher-Setup-${version}.${ext}"
+      "artifactName": "Tiflisi-Launcher-Setup.${ext}"
     },
     "publish": [
       {
