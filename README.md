@@ -2,6 +2,8 @@
 
 A free, open-source launcher for RedM servers. One server is featured on the home page (yours), and players can still browse and join any other server. It also fixes the usual player problems: wrong client branch, broken caches, the game running on the wrong GPU.
 
+**Download: [launcher.tiflisi.cloud](https://launcher.tiflisi.cloud)** (Windows 10 / 11) · [Code signing policy](#code-signing-policy)
+
 ![Home: the featured server over its own art](docs/screenshots/home.jpg)
 
 ## Screenshots
@@ -142,6 +144,17 @@ set launcher_reward_message "Thanks for playing with the launcher! +$%s"
 Keep rewards modest: the join signal can be imitated by someone who reads this code.
 
 Limits: matching is by IP, so players behind the same NAT share a hello. It also only works when the server's real `ip:port` is public (not hidden behind a Cfx proxy).
+
+## Code signing policy
+
+Windows installers are built only from this repository, by the `Release` GitHub Action ([release.yml](.github/workflows/release.yml)), never on a personal machine. Every release is approved by hand before it is signed and published.
+
+Team roles:
+
+- Committers and reviewers: [teddyyGO](https://github.com/teddyyGO). Changes from anyone else come in as pull requests and are reviewed before merging.
+- Approvers (approve each release for signing): [teddyyGO](https://github.com/teddyyGO).
+
+Privacy: this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. The only exceptions are listed under [Privacy and security](#privacy-and-security): the Cfx server list, the servers you add, GitHub for update checks, and, if left on, the anonymous heartbeat to the featured server described in [Live usage dashboard](#live-usage-dashboard), which players can switch off in Settings.
 
 ## License
 

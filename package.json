@@ -3,7 +3,7 @@
   "version": "1.1.4",
   "description": "Tiflisi Launcher: the Tiflisi 1898 RedM launcher. Featured server, server browser, branch switch and fix tools. Open source.",
   "author": "Tiflisi Launcher contributors",
-  "homepage": "https://github.com/teddyyGO/tiflisi-redm-launcher",
+  "homepage": "https://launcher.tiflisi.cloud",
   "repository": "github:teddyyGO/tiflisi-redm-launcher",
   "main": "src/main/main.js",
   "scripts": {
