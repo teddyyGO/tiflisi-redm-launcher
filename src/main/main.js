@@ -68,6 +68,14 @@ function createWindow() {
     return { action: "deny" }
   })
   mainWindow.webContents.on("will-navigate", (e) => e.preventDefault())
+  // A GPU driver reset (common while RedM crashes) can kill the page: reload instead of a blank window.
+  // At most once per 10 s, so a page that dies on load doesn't loop.
+  let reloadedAt = 0
+  mainWindow.webContents.on("render-process-gone", (_, d) => {
+    if (d.reason === "clean-exit" || Date.now() - reloadedAt < 10000) return
+    reloadedAt = Date.now()
+    mainWindow.reload()
+  })
   mainWindow.loadFile(path.join(__dirname, "..", "renderer", "index.html"))
   updater.init(mainWindow)
 }
@@ -86,6 +94,8 @@ if (!app.requestSingleInstanceLock()) {
     // The CSP has to allow file: for the launcher's own files, which also matches file://server/share.
     // Windows opens those over SMB and sends the player's login hash, so block any file URL with a host.
     session.defaultSession.webRequest.onBeforeRequest((d, cb) => cb({ cancel: d.url.startsWith("file:") && new URL(d.url).host !== "" }))
+    // Notifications only (update and crash toasts). Electron grants everything else (camera, mic, location...) by default.
+    session.defaultSession.setPermissionRequestHandler((_, permission, cb) => cb(permission === "notifications"))
     createWindow()
     if (config.discordClientId) rpc.start(config.discordClientId)
     if (app.isPackaged && process.platform === "win32") {
@@ -116,8 +126,9 @@ ipcMain.handle("maximize-window", () => {
   mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize()
 })
 ipcMain.handle("close-window", () => mainWindow?.close())
+// The page only opens web links. Game links (redm://) go through join-server, so injected text can't connect RedM anywhere.
 ipcMain.handle("open-external", (_, url) => {
-  if (/^(https?|redm|fivem):\/\//i.test(String(url))) return shell.openExternal(url)
+  if (/^https:\/\//i.test(String(url))) return shell.openExternal(url)
 })
 ipcMain.handle("set-auto-start", (_, enabled) => {
   app.setLoginItemSettings({ openAtLogin: !!enabled })
@@ -228,9 +239,10 @@ ipcMain.handle("join-server", async (_, opts) => {
   if (!addr) return { success: false, error: "not_configured" }
   // Tell the server's launcher_check resource (if it runs one) that this IP joins via the launcher.
   if (IP_PORT.test(endpoint || "")) {
+    // No install id: launcher_check matches the join by IP, so other servers never learn it.
     fetch("http://" + endpoint + "/launcher_check/hello", {
       method: "POST",
-      body: JSON.stringify({ id: launcherId, version: app.getVersion() }),
+      body: JSON.stringify({ version: app.getVersion() }),
       signal: AbortSignal.timeout(2500),
     }).catch(() => {})
   }
@@ -239,8 +251,7 @@ ipcMain.handle("join-server", async (_, opts) => {
   const url = "redm://connect/" + addr
   try {
     const exe = await redmExe()
-    if (exe) spawn(exe, [url], { detached: true, stdio: "ignore" }).unref()
-    else await shell.openExternal(url)
+    if (!exe || !(await launch(exe, [url]))) await shell.openExternal(url)
     rpc.setActivity({ details: "Playing on " + (name || addr), startTimestamp: Date.now() })
     return { success: true }
   } catch (e) {
@@ -276,12 +287,18 @@ ipcMain.handle("set-usage", (_, opts) => {
 const redmDir = path.join(process.env.LOCALAPPDATA || "", "RedM", "RedM.app")
 const iniPath = path.join(redmDir, "CitizenFX.ini")
 
-function getProtocolExe() {
+// Windows' own lookup (Unicode): reg.exe output uses the console code page, which garbles Georgian profile paths.
+async function getProtocolExe() {
+  try { return (await app.getApplicationInfoForProtocol("redm://")).path || null } catch (e) { return null }
+}
+
+// Resolves true once Windows started the exe, false if it couldn't (missing, blocked by antivirus...).
+// Without the error listener a failed start is an uncaught exception and a main-process error box.
+function launch(exe, args) {
   return new Promise((resolve) => {
-    exec('reg query "HKEY_CLASSES_ROOT\\redm\\shell\\open\\command" /ve', { windowsHide: true }, (err, stdout) => {
-      const m = !err && stdout && stdout.match(/REG_SZ\s+"?([A-Za-z]:\\[^"]+?\.exe)"?/i)
-      resolve(m ? m[1] : null)
-    })
+    const p = spawn(exe, args, { detached: true, stdio: "ignore" })
+    p.once("error", () => resolve(false))
+    p.once("spawn", () => { p.unref(); resolve(true) })
   })
 }
 
@@ -305,10 +322,7 @@ function redmPids() {
 
 async function openGame() {
   const exe = await redmExe()
-  if (exe) {
-    spawn(exe, [], { detached: true, stdio: "ignore" }).unref()
-    return { success: true }
-  }
+  if (exe && (await launch(exe, []))) return { success: true }
   try { await shell.openExternal("redm://"); return { success: true } } catch (e) { return { success: false, error: "not_installed" } }
 }
 ipcMain.handle("open-game", openGame)
@@ -389,7 +403,7 @@ ipcMain.handle("name-get", () => nickname.read(redmCfg()))
 ipcMain.handle("name-set", async (_, name) => {
   if (!nickname.valid(name)) return { success: false, error: "invalid" }
   if ((await redmPids()).length) return { success: false, error: "running" }
-  return nickname.write(redmCfg(), name)
+  try { return nickname.write(redmCfg(), name) } catch (e) { return { success: false, error: e.code || "failed" } }
 })
 
 ipcMain.handle("copy-text", (_, text) => clipboard.writeText(String(text || "").slice(0, 20000)))
@@ -420,7 +434,9 @@ function checkCrash() {
     }
   } catch (e) { return }
   if (!newest || Date.now() - newest.t > 5 * 60 * 1000) return // only this session's log
-  const c = crash.parseCrash(fs.readFileSync(newest.f, "utf8"))
+  let text
+  try { text = fs.readFileSync(newest.f, "utf8") } catch (e) { return } // runs in a timer: a throw here is a main-process error box
+  const c = crash.parseCrash(text)
   if (!c) return
   const key = newest.f + ":" + c.at
   if (reported.has(key)) return
@@ -442,20 +458,24 @@ ipcMain.handle("reset-graphics", async () => {
   if ((await redmPids()).length) return { success: false, error: "running" }
   const f = systemXml()
   if (!fs.existsSync(f)) return { success: false, error: "no_settings" }
-  fs.renameSync(f, f + ".backup-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-"))
+  try { fs.renameSync(f, f + ".backup-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")) } catch (e) { return { success: false, error: e.code || "failed" } }
   return { success: true }
 })
 
 ipcMain.handle("set-channel", async (_, channel) => {
   channel = String(channel || "").trim()
   if (!/^[\w./-]+$/.test(channel)) return { success: false, error: "bad_channel" }
-  let ini = readIni()
-  if (ini == null) return { success: false, error: "not_installed" }
+  // latin1 in and out keeps every byte as it was: the file can be ANSI (a Georgian or Cyrillic IVPath
+  // would be mangled by a UTF-8 round trip), and only the ASCII UpdateChannel line changes.
+  let ini
+  try { ini = fs.readFileSync(iniPath, "latin1") } catch (e) { return { success: false, error: "not_installed" } }
   if (/^UpdateChannel=.*$/m.test(ini)) ini = ini.replace(/^UpdateChannel=.*$/m, "UpdateChannel=" + channel)
   else if (/^\[Game\]\s*$/m.test(ini)) ini = ini.replace(/^\[Game\]\s*$/m, "[Game]\r\nUpdateChannel=" + channel)
   else ini = "[Game]\r\nUpdateChannel=" + channel + "\r\n" + ini
-  fs.writeFileSync(iniPath + ".bak", readIni())
-  fs.writeFileSync(iniPath, ini)
+  try {
+    fs.copyFileSync(iniPath, iniPath + ".bak")
+    fs.writeFileSync(iniPath, ini, "latin1")
+  } catch (e) { return { success: false, error: e.code || "failed" } }
   return { success: true }
 })
 
