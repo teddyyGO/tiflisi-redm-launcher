@@ -1,5 +1,11 @@
-# Push a version tag (git tag v1.1.0 && git push --tags) and this builds the Windows installer
+# Push a version tag together with main (git tag v1.1.0 && git push origin main v1.1.0) and this builds the Windows installer
 # and publishes it as a GitHub release. Installed launchers see it within 30 minutes and update with one click.
+#
+# Every release reaches every player automatically, so:
+#  - only a tag on a commit that is already on main builds (a tag on a stray branch stops here);
+#  - the job runs in the "release" environment: add yourself as a required reviewer
+#    (repo Settings > Environments > release) and each release waits for your click;
+#  - actions are pinned to commit hashes (Dependabot keeps them current).
 name: Release
 
 on:
@@ -12,9 +18,16 @@ permissions:
 jobs:
   release:
     runs-on: windows-latest
+    environment: release
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0 # full history, to check the tag is on main
+          persist-credentials: false # no token in .git/config while npm install scripts run
+      - name: Only tags on main
+        shell: bash
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "::error::$GITHUB_REF_NAME is not on main"; exit 1; }
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 22
           cache: npm
@@ -25,6 +38,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Code signing (removes the SmartScreen "unknown publisher" warning): add these repo secrets.
+          # Sign inside this step (electron-builder's sign hook), never afterwards: latest.yml holds the
+          # installer's sha512, so a file signed later no longer matches and every player's update fails.
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
       # The build uploads into a draft. Publish only now that every file (installer, latest.yml,

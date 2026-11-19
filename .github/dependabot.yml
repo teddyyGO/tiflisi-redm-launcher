@@ -1,0 +1,15 @@
+# Weekly pull requests for outdated or vulnerable dependencies and pinned GitHub Actions.
+# Electron matters most: it is the browser every player runs, and old versions stop getting security fixes.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      minor-and-patch:
+        update-types: [minor, patch]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

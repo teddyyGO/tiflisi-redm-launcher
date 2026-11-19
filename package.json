@@ -10,7 +10,7 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
-    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && node test/nickname.check.js && electron test/shortcuts.check.js"
+    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && node test/nickname.check.js && electron test/shortcuts.check.js && electron test/smoke.check.js"
   },
   "build": {
     "appId": "io.github.openredmlauncher",
@@ -23,6 +23,11 @@
         "nsis"
       ],
       "icon": "assets/icon.png"
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false
     },
     "nsis": {
       "oneClick": true,
@@ -50,11 +55,11 @@
     "@fontsource-variable/hanken-grotesk": "^5.3.0",
     "@fontsource-variable/noto-sans-georgian": "^5.3.0",
     "@phosphor-icons/web": "^2.1.2",
-    "electron-updater": "^6.3.9"
+    "electron-updater": "^6.8.11"
   },
   "devDependencies": {
-    "electron": "^33.0.0",
-    "electron-builder": "^25.0.0",
+    "electron": "^45.4.1",
+    "electron-builder": "^26.18.0",
     "fengari": "^0.1.4"
   },
   "license": "MIT"

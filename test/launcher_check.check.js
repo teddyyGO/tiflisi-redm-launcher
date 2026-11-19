@@ -21,6 +21,7 @@ EVENTS = {}
 function AddEventHandler(n, f) EVENTS[n] = f end
 function RegisterCommand() end
 function Wait() end
+function CreateThread(f) PRUNE = f end
 PLAYERS = {}
 function GetPlayers() local t = {} for id in pairs(PLAYERS) do t[#t + 1] = tostring(id) end return t end
 function GetPlayerName(id) return PLAYERS[tonumber(id)].name end
@@ -107,6 +108,23 @@ source = 1 EVENTS.playerJoining() -- same player rejoins
 request('GET', '/stats.json', nil, { Authorization = 'Basic ${b64("admin:hunter22pass")}' })
 check(LAST.launcherPlayersEver == 1, 'rejoining does not count twice')
 check(EXPORTS.ClaimOnce(1, 'welcome') == false, 'claim stays used after rejoining')
+
+-- hellos are capped (a flood from many IPs can't grow the table) and the 60 s timer prunes expired ones
+check(type(PRUNE) == 'function', 'prune timer started')
+for i = 1, 5000 do request('POST', '/hello', '{"version":"1"}', nil, '10.0.' .. (i // 256) .. '.' .. (i % 256) .. ':1') end
+PLAYERS[4] = { name = 'Late', endpoint = '7.7.7.7:9', ids = { 'license:ddd' } }
+request('POST', '/hello', '{"version":"1"}', nil, '7.7.7.7:1')
+source = 4 EVENTS.playerJoining()
+check(not EXPORTS.UsedLauncher(4), 'hello refused once the table is full')
+CONVARS.launcher_check_ttl = '-1' -- everything counts as expired
+local realWait, waits = Wait, 0
+Wait = function() waits = waits + 1 if waits > 1 then error('one pass') end end
+pcall(PRUNE)
+Wait, CONVARS.launcher_check_ttl = realWait, nil
+request('POST', '/hello', '{"version":"1"}', nil, '7.7.7.7:1')
+source = 4 EVENTS.playerJoining()
+check(EXPORTS.UsedLauncher(4), 'room again after the timer pruned expired hellos')
+PLAYERS[4] = nil
 print('launcher_check ok')
 
 -- set up the world for launcher_reward_vorp

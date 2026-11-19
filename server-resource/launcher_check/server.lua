@@ -23,6 +23,21 @@ local launchers = {}   -- install id -> { ip, version, lang, playing, seen }
 local uniqueSinceStart = 0
 local LIVE = 150       -- seconds without a heartbeat before a launcher counts as closed
 local MAX_LAUNCHERS = 5000
+local MAX_HELLOS = 5000 -- spam guard: a flood of hellos from many IPs can't grow the table without limit
+local helloCount = 0
+
+-- Expired hellos are dropped once a minute here, not on every POST: HTTP handlers run on the server's
+-- main thread, so walking the whole table per request would let a flood stall the game server.
+CreateThread(function()
+  while true do
+    Wait(60000)
+    local ttl, now, n = GetConvarInt('launcher_check_ttl', 300), os.time(), 0
+    for ip, h in pairs(hellos) do
+      if now - h.at > ttl then hellos[ip] = nil else n = n + 1 end
+    end
+    helloCount = n
+  end
+end)
 
 SetConvarServerInfo('launcher_check', '1')
 
@@ -137,9 +152,10 @@ SetHttpHandler(function(req, res)
   if req.method == 'POST' and path == '/hello' then
     readBody(req, function(data)
       local ip = ipOf(req.address)
-      local ttl = GetConvarInt('launcher_check_ttl', 300)
-      for k, v in pairs(hellos) do if os.time() - v.at > ttl then hellos[k] = nil end end
-      if ip then hellos[ip] = { at = os.time(), version = str(data.version, '^[%w%.%-]+$', 20) or '' } end
+      if ip and (hellos[ip] or helloCount < MAX_HELLOS) then
+        if not hellos[ip] then helloCount = helloCount + 1 end
+        hellos[ip] = { at = os.time(), version = str(data.version, '^[%w%.%-]+$', 20) or '' }
+      end
       res.writeHead(204); res.send('')
     end)
     return
