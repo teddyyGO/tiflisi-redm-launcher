@@ -71,7 +71,7 @@ Object.assign(i18nTranslations.en, {
   "fix.done": "Done. Join the server again.", "fix.partly": "Some steps didn't work. Close RedM fully and try again, or ask staff for help.",
   "crash.title": "RedM crashed", "crash.copy": "Copy report for staff", "crash.copied": "Report copied. Paste it to staff on Discord.",
   "crash.cause.memory": "Your PC ran out of memory. Close other programs (browser, recording apps) and try again. If it keeps happening, lower Texture Quality.",
-  "crash.cause.graphics": "The graphics driver stopped responding. Update your graphics driver and make sure the game uses your fast graphics card.",
+  "crash.cause.graphics": "The graphics driver stopped responding. Update your graphics driver. If it keeps happening, use Tools > Reset graphics settings.",
   "crash.cause.pool": "The game ran out of room for objects. This is usually a server limit, so tell staff.",
   "crash.cause.files": "Some game files look damaged. Verify the game files in Steam, Epic or the Rockstar Games Launcher.",
   "crash.cause.start": "RedM didn't start correctly. Close RedM and the Rockstar Games Launcher fully, then join again from here.",
@@ -151,7 +151,7 @@ Object.assign(i18nTranslations.ka, {
   "fix.done": "მზადაა. შედით სერვერზე თავიდან.", "fix.partly": "ზოგიერთი ნაბიჯი ვერ შესრულდა. სრულად დახურეთ RedM და სცადეთ თავიდან, ან მიმართეთ ადმინისტრაციას.",
   "crash.title": "RedM გაითიშა", "crash.copy": "ანგარიშის კოპირება", "crash.copied": "ანგარიში დაკოპირდა. ჩასვით Discord-ზე ადმინისტრაციისთვის.",
   "crash.cause.memory": "კომპიუტერს მეხსიერება ამოეწურა. დახურეთ სხვა პროგრამები (ბრაუზერი, ჩამწერი აპები) და სცადეთ თავიდან. თუ განმეორდა, შეამცირეთ Texture Quality.",
-  "crash.cause.graphics": "ვიდეოკარტის დრაივერმა პასუხი შეწყვიტა. განაახლეთ დრაივერი და დარწმუნდით, რომ თამაში ძლიერ ვიდეოკარტას იყენებს.",
+  "crash.cause.graphics": "ვიდეოკარტის დრაივერმა პასუხი შეწყვიტა. განაახლეთ დრაივერი. თუ ისევ მოხდა, გამოიყენეთ ხელსაწყოები > გრაფიკის პარამეტრების განულება.",
   "crash.cause.pool": "თამაშს ობიექტებისთვის ადგილი ამოეწურა. ეს ჩვეულებრივ სერვერის ლიმიტია, აცნობეთ ადმინისტრაციას.",
   "crash.cause.files": "თამაშის ზოგიერთი ფაილი დაზიანებული ჩანს. შეამოწმეთ ფაილები Steam-ში, Epic-ში ან Rockstar Games Launcher-ში.",
   "crash.cause.start": "RedM სწორად ვერ ჩაირთო. სრულად დახურეთ RedM და Rockstar Games Launcher, შემდეგ ისევ შედით აქედან.",
@@ -593,6 +593,13 @@ async function joinServer() {
   }, 3000)
 }
 
+// Servers tab joins: the featured server is listed there too and still needs its game-version check
+// (the Home button runs it in joinServer).
+async function joinListed(address, endpoint, name) {
+  if (addrKey(address) === addrKey(getCfxCode()) && !(await branchCheckBeforeJoin())) return
+  return joinAddress(address, endpoint, name)
+}
+
 // Shared by the Home join button and the Servers tab.
 async function joinAddress(address, endpoint, name) {
   var result = await window.launcher.joinServer({ address: address || null, endpoint: endpoint, name: name })
@@ -722,9 +729,10 @@ function initSettings() {
   }
 }
 
+// Safe in text and in quoted attributes (server tags and names land in data-* attributes).
 function esc(s) {
   if (!s) return ""
-  var d = document.createElement("div"); d.textContent = s; return d.innerHTML
+  return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] })
 }
 
 function cleanName(s) {
@@ -908,7 +916,7 @@ function renderServers() {
       '</div></div>'
   }).join("")
   box.querySelectorAll("[data-join]").forEach(function (b) {
-    b.onclick = function () { var s = list[b.dataset.join], l = serverLive[s.address] || {}; joinAddress(s.address, l.endpoint, s.name || l.name) }
+    b.onclick = function () { var s = list[b.dataset.join], l = serverLive[s.address] || {}; joinListed(s.address, l.endpoint, s.name || l.name) }
   })
   box.querySelectorAll("[data-remove]").forEach(function (b) {
     b.onclick = function () { list.splice(b.dataset.remove, 1); saveServers(list); renderServers() }
@@ -1062,7 +1070,7 @@ function initBrowse() {
   }
   document.getElementById("browse-list").onclick = function (e) {
     var j = e.target.closest("[data-join]"), st = e.target.closest("[data-star]")
-    if (j) { var s = browse.shown[j.dataset.join]; joinAddress(s.address, null, s.name) }
+    if (j) { var s = browse.shown[j.dataset.join]; joinListed(s.address, null, s.name) }
     if (st) {
       var sv = browse.shown[st.dataset.star], key = addrKey(sv.address), list = loadServers()
       var at = list.findIndex(function (x) { return addrKey(x.address) === key })
@@ -1278,7 +1286,8 @@ function initGraphics(fail) {
   // Re-apply on every launch: a new RedM game build brings a new exe that needs the same settings.
   // Up to 1.1.6 the launcher could turn on "High performance GPU" for the game (see graphics.js undoGpu).
   // Undo it once, only where the launcher itself turned it on: a setting the player made in Windows stays.
-  if (localStorage.getItem("gfxGpu") === "true") window.launcher.undoGpu().then(function () { localStorage.removeItem("gfxGpu") })
+  // Keeps trying on each launch until every value is gone.
+  if (localStorage.getItem("gfxGpu") === "true") window.launcher.undoGpu().then(function (ok) { if (ok) localStorage.removeItem("gfxGpu") })
   if (localStorage.getItem("gfxFso") === "true") window.launcher.setFso(true)
   if (localStorage.getItem("gfxPrio") === "true") window.launcher.setPriorityBoost(true)
 }

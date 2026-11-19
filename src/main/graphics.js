@@ -52,8 +52,24 @@ async function state(exes) {
 // Removed: it changes which graphics card counts as number 0, so RedM's saved adapterIndex can point at the
 // wrong card, and a PC with the monitor in the motherboard port can stop starting the game. This only
 // removes the exact value those launchers wrote.
-async function undoGpu(exes) {
-  for (const e of exes) if ((await regGet(GPU_KEY, e)) === HIGH_GPU) await regDel(GPU_KEY, e)
+// Covers exes no longer on disk (Clean up deletes the GTAProcess exe; RedM recreates it at the same path).
+// reg.exe output isn't UTF-8 on non-ASCII profile paths, so only the build numbers are read from it and
+// each path is rebuilt from redmRoot.
+function gpuCandidates(regOut, redmRoot, gamePath) {
+  const sub = path.join(redmRoot, "RedM.app", "data", "cache", "subprocess")
+  const builds = String(regOut || "").match(/RedM_b\d+_GTAProcess\.exe/gi) || []
+  const out = [path.join(redmRoot, "RedM.exe"), ...builds.map((n) => path.join(sub, n))]
+  if (gamePath) out.push(path.join(gamePath, "RDR2.exe"))
+  return [...new Set(out)]
+}
+
+// true when nothing the launcher set is left.
+async function undoGpu(redmRoot, gamePath) {
+  let ok = true
+  for (const e of gpuCandidates(await reg(["query", GPU_KEY]), redmRoot, gamePath)) {
+    if ((await regGet(GPU_KEY, e)) === HIGH_GPU && (await regDel(GPU_KEY, e)) === null) ok = false
+  }
+  return ok
 }
 
 async function setFso(exes, on) {
@@ -91,4 +107,4 @@ function setPriorityBoost(on) {
   boostTimer = setInterval(tick, 15000)
 }
 
-module.exports = { gameExes, state, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet }
+module.exports = { gameExes, state, gpuCandidates, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet }
