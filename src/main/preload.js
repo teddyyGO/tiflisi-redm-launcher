@@ -12,7 +12,6 @@ contextBridge.exposeInMainWorld("launcher", {
   setAutoStart: call("set-auto-start"),
   pingServer: call("ping-server"),
   serverStatus: call("server-status"),
-  serverList: call("server-list"),
   getVersion: call("get-app-version"),
   openGame: call("open-game"),
   redmInfo: call("redm-info"),

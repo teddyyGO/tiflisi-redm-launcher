@@ -33,7 +33,6 @@
       <button class="nav-item" data-nav="gallery" data-act="nav" data-arg="gallery"><i class="ph ph-images"></i><span data-i18n="nav.gallery">Gallery</span></button>
       <button class="nav-item" data-nav="rules" data-act="nav" data-arg="rules"><i class="ph ph-book-open-text"></i><span data-i18n="nav.rules">Rules</span></button>
       <button class="nav-item" data-nav="staff" data-act="nav" data-arg="staff"><i class="ph ph-users-three"></i><span data-i18n="nav.staff">Staff</span></button>
-      <button class="nav-item" data-nav="servers" data-act="nav" data-arg="servers"><i class="ph ph-hard-drives"></i><span data-i18n="nav.servers">Servers</span></button>
       <button class="nav-item" data-nav="tools" data-act="nav" data-arg="tools"><i class="ph ph-wrench"></i><span data-i18n="nav.tools">Tools</span></button>
       <button class="nav-item" data-nav="settings" data-act="nav" data-arg="settings"><i class="ph ph-gear-six"></i><span data-i18n="nav.settings">Settings</span></button>
     </nav>
@@ -71,7 +70,6 @@
         <div class="hero-empty">
           <p class="hero-empty-title" data-i18n="featured.none">No featured server set</p>
           <p class="hero-empty-desc" data-i18n="featured.noneDesc"></p>
-          <button class="btn glass" data-act="nav" data-arg="servers"><i class="ph ph-hard-drives"></i><span data-i18n="featured.browse">Browse servers</span></button>
         </div>
       </div>
 
@@ -118,46 +116,6 @@
     <section class="content-area" id="content-staff">
       <header class="page-head"><h1 class="page-title" data-i18n="nav.staff">Staff</h1></header>
       <div id="staff-grid" class="staff-grid"></div>
-    </section>
-
-    <section class="content-area" id="content-servers">
-      <header class="page-head">
-        <h1 class="page-title" data-i18n="nav.servers">Servers</h1>
-        <div class="segmented" id="servers-seg" role="radiogroup" aria-label="Server list">
-          <button role="radio" data-view="fav" aria-checked="true"><i class="ph ph-star"></i><span data-i18n="servers.favorites">Favorites</span></button>
-          <button role="radio" data-view="browse"><i class="ph ph-globe-hemisphere-west"></i><span data-i18n="servers.browse">All servers</span></button>
-        </div>
-      </header>
-
-      <div id="servers-fav">
-        <form class="server-add">
-          <label class="field grow">
-            <i class="ph ph-link-simple"></i>
-            <input id="server-add-input" data-i18n-placeholder="servers.placeholder" placeholder="cfx.re/join/abc123 or ip:port" aria-label="Server address">
-          </label>
-          <button type="button" class="btn accent" id="server-add-btn"><i class="ph ph-plus"></i><span data-i18n="servers.add">Add server</span></button>
-        </form>
-        <div id="server-list" class="server-list"></div>
-      </div>
-
-      <div id="servers-browse" hidden>
-        <div class="filter-bar">
-          <label class="field grow">
-            <i class="ph ph-magnifying-glass"></i>
-            <input id="browse-q" data-i18n-placeholder="browse.search" placeholder="Search servers" aria-label="Search servers">
-          </label>
-          <div class="select-wrap"><select id="browse-lang" class="select" aria-label="Language"></select><i class="ph ph-caret-down"></i></div>
-          <div class="select-wrap"><select id="browse-sort" class="select" aria-label="Sort">
-            <option value="players" data-i18n="browse.sortPlayers">Most players</option>
-            <option value="name" data-i18n="browse.sortName">Name</option>
-          </select><i class="ph ph-caret-down"></i></div>
-          <button class="icon-btn" id="browse-refresh" aria-label="Refresh list" title="Refresh list"><i class="ph ph-arrows-clockwise"></i></button>
-        </div>
-        <div class="chip-bar" id="browse-chips"></div>
-        <p class="browse-count" id="browse-count" role="status"></p>
-        <div id="browse-list" class="browse-list"></div>
-        <button class="btn glass browse-more" id="browse-more" hidden data-i18n="browse.more">Show more</button>
-      </div>
     </section>
 
     <section class="content-area" id="content-tools">

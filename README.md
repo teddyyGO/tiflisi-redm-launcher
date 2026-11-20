@@ -1,6 +1,6 @@
 # Tiflisi Launcher
 
-A free, open-source launcher for RedM servers. One server is featured on the home page (yours), and players can still browse and join any other server. It also fixes the usual player problems: wrong client branch, broken caches, broken join links.
+A free, open-source launcher for one RedM server: yours. Players join in one click, and it fixes the usual player problems: wrong client branch, broken caches, broken join links.
 
 **Download: [launcher.tiflisi.cloud](https://launcher.tiflisi.cloud)** (Windows 10 / 11) · [Code signing policy](#code-signing-policy)
 
@@ -10,8 +10,6 @@ A free, open-source launcher for RedM servers. One server is featured on the hom
 
 | | |
 |---|---|
-| ![All public RedM servers with search and filters](docs/screenshots/servers-browse.jpg) | ![Favorite servers with their Cfx banners](docs/screenshots/servers-favorites.jpg) |
-| **All servers**: every public RedM server, with search, language and tag filters. | **Favorites**: your saved servers with live players and ping. |
 | ![Tools: client branch and cleanup](docs/screenshots/tools.jpg) | ![Tools: graphics and performance](docs/screenshots/tools-graphics.jpg) |
 | **Tools**: switch the client branch and clean caches, with live sizes. | **Graphics and performance**: fullscreen optimizations, priority, reset RedM's graphics settings. |
 | ![Settings: language, updates, usage stats, about](docs/screenshots/settings.jpg) | ![Home in Georgian](docs/screenshots/home-georgian.jpg) |
@@ -28,9 +26,6 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
 - **Fix my game**: one button that closes RedM, clears the server and RedM caches and applies the recommended settings, with a plain list of what it did.
 - **Crash helper**: when RedM crashes, the launcher reads RedM's log, explains the likely cause in plain words and offers "Copy report for staff".
 - **Alerts and auto-join**: a Windows notification when the server is back online; on a full server, Join waits and joins as soon as a slot opens.
-- **Servers tab**:
-  - Favorites: add any server by `cfx.re/join/xxxx` or `ip:port`, with its Cfx banner, icon, players and ping.
-  - All servers: every public RedM server from the Cfx list, with search, language, tag, hide empty/full and sort filters.
 - **Tools tab** (fixes for the usual player problems):
   - Switch the client branch (production / beta / canary / your own presets / custom). It edits `CitizenFX.ini` and keeps a `.bak` copy.
   - Clean up, with live sizes: server cache, RedM app cache, GPU shader cache, crash dumps, old logs, in-game UI storage, Windows temp (older than 2 days). The sign-in session and the newest logs are kept.
@@ -49,8 +44,7 @@ Out of the box this is the [Tiflisi 1898](https://cfx.re/join/dg346jd) launcher:
 | Key | What it does |
 |---|---|
 | `brand.name`, `brand.logo`, `brand.background`, `brand.*Color`, `brand.welcomeMessage` | Look and feel |
-| `brand.cfxCode` | Featured server (`abc123` or `ip:port`) |
-| `servers` | Default entries for the Servers tab: `[{ "name": "", "address": "cfx.re/join/abc123" }]` |
+| `brand.cfxCode` | Your server (`abc123` or `ip:port`). The launcher joins only this one. |
 | `branches` | Extra branch buttons in Tools: `[{ "label": "128", "channel": "specific/feature/..." }]` |
 | `recommendedBranch` | The game version your server needs. Players on another one get a "Switch" fix and a prompt before joining. Leave empty if any version works. |
 | `news`, `changelogs`, `rules` | Static content when you don't run an API |
@@ -75,7 +69,6 @@ npm run build:win   # installer in dist/
 Self-checks (no test framework needed):
 
 ```
-node test/server-list.check.js   # add --live to hit the real Cfx list
 node test/cleanup.check.js
 node test/graphics.check.js
 node test/launcher_check.check.js   # runs the server resource in a Lua VM
@@ -117,7 +110,7 @@ set launcher_check_dashboard_password "a-long-unique-password"
 
 Full privacy policy (English and Georgian): [PRIVACY.md](PRIVACY.md).
 
-- The launcher never sends anything anywhere except: the Cfx server list, your configured servers, your panel API (if set), GitHub (update checks) and, if enabled, the anonymous heartbeat above.
+- The launcher never sends anything anywhere except: Cfx and your server (for its status), your panel API (if set), GitHub (update checks) and, if enabled, the anonymous heartbeat above.
 - The window is locked down: sandboxed renderer, no Node access, a strict Content-Security-Policy (only the launcher's own scripts run, so server names or news text can never execute code), no pop-ups, no navigating away.
 - Cleanup only empties known cache folders, keeps your sign-in session, and asks before deleting. Graphics switches use Windows' own per-app settings and can be turned off again.
 - `apiUrl` must be `https`.

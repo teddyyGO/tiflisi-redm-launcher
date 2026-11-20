@@ -311,50 +311,6 @@ body.intro .home-columns { animation-delay: 0.36s; }
 .entry-body { display: none; padding: 0 0 20px; max-width: 72ch; color: var(--text-2); font-size: 14.5px; line-height: 1.7; white-space: pre-wrap; user-select: text; }
 .entry-card.open .entry-body { display: block; animation: fade 0.3s var(--ease); }
 
-/* Servers: each card wears the server's own Cfx banner. */
-.server-add { display: flex; gap: 10px; margin-bottom: 14px; }
-.field.grow { flex: 1; min-width: 200px; }
-.field.grow input { width: 100%; }
-
-/* Browse: every public RedM server, filterable */
-.filter-bar { display: flex; gap: 10px; align-items: center; margin-bottom: 12px; }
-.filter-bar .icon-btn:hover { color: var(--text); }
-.chip-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-.chip-toggle {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 32px; padding: 0 13px; border-radius: 999px;
-  background: rgba(255, 245, 235, 0.07); border: 1px solid var(--line);
-  color: var(--text-2); font-size: 13px; font-weight: 600;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-.chip-toggle:hover { color: var(--text); border-color: var(--line-2); }
-.chip-toggle[aria-pressed="true"] { background: color-mix(in srgb, var(--primary) 32%, transparent); border-color: color-mix(in srgb, var(--primary) 60%, transparent); color: #fff; }
-.chip-toggle .count { color: var(--text-3); font-weight: 500; }
-.chip-toggle[aria-pressed="true"] .count { color: rgba(255, 255, 255, 0.7); }
-.chip-sep { width: 1px; align-self: stretch; margin: 4px 4px; background: var(--line-2); }
-.browse-count { margin: 2px 0 10px; color: var(--text-3); font-size: 13px; }
-.browse-list { display: grid; gap: 8px; }
-.browse-row {
-  display: grid; grid-template-columns: 44px minmax(0, 1fr) auto 96px auto; align-items: center; gap: 16px;
-  padding: 12px 14px 12px 12px; border-radius: var(--r);
-  background: var(--glass-strong); border: 1px solid var(--line);
-  backdrop-filter: blur(16px);
-  transition: border-color 0.2s, background 0.2s;
-}
-.browse-row:hover { border-color: var(--line-2); background: rgba(30, 23, 19, 0.78); }
-.browse-row .server-icon { width: 44px; height: 44px; font-size: 21px; border-radius: 10px; }
-.browse-name { font: 700 19px/1.1 var(--display); letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.browse-desc { margin-top: 3px; color: var(--text-3); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.browse-tags { display: flex; gap: 6px; max-width: 260px; overflow: hidden; }
-.browse-players { text-align: right; font: 700 22px/1 var(--display); font-variant-numeric: tabular-nums; }
-.browse-players span { color: var(--text-3); font-size: 15px; }
-.browse-actions { display: flex; align-items: center; gap: 4px; }
-.browse-actions .btn { height: 38px; padding: 0 14px; }
-.star-btn { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; color: var(--text-3); transition: color 0.2s, background 0.2s; }
-.star-btn:hover { background: rgba(255, 245, 235, 0.1); color: var(--text); }
-.star-btn[aria-pressed="true"] { color: #f2c14e; }
-.browse-more { display: flex; margin: 14px auto 4px; }
-.browse-row.skeleton { height: 70px; background: rgba(255, 245, 235, 0.05); animation: pulse 1.4s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: 0.55; } }
 .field {
   display: flex; align-items: center; gap: 9px;
@@ -366,35 +322,6 @@ body.intro .home-columns { animation-delay: 0.36s; }
 .field input { width: 280px; background: none; border: 0; outline: none; color: var(--text); font-size: 14px; user-select: text; }
 .field input::placeholder { color: var(--text-3); }
 
-.server-list { display: grid; gap: 12px; }
-.server-card {
-  position: relative; overflow: hidden; isolation: isolate;
-  display: grid; grid-template-columns: 60px minmax(0, 1fr) auto auto; align-items: center; gap: 20px;
-  min-height: 108px; padding: 20px 22px; border-radius: var(--r);
-  background: var(--glass-strong); border: 1px solid var(--line);
-  backdrop-filter: blur(18px);
-  transition: border-color 0.2s, transform 0.25s var(--ease);
-}
-.server-card:hover { border-color: var(--line-2); transform: translateY(-1px); }
-/* Banner covers the left two thirds and fades out before the numbers. */
-.server-banner { position: absolute; inset: 0 32% 0 0; z-index: -1; background-size: cover; background-position: center; opacity: 0.9; transition: transform 6s ease-out; -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent); mask-image: linear-gradient(90deg, #000 55%, transparent); }
-.server-card:hover .server-banner { transform: scale(1.04); }
-/* Dark behind the name on the left, banner shows through toward the middle. */
-.server-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18, 14, 12, 0.94) 0%, rgba(18, 14, 12, 0.7) 45%, rgba(18, 14, 12, 0.35) 100%); }
-.server-icon { width: 60px; height: 60px; border-radius: var(--r); object-fit: cover; background: rgba(255, 245, 235, 0.1); display: grid; place-items: center; font: 800 28px/1 var(--display); }
-.server-title { font: 700 26px/1 var(--display); letter-spacing: 0.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.server-sub { display: flex; align-items: center; gap: 8px; margin-top: 7px; min-width: 0; color: var(--text-3); font-size: 12.5px; }
-.server-sub .addr { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; user-select: text; }
-.server-stats { display: flex; gap: 22px; text-align: right; }
-.stat-num { font: 700 26px/1 var(--display); font-variant-numeric: tabular-nums; }
-.stat-label { color: var(--text-3); font-size: 12px; margin-top: 3px; }
-.server-actions { display: flex; gap: 6px; }
-.icon-btn { width: 44px; height: 44px; border-radius: var(--r); display: grid; place-items: center; color: var(--text-3); font-size: 18px; transition: background 0.2s, color 0.2s; }
-.icon-btn:hover { background: rgba(255, 245, 235, 0.1); color: var(--danger); }
-.server-card.is-offline .server-banner { filter: grayscale(1); opacity: 0.4; }
-.server-card.is-offline .stat-num { color: var(--text-3); }
-.server-card.is-offline .btn.accent { background: rgba(255, 245, 235, 0.1); color: var(--text-2); box-shadow: none; }
-.server-card.is-loading .stat-num { color: var(--text-3); }
 
 /* Tools */
 .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -538,8 +465,6 @@ label.switch-row { cursor: pointer; }
 
 @media (max-width: 1100px) {
   :root { --pad: 28px; }
-  .browse-tags { display: none; }
-  .browse-row { grid-template-columns: 44px minmax(0, 1fr) 96px auto; }
   .nav-item span { display: none; }
   .nav-item { padding: 0 11px; }
   .home-columns { grid-template-columns: 1fr; }
@@ -553,8 +478,8 @@ label.switch-row { cursor: pointer; }
 
 /* Georgian in display type: Noto Sans Georgian has a width axis (62.5-100), so use its narrowest cut
    to sit with Big Shoulders (which has no width axis and ignores this). Placed last so it beats `font:` shorthands. */
-.hero-name, .page-title, .titlebar-name, .tile-title, .tile-heading, .entry-title, .server-title, .browse-name,
-.tool-label, .row-label, .stat-num, .browse-players, .chip-part b, .status, .join-btn, .hero-empty-title,
+.hero-name, .page-title, .titlebar-name, .tile-title, .tile-heading, .entry-title,
+.tool-label, .row-label, .chip-part b, .status, .join-btn, .hero-empty-title,
 .error-title, .staff-name, .prose h1, .prose h2, .prose h3 { font-stretch: 62.5%; font-variation-settings: "wdth" 62.5; }
 
 /* ── Accessibility fallbacks ── */
@@ -563,5 +488,5 @@ label.switch-row { cursor: pointer; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .tile, .sheet, .tool, .server-card, .status-chip, .btn.glass { backdrop-filter: none; background: #241c18; }
+  .tile, .sheet, .tool, .status-chip, .btn.glass { backdrop-filter: none; background: #241c18; }
 }

@@ -5,7 +5,6 @@ const net = require("net")
 const crypto = require("crypto")
 const { exec, spawn } = require("child_process")
 const rpc = require("./discord-rpc")
-const { getRedmServers } = require("./server-list")
 const cleanup = require("./cleanup")
 const graphics = require("./graphics")
 const updater = require("./updater")
@@ -21,7 +20,7 @@ app.setAppUserModelId(APP_ID)
 let mainWindow = null
 
 const configPath = path.join(__dirname, "..", "..", "config.json")
-let config = { apiUrl: "", slug: "", servers: [], brand: {} }
+let config = { apiUrl: "", slug: "", brand: {} }
 try {
   config = JSON.parse(fs.readFileSync(configPath, "utf8"))
 } catch (e) {
@@ -194,13 +193,7 @@ ipcMain.handle("server-status", async (_, address) => {
     // Art the server owner uploaded to Cfx (only https URLs are passed to the page).
     banner: httpsOnly(vars.banner_detail || vars.banner_connecting),
     icon: httpsOnly(vars.icon_url),
-    tags: String(vars.tags || "").split(",").map((s) => s.trim()).filter(Boolean).slice(0, 4),
   }
-})
-
-// Every public RedM server from the Cfx list (cached 2 min in server-list.js).
-ipcMain.handle("server-list", async (_, force) => {
-  try { return { list: await getRedmServers(!!force) } } catch (e) { return { error: e.message } }
 })
 
 // TCP connect round-trip, best of 3.
