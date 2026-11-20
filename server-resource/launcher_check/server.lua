@@ -2,6 +2,9 @@
 --
 -- 1. Launcher joins: right before opening redm://connect the launcher POSTs /launcher_check/hello.
 --    We remember the caller's IP for a few minutes and match it when the player connects.
+--    The hello also says which visual mod is in the player's RedM: "none", "unknown" or the id of a mod
+--    the launcher's config approves (exports.launcher_check:Mod). It is a hint for your anticheat, never
+--    proof: anyone can send a hello, so keep measuring the game itself.
 -- 2. Live usage: while open, the launcher POSTs /launcher_check/heartbeat every 60 s with a random
 --    install id, its version, UI language and whether the game is running. No names, no files.
 --    (Players can switch this off in the launcher's Settings.)
@@ -17,7 +20,7 @@
 -- token passed through the connect flow if that starts to matter.
 -- Note: FXServer serves this over plain HTTP. Use a password you don't use anywhere else.
 
-local hellos = {}      -- ip -> { at, version }
+local hellos = {}      -- ip -> { at, version, mod }
 local viaLauncher = {} -- server id -> hello
 local launchers = {}   -- install id -> { ip, version, lang, playing, seen }
 local uniqueSinceStart = 0
@@ -89,7 +92,7 @@ local function snapshot()
   for _, sid in ipairs(GetPlayers()) do
     local h = viaLauncher[tonumber(sid)]
     if h then via = via + 1 end
-    players[#players + 1] = { id = tonumber(sid), name = GetPlayerName(sid), ping = GetPlayerPing(sid), launcher = h ~= nil, version = h and h.version or '' }
+    players[#players + 1] = { id = tonumber(sid), name = GetPlayerName(sid), ping = GetPlayerPing(sid), launcher = h ~= nil, version = h and h.version or '', mod = h and h.mod or '' }
   end
   return {
     time = now, launchersOpen = open, launchersInGame = playing, uniqueSinceStart = uniqueSinceStart,
@@ -134,7 +137,7 @@ document.getElementById('sub').textContent='Live, refreshes every 5 seconds. Joi
 chips(document.getElementById('versions'),d.versions||{});chips(document.getElementById('langs'),d.languages||{});
 var tb=document.getElementById('players');tb.textContent='';(d.players||[]).sort(function(a,b){return a.id-b.id}).forEach(function(p){
 var tr=document.createElement('tr');[p.id,p.name,p.ping+' ms'].forEach(function(v){var td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
-var td=document.createElement('td');td.className=p.launcher?'yes':'no';td.textContent=p.launcher?('Yes'+(p.version?' ('+p.version+')':'')):'No';tr.appendChild(td);tb.appendChild(tr)})
+var td=document.createElement('td');td.className=p.launcher?'yes':'no';td.textContent=p.launcher?('Yes'+(p.version?' ('+p.version+')':'')+(p.mod&&p.mod!=='none'?', mod: '+p.mod:'')):'No';tr.appendChild(td);tb.appendChild(tr)})
 }).catch(function(){document.getElementById('sub').textContent='Could not load stats. Retrying...'})}
 load();setInterval(load,5000);
 </script></body></html>]==]
@@ -154,7 +157,7 @@ SetHttpHandler(function(req, res)
       local ip = ipOf(req.address)
       if ip and (hellos[ip] or helloCount < MAX_HELLOS) then
         if not hellos[ip] then helloCount = helloCount + 1 end
-        hellos[ip] = { at = os.time(), version = str(data.version, '^[%w%.%-]+$', 20) or '' }
+        hellos[ip] = { at = os.time(), version = str(data.version, '^[%w%.%-]+$', 20) or '', mod = str(data.mod, '^[%w%.%-_]+$', 40) }
       end
       res.writeHead(204); res.send('')
     end)
@@ -242,8 +245,8 @@ AddEventHandler('playerJoining', function()
     SetResourceKvpInt('seen:' .. lic, 1)
     SetResourceKvpInt('stat:ever', GetResourceKvpInt('stat:ever') + 1)
   end
-  -- Other resources can react: AddEventHandler('launcher_check:joined', function(src, version) ... end)
-  TriggerEvent('launcher_check:joined', src, viaLauncher[src].version)
+  -- Other resources can react: AddEventHandler('launcher_check:joined', function(src, version, mod) ... end)
+  TriggerEvent('launcher_check:joined', src, viaLauncher[src].version, viaLauncher[src].mod)
 end)
 
 AddEventHandler('playerDropped', function() viaLauncher[source] = nil end)
@@ -252,6 +255,13 @@ AddEventHandler('playerDropped', function() viaLauncher[source] = nil end)
 exports('UsedLauncher', function(src)
   local h = viaLauncher[tonumber(src)]
   return h ~= nil, h and h.version or nil
+end)
+
+-- exports.launcher_check:Mod(src) -> 'none', 'unknown' or an approved mod's id: what the launcher found in
+-- the player's RedM data folders at join. nil = no launcher, or a launcher too old to say.
+exports('Mod', function(src)
+  local h = viaLauncher[tonumber(src)]
+  return h and h.mod or nil
 end)
 
 -- exports.launcher_check:ClaimOnce(src, key) -> true only the first time this Rockstar license claims `key`

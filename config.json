@@ -30,6 +30,46 @@
     { "label": "128", "channel": "specific/feature/redm-physical-player-extension" }
   ],
   "recommendedBranch": "specific/feature/redm-physical-player-extension",
+  "mods": [
+    {
+      "id": "visual-redemption-2.40",
+      "name": "Visual Redemption 2.40",
+      "files": {
+        "common/data/levels/rdr3/time.xml": "a86fbf7047e5c7a91940bc184a416aa6cb7fc84ed79f484ab35579ea35016e5b",
+        "common/data/levels/rdr3/weather.xml": "d2b8860887158418a3ba85cd96240ceaa3119eafedae722e5360430dcc20215f",
+        "common/data/levels/rdr3/weathers/rainstorm_render_drop.xml": "06862b58f693ba85e07b314accb54995b4ecf98ca4b8a75bfc9eb2e0aaadf73f",
+        "common/data/levels/rdr3/weathers/rainstorm_render_ground.xml": "87346ad0919f79c7b536c2d4cc0f7f681ef09f8c00df1b6703c9a116445f9ca7",
+        "common/data/levels/rdr3/weathers/sleet_render_drop.xml": "683384fdc869cca130257d4dd82d0a7b432d9e494e6091bf638041940baa6b6c",
+        "common/data/levels/rdr3/weathers/thunder_render_drop.xml": "81d2dcd4ca0c3b56effc8fef8aa2d91b78457ab356d59784f94085a0b7416892",
+        "common/data/levels/rdr3/weathers/thunder_render_ground.xml": "6cfab665704f678ed7b86104a26714139cf0b40750a1966d04ca263766ef9036",
+        "common/data/timecycle/timecycle_mods_1.xml": "bef92cfe8e3d14fd84ce41915ab82951987faa26cbedf3f1c182442bfbce4391",
+        "common/data/timecycle/timecycle_mods_2.xml": "d0085024fbf062c0c70d7f0ec81539d8a3618c17e862a0a2be23d0c369ff24d7",
+        "common/data/timecycle/w_blizzard.xml": "0b763f3f0944fcce6d46ed3a809c6bb41e7058f0a4c178a3483b943dbc017a0d",
+        "common/data/timecycle/w_clouds.xml": "b0d568021f216ec6f0fca1a62333c6f5444bcf02546ce617202cdc6becd0711e",
+        "common/data/timecycle/w_drizzle.xml": "4b6de83535a4dcc04aa011c7762c24ac72fd4b1f8659b8fc7c4f84dcbd1bd860",
+        "common/data/timecycle/w_fog.xml": "e38f3c6f0b1b7a707d718124bb091fb3b2a00298e2e94967b331dd4ea7cda4c1",
+        "common/data/timecycle/w_groundblizzard.xml": "8cec2742c1ff0ea8de75f515c1db2f5f9d221146d700e58dfd56ec15f3b7bf22",
+        "common/data/timecycle/w_hail.xml": "0af5a249e5ec27073ed7c90b866e1453603ac48b97ae72f3700a49a36ac16c23",
+        "common/data/timecycle/w_highpressure.xml": "b57c6bfd7c7cd3dd8546233dec60d227e02cec74b389d413dbb282617671d9ed",
+        "common/data/timecycle/w_hurricane.xml": "29f62f4dc26aa37197ece30787f3e5323e8bd3278bc921a9a3d3911178b8d2c4",
+        "common/data/timecycle/w_misty.xml": "44cca082e8007f71c627ba19970fc9c1f70bbeffd7f29ff602249f7ab6dce17d",
+        "common/data/timecycle/w_overcast.xml": "a0d2cedf648894d8452217462e0c48f7b23bfd0df63f3b7251b35ae4de564074",
+        "common/data/timecycle/w_overcastdark.xml": "c1ed0eb43b855b74b3c728aa0084345883ca68d5a01f05b0dcc1e2b1369f4f2b",
+        "common/data/timecycle/w_rain.xml": "3dbb1851823b31aca5510f11d4f76fe2fcee3254a99691bceef03158c9eb1380",
+        "common/data/timecycle/w_sandstorm.xml": "37bb7f5bcc7c2bd162f6b9da8d5d84bde797106937aef20e41ce169cff20a0fb",
+        "common/data/timecycle/w_shower.xml": "f0e2f235dc5d2211866f3c130452349ef4f6679275495baec2c413c65902e0b3",
+        "common/data/timecycle/w_sleet.xml": "bc8708de91de39f4f3645bc2524d55ba4771b69205d4505edf9b7682bc2a5c65",
+        "common/data/timecycle/w_snow.xml": "ab18ca103f45e26c259e97bf90fb9eced257e5a976f4086b2f1d6815d53a3662",
+        "common/data/timecycle/w_snowclearing.xml": "a3810c040be3dcbdfc6778ef8954f4c1fc409193c71b1ed28ffcde66d4fa220f",
+        "common/data/timecycle/w_snowlight.xml": "bfcc00d0c82f46c38e5c763de951537c8156f9fd096855d77aadb7e01627f8df",
+        "common/data/timecycle/w_sunny.xml": "ba2172cce81db129674ad6ab3ee687829a8978781be835f4a9e9508bedbda2cc",
+        "common/data/timecycle/w_thunder.xml": "fa9376ba3773e4b095329f377a69b551e548be898462226769d8aee7233c4359",
+        "common/data/timecycle/w_thunderstorm.xml": "4115557bada306b5e6451dd5db54457b2730d5dc377c4ade49f584857f389d90",
+        "common/data/timecycle/w_whiteout.xml": "8a3001e380cdb20b9d6ff5a4b08c0c2b732c5b4420eaba28d0b668042f5fe775",
+        "common/data/visualsettings.dat": "9a67583e16418675691e3f194ac49f2fe7eaf688a836d065d90d580c5058a6c6"
+      }
+    }
+  ],
   "news": [],
   "changelogs": [],
   "rules": ""

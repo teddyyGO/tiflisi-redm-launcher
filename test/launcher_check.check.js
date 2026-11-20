@@ -124,6 +124,16 @@ Wait, CONVARS.launcher_check_ttl = realWait, nil
 request('POST', '/hello', '{"version":"1"}', nil, '7.7.7.7:1')
 source = 4 EVENTS.playerJoining()
 check(EXPORTS.UsedLauncher(4), 'room again after the timer pruned expired hellos')
+
+-- visual mod reported at join (a hint for the anticheat)
+check(EXPORTS.Mod(4) == nil, 'older launchers report no mod')
+request('POST', '/hello', '{"version":"1.2.0","mod":"visual-redemption-2.40"}', nil, '7.7.7.7:1')
+source = 4 EVENTS.playerJoining()
+check(EXPORTS.Mod(4) == 'visual-redemption-2.40', 'mod id kept from the hello')
+request('POST', '/hello', '{"version":"1.2.0","mod":"<script>"}', nil, '7.7.7.7:1')
+source = 4 EVENTS.playerJoining()
+check(EXPORTS.Mod(4) == nil, 'a mod value with odd characters is dropped')
+check(EXPORTS.Mod(2) == nil, 'no launcher, no mod')
 PLAYERS[4] = nil
 print('launcher_check ok')
 

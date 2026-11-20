@@ -10,7 +10,7 @@ Tiflisi Launcher is a free, open-source launcher for RedM. This page lists every
 | The launcher is open | The featured server's own address | Requests for its public status (players, ping) |
 | The server's picture is shown | Wherever the server's owner hosts it | A normal image request |
 | At start, every 10 minutes and when the window comes back | GitHub (`github.com`) | A check for a new version, and the download if there is one |
-| You press Join | The server you join, if it runs the `launcher_check` resource | The launcher version. Server staff use it to see who joined with the launcher, for example for a one-time reward |
+| You press Join | The server you join, if it runs the `launcher_check` resource | The launcher version, and which visual mod is in RedM's data folders: none, one the server allows, or unknown files (no file names, no file contents). Server staff use it to see who joined with the launcher, for example for a one-time reward, and to tell allowed visual mods from cheat packs |
 | Every minute while the launcher is open, if "Share anonymous launcher stats" is on | The featured server (Tiflisi 1898) | A random install number, the launcher version, its language, and whether RedM is running |
 
 The random install number is made on your PC the first time the launcher starts. It is not linked to your name or to any account. Delete the `launcher-id` file in the launcher's data folder and you get a new one.
@@ -53,7 +53,7 @@ Tiflisi Launcher უფასო, ღია კოდის ლაუნჩე�
 - **სერვერის სტატუსი:** Tiflisi 1898 სერვერის საკუთარ მისამართზე (მოთამაშეები, პინგი).
 - **სერვერის სურათები:** იქიდან, სადაც სერვერის მფლობელი ინახავს მათ.
 - **განახლებები:** GitHub-ზე (`github.com`) ახალი ვერსიის შემოწმება და ჩამოტვირთვა.
-- **შესვლისას:** სერვერს, რომელზეც შედიხართ (თუ მასზე `launcher_check` მუშაობს), ეგზავნება ლაუნჩერის ვერსია. სერვერის ადმინისტრაცია ხედავს, ვინ შევიდა ლაუნჩერით, მაგალითად ერთჯერადი ბონუსისთვის.
+- **შესვლისას:** სერვერს, რომელზეც შედიხართ (თუ მასზე `launcher_check` მუშაობს), ეგზავნება ლაუნჩერის ვერსია და ის, თუ რა ვიზუალური მოდია RedM-ის მონაცემთა საქაღალდეებში: არცერთი, სერვერის მიერ დაშვებული თუ უცნობი ფაილები (ფაილების სახელები და შიგთავსი არ იგზავნება). სერვერის ადმინისტრაცია ხედავს, ვინ შევიდა ლაუნჩერით, მაგალითად ერთჯერადი ბონუსისთვის.
 - **ანონიმური სტატისტიკა** (თუ ჩართულია): სანამ ლაუნჩერი ღიაა, ყოველ წუთში რჩეულ სერვერს (Tiflisi 1898) ეგზავნება შემთხვევითი ინსტალაციის ნომერი, ლაუნჩერის ვერსია, მისი ენა და ჩართულია თუ არა RedM.
 
 შემთხვევითი ინსტალაციის ნომერი თქვენს კომპიუტერზე იქმნება ლაუნჩერის პირველი გაშვებისას. ის არ არის დაკავშირებული თქვენს სახელთან ან რომელიმე ანგარიშთან.

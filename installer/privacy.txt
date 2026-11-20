@@ -3,7 +3,7 @@
 ლაუნჩერი აგზავნის მხოლოდ იმას, რაც მუშაობისთვის სჭირდება:
 - სერვერის სტატუსი: Cfx.re-დან და Tiflisi 1898 სერვერიდან.
 - განახლებები: ახალი ვერსიის შემოწმება GitHub-ზე.
-- შესვლისას: სერვერს ეგზავნება ლაუნჩერის ვერსია.
+- შესვლისას: სერვერს ეგზავნება ლაუნჩერის ვერსია და ის, თუ რომელი ვიზუალური მოდია RedM-ში (თუ არის).
 - ანონიმური სტატისტიკა: სანამ ლაუნჩერი ღიაა, ყოველ წუთში Tiflisi 1898 სერვერს ეგზავნება ლაუნჩერის ვერსია, მისი ენა, ჩართულია თუ არა თამაში და შემთხვევითი ინსტალაციის ნომერი. გამორთვა ნებისმიერ დროს: პარამეტრები > „ანონიმური სტატისტიკის გაზიარება“.
 
 თქვენი სახელი, ანგარიშები, ფაილები და კომპიუტერის მონაცემები არასოდეს იგზავნება.
@@ -13,7 +13,7 @@
 The launcher sends only what it needs to work:
 - Server status: from Cfx.re and from the Tiflisi 1898 server.
 - Updates: checks GitHub for new versions.
-- When you press Join: that server gets the launcher version.
+- When you press Join: that server gets the launcher version and which visual mod, if any, is in RedM.
 - Anonymous stats: while the launcher is open, once a minute the Tiflisi 1898 server gets the launcher version, its language, whether the game is running and a random install number. Turn it off any time: Settings > "Share anonymous launcher stats".
 
 Your name, accounts, files and PC details are never sent.
