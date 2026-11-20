@@ -8,16 +8,8 @@ Object.assign(i18nTranslations.en, {
   // English shipped in all caps; sentence case reads better in this design.
   "status.online": "Online", "status.offline": "Offline", "join.default": "Join server", "join.connecting": "Connecting…",
   "section.changelog": "Devlog", "settings.autoStart": "Start with Windows", "empty.news": "No news yet.", "empty.changelog": "No devlog entries yet.",
-  "nav.servers": "Servers", "nav.tools": "Tools", "chip.players": "players",
+  "nav.tools": "Tools", "chip.players": "players",
   "stats.status": "Status", "stats.players": "Players", "stats.ping": "Your ping",
-  "servers.favorites": "Favorites", "servers.browse": "All servers", "servers.add": "Add server",
-  "servers.placeholder": "cfx.re/join/abc123 or ip:port", "servers.join": "Join", "servers.remove": "Remove",
-  "servers.offline": "Offline", "servers.empty": "No servers yet. Add one above.", "servers.colPing": "Ping",
-  "browse.search": "Search by name, description or tag", "browse.sortPlayers": "Most players", "browse.sortName": "Name",
-  "browse.more": "Show more", "browse.allLangs": "All languages", "browse.hideEmpty": "Hide empty", "browse.hideFull": "Hide full",
-  "browse.count": "{n} servers, {p} players online", "browse.loading": "Loading the server list…",
-  "browse.error": "Couldn't load the server list. Check your connection, then press refresh.",
-  "browse.none": "No servers match these filters.", "browse.fav": "Add to favorites", "browse.unfav": "Remove from favorites",
   "tools.branch": "Client branch", "tools.branchDesc": "Switch RedM update channel. Restart RedM to apply.",
   "tools.apply": "Apply", "tools.custom": "Custom",
   "tools.restart": "Restart RedM", "tools.restartDesc": "Close stuck RedM processes and open it again.", "tools.restartBtn": "Restart",
@@ -26,8 +18,7 @@ Object.assign(i18nTranslations.en, {
   "tools.folders": "Logs and crashes", "tools.foldersDesc": "Open the folders to send to staff.", "tools.logs": "Logs", "tools.crashes": "Crashes",
   "tools.running": "Close RedM first.", "tools.done": "Done.", "tools.notInstalled": "RedM is not installed.",
   "featured.none": "No featured server set",
-  "featured.noneDesc": "Server owners: put your cfx.re code or ip:port in brand.cfxCode in config.json. Players can still join any server from the Servers tab.",
-  "featured.browse": "Browse servers",
+  "featured.noneDesc": "Server owners: put your cfx.re code or ip:port in brand.cfxCode in config.json.",
   "settings.notificationsDesc": "Show a banner when a new launcher version is out", "settings.version": "Launcher version",
   "dialog.cancel": "Cancel", "tools.process": "RedM process", "tools.processDesc": "Frozen game or stuck in the background.",
   "clean.title": "Clean up", "clean.desc": "Frees space and fixes most loading, texture and stutter problems.",
@@ -88,16 +79,8 @@ Object.assign(i18nTranslations.en, {
 });
 
 Object.assign(i18nTranslations.ka, {
-  "nav.servers": "სერვერები", "nav.tools": "ხელსაწყოები", "chip.players": "მოთამაშე",
+  "nav.tools": "ხელსაწყოები", "chip.players": "მოთამაშე",
   "stats.status": "სტატუსი", "stats.players": "მოთამაშეები", "stats.ping": "თქვენი პინგი",
-  "servers.favorites": "რჩეულები", "servers.browse": "ყველა სერვერი", "servers.add": "სერვერის დამატება",
-  "servers.placeholder": "cfx.re/join/abc123 ან ip:port", "servers.join": "შესვლა", "servers.remove": "წაშლა",
-  "servers.offline": "ოფლაინ", "servers.empty": "სერვერები ჯერ არ გაქვთ. დაამატეთ ზემოთ.", "servers.colPing": "პინგი",
-  "browse.search": "ძებნა სახელით, აღწერით ან თეგით", "browse.sortPlayers": "მეტი მოთამაშე", "browse.sortName": "სახელით",
-  "browse.more": "მეტის ჩვენება", "browse.allLangs": "ყველა ენა", "browse.hideEmpty": "ცარიელების დამალვა", "browse.hideFull": "სავსეების დამალვა",
-  "browse.count": "{n} სერვერი, ონლაინ {p} მოთამაშე", "browse.loading": "სერვერების სია იტვირთება…",
-  "browse.error": "სერვერების სია ვერ ჩაიტვირთა. შეამოწმეთ ინტერნეტი და დააჭირეთ განახლებას.",
-  "browse.none": "ამ ფილტრებით სერვერი ვერ მოიძებნა.", "browse.fav": "რჩეულებში დამატება", "browse.unfav": "რჩეულებიდან წაშლა",
   "tools.branch": "კლიენტის არხი", "tools.branchDesc": "შეცვალეთ RedM-ის განახლების არხი. ძალაში შევა RedM-ის გადატვირთვის შემდეგ.",
   "tools.apply": "გამოყენება", "tools.custom": "სხვა",
   "tools.restart": "RedM-ის გადატვირთვა", "tools.restartDesc": "დახურავს გაჭედილ RedM-ს და ხელახლა გახსნის.", "tools.restartBtn": "გადატვირთვა",
@@ -106,8 +89,7 @@ Object.assign(i18nTranslations.ka, {
   "tools.folders": "ლოგები და კრაშები", "tools.foldersDesc": "გახსენით საქაღალდეები, რომ ადმინისტრაციას გაუგზავნოთ.", "tools.logs": "ლოგები", "tools.crashes": "კრაშები",
   "tools.running": "ჯერ დახურეთ RedM.", "tools.done": "შესრულდა.", "tools.notInstalled": "RedM არ არის დაინსტალირებული.",
   "featured.none": "მთავარი სერვერი არ არის მითითებული",
-  "featured.noneDesc": "სერვერის მფლობელებო: ჩაწერეთ თქვენი cfx.re კოდი ან ip:port config.json-ის brand.cfxCode-ში. მოთამაშეებს მაინც შეუძლიათ ნებისმიერ სერვერზე შესვლა „სერვერების“ ჩანართიდან.",
-  "featured.browse": "სერვერების დათვალიერება",
+  "featured.noneDesc": "სერვერის მფლობელებო: ჩაწერეთ თქვენი cfx.re კოდი ან ip:port config.json-ის brand.cfxCode-ში.",
   "settings.notificationsDesc": "ბანერის ჩვენება, როცა ლაუნჩერის ახალი ვერსია გამოვა", "settings.version": "ლაუნჩერის ვერსია",
   "dialog.cancel": "გაუქმება", "tools.process": "RedM-ის პროცესი", "tools.processDesc": "გაჭედილი თამაში ან ფონში დარჩენილი.",
   "clean.title": "გასუფთავება", "clean.desc": "ათავისუფლებს ადგილს და აგვარებს ჩატვირთვის, ტექსტურების და ლაგის პრობლემების უმეტესობას.",
@@ -210,7 +192,6 @@ function setLanguage(lang) {
   renderContent();
   fetchServerStatus();
   // Parts drawn by code (not data-i18n) need redrawing in the new language.
-  if (browse.list) { buildBrowseFilters(); renderBrowse() }
   if (cleanScan) renderCleanup()
   if (lastGfx) renderGraphics(lastGfx)
   renderUpdate()
@@ -248,8 +229,6 @@ async function init() {
     }
     await fetchLauncherData()
     initSettings()
-    initServers()
-    initBrowse()
     initTools()
     initHelpers()
     applyLanguage()
@@ -555,7 +534,6 @@ function switchNav(nav) {
   document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.toggle("active", n.dataset.nav === nav) })
   document.querySelectorAll(".content-area").forEach(function(c) { c.classList.toggle("active", c.id === "content-" + nav) })
   document.body.dataset.view = nav // blurs the art behind inner pages
-  if (nav === "servers") setServersView(serversView)
   if (nav === "tools") refreshTools()
 }
 
@@ -593,14 +571,6 @@ async function joinServer() {
   }, 3000)
 }
 
-// Servers tab joins: the featured server is listed there too and still needs its game-version check
-// (the Home button runs it in joinServer).
-async function joinListed(address, endpoint, name) {
-  if (addrKey(address) === addrKey(getCfxCode()) && !(await branchCheckBeforeJoin())) return
-  return joinAddress(address, endpoint, name)
-}
-
-// Shared by the Home join button and the Servers tab.
 async function joinAddress(address, endpoint, name) {
   var result = await window.launcher.joinServer({ address: address || null, endpoint: endpoint, name: name })
   if (result && !result.success) {
@@ -857,229 +827,6 @@ function renderStaff() {
     .catch(function() {
       container.innerHTML = '<div class="news-empty">' + esc(t("error.staffFailed")) + '</div>'
     })
-}
-
-// ── Servers tab: any RedM server, saved per user (seeded from config.servers) ──
-
-function loadServers() {
-  try {
-    var s = JSON.parse(localStorage.getItem("servers"))
-    if (Array.isArray(s)) return s
-  } catch (e) {}
-  return (config.servers || []).map(function (x) { return { name: x.name || "", address: x.address } })
-}
-function saveServers(list) { localStorage.setItem("servers", JSON.stringify(list)) }
-
-function initServers() {
-  var input = document.getElementById("server-add-input")
-  var add = function () {
-    var a = input.value.trim()
-    if (!a) return
-    var list = loadServers()
-    if (!list.some(function (s) { return s.address === a })) list.push({ name: "", address: a })
-    saveServers(list)
-    input.value = ""
-    renderServers()
-  }
-  document.getElementById("server-add-btn").addEventListener("click", add)
-  input.addEventListener("keydown", function (e) { if (e.key === "Enter") add() })
-}
-
-var serverLive = {}
-function renderServers() {
-  var box = document.getElementById("server-list")
-  var list = loadServers()
-  if (!list.length) { box.innerHTML = '<div class="tile news-empty">' + esc(t("servers.empty")) + '</div>'; return }
-  box.innerHTML = list.map(function (s, i) {
-    var l = serverLive[s.address]
-    var name = s.name || (l && l.name) || s.address
-    var state = !l ? "is-loading" : l.online ? "" : "is-offline"
-    var players = !l ? "--" : l.online ? l.clients + " / " + (l.maxClients || "?") : t("servers.offline")
-    var ping = l && l.online && l.ping != null ? l.ping + " ms" : "--"
-    var icon = l && l.icon
-      ? '<img class="server-icon" src="' + esc(l.icon) + '" alt="">'
-      : '<div class="server-icon">' + esc(name.replace(/[^A-Za-z0-9Ⴀ-ჿ]/g, "").charAt(0).toUpperCase() || "?") + '</div>'
-    var tags = l && l.tags ? l.tags.slice(0, 3).map(function (tg) { return '<span class="chip">' + esc(tg) + '</span>' }).join("") : ""
-    return '<div class="server-card ' + state + '">' +
-      // banner is https-only with no quotes/brackets (checked in main.js httpsOnly)
-      (l && l.banner ? '<div class="server-banner" style="background-image:url(\'' + l.banner + '\')"></div>' : '') +
-      icon +
-      '<div><div class="server-title">' + esc(name) + '</div>' +
-      '<div class="server-sub"><span class="addr">' + esc(s.address) + '</span>' + tags + '</div></div>' +
-      '<div class="server-stats">' +
-        '<div><div class="stat-num">' + esc(players) + '</div><div class="stat-label">' + esc(t("stats.players")) + '</div></div>' +
-        '<div><div class="stat-num">' + esc(ping) + '</div><div class="stat-label">' + esc(t("servers.colPing")) + '</div></div>' +
-      '</div>' +
-      '<div class="server-actions">' +
-        '<button class="btn accent" data-join="' + i + '"><i class="ph-fill ph-play"></i>' + esc(t("servers.join")) + '</button>' +
-        '<button class="icon-btn" data-remove="' + i + '" aria-label="' + esc(t("servers.remove")) + '" title="' + esc(t("servers.remove")) + '"><i class="ph ph-trash"></i></button>' +
-      '</div></div>'
-  }).join("")
-  box.querySelectorAll("[data-join]").forEach(function (b) {
-    b.onclick = function () { var s = list[b.dataset.join], l = serverLive[s.address] || {}; joinListed(s.address, l.endpoint, s.name || l.name) }
-  })
-  box.querySelectorAll("[data-remove]").forEach(function (b) {
-    b.onclick = function () { list.splice(b.dataset.remove, 1); saveServers(list); renderServers() }
-  })
-}
-
-async function refreshServers() {
-  renderServers()
-  await Promise.all(loadServers().map(async function (s) {
-    var l = await window.launcher.serverStatus(s.address)
-    if (l.online && l.endpoint) l.ping = await window.launcher.pingServer(l.endpoint)
-    serverLive[s.address] = l
-    renderServers()
-  }))
-}
-
-// ── Servers > All servers: every public RedM server from the Cfx list ──
-
-var browse = { list: null, error: "", loading: false, q: "", lang: "", tag: "", hideEmpty: true, hideFull: false, sort: "players", limit: 40, shown: [] }
-var serversView = "fav"
-
-// "cfx.re/join/AbC123", "https://cfx.re/join/abc123/", "abc123" all compare equal.
-function addrKey(a) {
-  return String(a || "").trim().toLowerCase().replace(/^(https?|redm):\/\/(connect\/)?/, "").replace(/^cfx\.re\/join\//, "").replace(/\/+$/, "")
-}
-
-function setServersView(v) {
-  serversView = v
-  document.querySelectorAll("#servers-seg button").forEach(function (b) { b.setAttribute("aria-checked", String(b.dataset.view === v)) })
-  document.getElementById("servers-fav").hidden = v !== "fav"
-  document.getElementById("servers-browse").hidden = v !== "browse"
-  if (v === "fav") refreshServers()
-  if (v === "browse" && !browse.list && !browse.loading) loadBrowse()
-}
-
-async function loadBrowse(force) {
-  browse.loading = true
-  browse.error = ""
-  renderBrowse()
-  var r = await window.launcher.serverList(!!force)
-  browse.loading = false
-  if (r.error) browse.error = r.error
-  else browse.list = r.list
-  buildBrowseFilters()
-  renderBrowse()
-}
-
-function langName(code) {
-  try { return new Intl.DisplayNames([currentLang.replace("_", "-")], { type: "language" }).of(code) } catch (e) { return code }
-}
-
-function buildBrowseFilters() {
-  var list = browse.list || []
-  var langs = {}, tags = {}
-  list.forEach(function (s) {
-    if (/^[a-z]{2,3}$/.test(s.locale) && s.locale !== "root") langs[s.locale] = (langs[s.locale] || 0) + 1
-    s.tags.forEach(function (tg) { tags[tg] = (tags[tg] || 0) + 1 })
-  })
-  var byCount = function (o) { return Object.keys(o).sort(function (a, b) { return o[b] - o[a] }) }
-  var sel = document.getElementById("browse-lang")
-  sel.innerHTML = '<option value="">' + esc(t("browse.allLangs")) + '</option>' + byCount(langs).map(function (c) {
-    return '<option value="' + esc(c) + '">' + esc(langName(c)) + ' (' + langs[c] + ')</option>'
-  }).join("")
-  sel.value = browse.lang
-  var chip = function (key, label, on, count) {
-    return '<button class="chip-toggle" data-chip="' + esc(key) + '" aria-pressed="' + on + '">' + esc(label) + (count ? ' <span class="count">' + count + '</span>' : '') + '</button>'
-  }
-  document.getElementById("browse-chips").innerHTML =
-    chip("empty", t("browse.hideEmpty"), browse.hideEmpty) + chip("full", t("browse.hideFull"), browse.hideFull) +
-    '<span class="chip-sep"></span>' +
-    byCount(tags).slice(0, 10).map(function (tg) { return chip("tag:" + tg, tg, browse.tag === tg, tags[tg]) }).join("")
-}
-
-function filteredServers() {
-  var q = browse.q.trim().toLowerCase()
-  var out = (browse.list || []).filter(function (s) {
-    if (browse.hideEmpty && !s.clients) return false
-    if (browse.hideFull && s.maxClients && s.clients >= s.maxClients) return false
-    if (browse.lang && s.locale !== browse.lang) return false
-    if (browse.tag && s.tags.indexOf(browse.tag) === -1) return false
-    if (q && (s.name + " " + s.desc + " " + s.tags.join(" ")).toLowerCase().indexOf(q) === -1) return false
-    return true
-  })
-  out.sort(browse.sort === "name"
-    ? function (a, b) { return a.name.localeCompare(b.name) }
-    : function (a, b) { return b.clients - a.clients })
-  return out
-}
-
-function renderBrowse() {
-  var box = document.getElementById("browse-list")
-  var count = document.getElementById("browse-count")
-  var more = document.getElementById("browse-more")
-  if (!browse.list) {
-    more.hidden = true
-    if (browse.loading) {
-      count.textContent = t("browse.loading")
-      box.innerHTML = new Array(6).join('<div class="browse-row skeleton"></div>')
-    } else {
-      count.textContent = ""
-      box.innerHTML = '<div class="tile news-empty">' + esc(t("browse.error")) + '</div>'
-    }
-    return
-  }
-  var rows = filteredServers()
-  var players = rows.reduce(function (n, s) { return n + s.clients }, 0)
-  count.textContent = t("browse.count").replace("{n}", rows.length.toLocaleString()).replace("{p}", players.toLocaleString())
-  var favs = loadServers().map(function (s) { return addrKey(s.address) })
-  browse.shown = rows.slice(0, browse.limit)
-  box.innerHTML = browse.shown.map(function (s, i) {
-    var fav = favs.indexOf(addrKey(s.address)) !== -1
-    var icon = s.icon
-      ? '<img class="server-icon" src="' + esc(s.icon) + '" alt="" loading="lazy">'
-      : '<div class="server-icon">' + esc(s.name.replace(/[^A-Za-z0-9Ⴀ-ჿ]/g, "").charAt(0).toUpperCase() || "?") + '</div>'
-    return '<div class="browse-row">' + icon +
-      '<div class="browse-main"><div class="browse-name">' + esc(s.name) + '</div>' +
-      '<div class="browse-desc">' + esc(s.desc || s.address) + '</div></div>' +
-      '<div class="browse-tags">' + (s.locale ? '<span class="chip">' + esc(s.locale.toUpperCase()) + '</span>' : '') +
-        s.tags.slice(0, 2).map(function (tg) { return '<span class="chip">' + esc(tg) + '</span>' }).join("") + '</div>' +
-      '<div class="browse-players">' + s.clients + '<span> / ' + (s.maxClients || "?") + '</span></div>' +
-      '<div class="browse-actions">' +
-        '<button class="star-btn" data-star="' + i + '" aria-pressed="' + fav + '" title="' + esc(t(fav ? "browse.unfav" : "browse.fav")) + '" aria-label="' + esc(t(fav ? "browse.unfav" : "browse.fav")) + '"><i class="' + (fav ? "ph-fill" : "ph") + ' ph-star"></i></button>' +
-        '<button class="btn accent" data-join="' + i + '"><i class="ph-fill ph-play"></i>' + esc(t("servers.join")) + '</button>' +
-      '</div></div>'
-  }).join("") || '<div class="tile news-empty">' + esc(t("browse.none")) + '</div>'
-  more.hidden = rows.length <= browse.limit
-}
-
-function initBrowse() {
-  document.querySelectorAll("#servers-seg button").forEach(function (b) { b.onclick = function () { setServersView(b.dataset.view) } })
-  var qTimer = null
-  document.getElementById("browse-q").addEventListener("input", function () {
-    var v = this.value
-    clearTimeout(qTimer)
-    qTimer = setTimeout(function () { browse.q = v; browse.limit = 40; renderBrowse() }, 150)
-  })
-  document.getElementById("browse-lang").onchange = function () { browse.lang = this.value; browse.limit = 40; renderBrowse() }
-  document.getElementById("browse-sort").onchange = function () { browse.sort = this.value; renderBrowse() }
-  document.getElementById("browse-refresh").onclick = function () { loadBrowse(true) }
-  document.getElementById("browse-more").onclick = function () { browse.limit += 40; renderBrowse() }
-  document.getElementById("browse-chips").onclick = function (e) {
-    var c = e.target.closest("[data-chip]")
-    if (!c) return
-    var k = c.dataset.chip
-    if (k === "empty") browse.hideEmpty = !browse.hideEmpty
-    else if (k === "full") browse.hideFull = !browse.hideFull
-    else browse.tag = browse.tag === k.slice(4) ? "" : k.slice(4)
-    browse.limit = 40
-    buildBrowseFilters()
-    renderBrowse()
-  }
-  document.getElementById("browse-list").onclick = function (e) {
-    var j = e.target.closest("[data-join]"), st = e.target.closest("[data-star]")
-    if (j) { var s = browse.shown[j.dataset.join]; joinListed(s.address, null, s.name) }
-    if (st) {
-      var sv = browse.shown[st.dataset.star], key = addrKey(sv.address), list = loadServers()
-      var at = list.findIndex(function (x) { return addrKey(x.address) === key })
-      if (at === -1) list.push({ name: "", address: sv.address })
-      else list.splice(at, 1)
-      saveServers(list)
-      renderBrowse()
-    }
-  }
 }
 
 // ── Tools tab: client branch, cache, stuck processes, logs ──

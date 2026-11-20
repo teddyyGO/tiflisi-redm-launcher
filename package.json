@@ -1,7 +1,7 @@
 {
   "name": "open-redm-launcher",
   "version": "1.1.8",
-  "description": "Tiflisi Launcher: the Tiflisi 1898 RedM launcher. Featured server, server browser, branch switch and fix tools. Open source.",
+  "description": "Tiflisi Launcher: the Tiflisi 1898 RedM launcher. One-click join, branch switch and fix tools. Open source.",
   "author": "Tiflisi Launcher contributors",
   "homepage": "https://launcher.tiflisi.cloud",
   "repository": "github:teddyyGO/tiflisi-redm-launcher",
@@ -10,7 +10,7 @@
     "start": "electron .",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
-    "test": "node test/server-list.check.js && node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && node test/nickname.check.js && electron test/shortcuts.check.js && electron test/smoke.check.js"
+    "test": "node test/cleanup.check.js && node test/graphics.check.js && node test/launcher_check.check.js && node test/crash.check.js && node test/nickname.check.js && electron test/shortcuts.check.js && electron test/smoke.check.js"
   },
   "build": {
     "appId": "io.github.openredmlauncher",
