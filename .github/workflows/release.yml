@@ -33,19 +33,27 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: Build and publish
-        run: npx electron-builder --win --publish always
+      # Build only. electron-builder's own publisher is not used: it created two releases for one tag and
+      # split the files between them (1.1.9 lost its blockmap, 1.2.0 was published without its installer).
+      - name: Build
+        run: npx electron-builder --win --publish never
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Code signing (removes the SmartScreen "unknown publisher" warning): add these repo secrets.
           # Sign inside this step (electron-builder's sign hook), never afterwards: latest.yml holds the
           # installer's sha512, so a file signed later no longer matches and every player's update fails.
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-      # The build uploads into a draft. Publish only now that every file (installer, latest.yml,
-      # blockmap) is there, so no launcher can see a release whose update file is still missing.
+      # One command makes the one release. gh uploads every file into a draft and only then publishes
+      # it, so no launcher can see a release whose installer, latest.yml or blockmap is missing.
       - name: Publish the release
+        shell: bash
         # The notes link the code signing and privacy policies (SignPath wants both on every release page).
-        run: gh release edit "${{ github.ref_name }}" --draft=false --latest --notes-file .github/release-notes.md
+        run: |
+          cd dist
+          for f in Tiflisi-Launcher-Setup.exe Tiflisi-Launcher-Setup.exe.blockmap latest.yml; do
+            test -s "$f" || { echo "::error::dist/$f is missing"; exit 1; }
+          done
+          gh release create "$GITHUB_REF_NAME" Tiflisi-Launcher-Setup.exe Tiflisi-Launcher-Setup.exe.blockmap latest.yml \
+            --verify-tag --latest --title "${GITHUB_REF_NAME#v}" --notes-file ../.github/release-notes.md
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
