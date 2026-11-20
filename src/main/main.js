@@ -11,6 +11,7 @@ const updater = require("./updater")
 const crash = require("./crash")
 const shortcuts = require("./shortcuts")
 const nickname = require("./nickname")
+const mods = require("./mods")
 
 // Same id the installer gives its shortcuts (build.appId): keeps taskbar pins, grouping and
 // Windows notifications tied to this app.
@@ -233,9 +234,12 @@ ipcMain.handle("join-server", async (_, opts) => {
   // Tell the server's launcher_check resource (if it runs one) that this IP joins via the launcher.
   if (IP_PORT.test(endpoint || "")) {
     // No install id: launcher_check matches the join by IP, so other servers never learn it.
+    // mod: what is in RedM's data folders ("none", "unknown" or an approved mod's id), so the server's
+    // anticheat knows what to expect. A hint only: the server still measures the game itself.
+    const mod = await mods.scan(redmDir, config.mods).catch(() => null)
     fetch("http://" + endpoint + "/launcher_check/hello", {
       method: "POST",
-      body: JSON.stringify({ version: app.getVersion() }),
+      body: JSON.stringify({ version: app.getVersion(), mod: mod ? mod.id || mod.state : undefined }),
       signal: AbortSignal.timeout(2500),
     }).catch(() => {})
   }
@@ -378,7 +382,13 @@ ipcMain.handle("readiness", async () => {
     game: !!game && fs.existsSync(path.join(game, "RDR2.exe")),
     channel,
     freeBytes,
+    mod: await mods.scan(redmDir, config.mods).catch(() => ({ state: "none", files: [] })), // visual mods, see mods.js
   }
+})
+
+ipcMain.handle("mods-remove", async () => {
+  if ((await redmPids()).length) return { success: false, error: "running" }
+  try { return await mods.remove(redmDir) } catch (e) { return { success: false, error: e.code || "failed" } }
 })
 
 // Rewrite the redm:// link registration the way RedM itself does (per user, HKCU).

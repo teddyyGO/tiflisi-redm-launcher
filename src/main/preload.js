@@ -33,6 +33,7 @@ contextBridge.exposeInMainWorld("launcher", {
   setUsage: call("set-usage"),
   readiness: call("readiness"),
   repairLinks: call("repair-links"),
+  removeMods: call("mods-remove"),
   getName: call("name-get"),
   setName: call("name-set"),
   copyText: call("copy-text"),

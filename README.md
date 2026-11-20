@@ -33,6 +33,7 @@ Shown with the [Tiflisi 1898](https://cfx.re/join/dg346jd) branding. Every name,
   - The launcher never changes which graphics card the game uses. Versions up to 1.1.6 could turn on Windows' "High performance" GPU setting for RedM (since 1.1.4 even by themselves on first start). That reorders the graphics cards, so RedM's saved card number can point at the wrong one, and on a PC with the monitor in the motherboard port the game may not start. 1.1.7 removes the setting wherever the launcher turned it on, and leaves it alone if you set it yourself in Windows.
   - Restart or force-close RedM, open the logs and crashes folders.
 - **Launcher-join detection**: the `server-resource/launcher_check` resource tells you who joined through the launcher, and can require it.
+- **Visual mods check**: the Ready check also looks in RedM's data folders, where graphics packs go. A mod you approve in `config.json` shows as allowed. Anything else gets a Remove button, which moves the files to a backup folder (nothing is deleted). At join the launcher tells your server which of the three it found (none, an approved mod, unknown files), so your anticheat knows what to expect.
 - **Discord Rich Presence**: set `discordClientId` to show "Playing on <server>" (no extra dependency).
 - News, devlog and rules, either from `config.json` or from an optional panel API. Gallery and staff pages need the API.
 - 30+ UI languages.
@@ -47,6 +48,7 @@ Out of the box this is the [Tiflisi 1898](https://cfx.re/join/dg346jd) launcher:
 | `brand.cfxCode` | Your server (`abc123` or `ip:port`). The launcher joins only this one. |
 | `branches` | Extra branch buttons in Tools: `[{ "label": "128", "channel": "specific/feature/..." }]` |
 | `recommendedBranch` | The game version your server needs. Players on another one get a "Switch" fix and a prompt before joining. Leave empty if any version works. |
+| `mods` | Visual mods you allow: `[{ "id": "my-mod-1.0", "name": "My Mod 1.0", "files": { "common/data/visualsettings.dat": "<sha256>" } }]`, with paths inside RedM's `citizen` folder. A player's RedM counts as that mod only when it holds exactly these files, unchanged. |
 | `news`, `changelogs`, `rules` | Static content when you don't run an API |
 | `apiUrl`, `slug` | Optional panel API (`GET {apiUrl}/{slug}`, `/gallery`, `/staff`) |
 | `defaultLanguage` | e.g. `en`, `ka`, `de` |
@@ -71,6 +73,7 @@ Self-checks (no test framework needed):
 ```
 node test/cleanup.check.js
 node test/graphics.check.js
+node test/mods.check.js
 node test/launcher_check.check.js   # runs the server resource in a Lua VM
 npx electron test/shortcuts.check.js   # Start Menu / Desktop / taskbar shortcut repair, in temp folders
 ```
@@ -126,7 +129,8 @@ set launcher_check_url  "https://your-site/download"
 
 - `exports.launcher_check:UsedLauncher(src)` returns `true/false, version`
 - `exports.launcher_check:ClaimOnce(src, "my_reward")` returns `true` only the first time a Rockstar license claims that reward while using the launcher, for one-time rewards
-- the server event `launcher_check:joined` (`src`, `version`) fires when a launcher player joins
+- `exports.launcher_check:Mod(src)` returns `"none"`, `"unknown"` or an approved mod's id: what the launcher found in the player's RedM data folders at join (`nil` without the launcher). Treat it as a hint for your anticheat, never as proof: anyone who reads this code can send it.
+- the server event `launcher_check:joined` (`src`, `version`, `mod`) fires when a launcher player joins
 - the state bag `Player(src).state.viaLauncher` holds the same answer
 - the console command `launcherstats` shows the counts
 

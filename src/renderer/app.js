@@ -75,7 +75,10 @@ Object.assign(i18nTranslations.en, {
   "name.madeUp": "RedM made this name up. Change it to the name you want others to see.", "name.current": "This is the name other players see.",
   "name.saved": "Saved. You'll be {name} in game.", "name.running": "Close RedM first, then save, or RedM will overwrite it.",
   "name.invalid": "Use 2 to 32 letters, numbers, spaces, - _ or .",
-  "ready.name": "Your name in game: {name}", "ready.nameBad": "You still have RedM's random name ({name})", "ready.change": "Change"
+  "ready.name": "Your name in game: {name}", "ready.nameBad": "You still have RedM's random name ({name})", "ready.change": "Change",
+  "ready.mod": "Visual mod: {name}, allowed on {server}", "ready.modBad": "{n} graphics files in RedM that {server} doesn't recognise. Its anticheat may flag them.",
+  "ready.remove": "Remove", "ready.modRemoved": "Moved {n} files out of RedM. They are kept in RedM's removed-mods folder.",
+  "ready.modFailed": "Couldn't move the files. Close RedM and try again."
 });
 
 Object.assign(i18nTranslations.ka, {
@@ -146,7 +149,10 @@ Object.assign(i18nTranslations.ka, {
   "name.madeUp": "ეს სახელი RedM-მა შემთხვევით შეარჩია. შეცვალეთ იმ სახელით, რომლითაც გინდათ, რომ გიცნობდნენ.", "name.current": "ამ სახელს ხედავენ სხვა მოთამაშეები.",
   "name.saved": "შენახულია. თამაშში იქნებით {name}.", "name.running": "ჯერ დახურეთ RedM, მერე შეინახეთ, თორემ RedM გადაწერს.",
   "name.invalid": "გამოიყენეთ 2-დან 32-მდე ასო, ციფრი, გამოტოვება, - _ ან .",
-  "ready.name": "თქვენი სახელი თამაშში: {name}", "ready.nameBad": "ჯერ კიდევ RedM-ის შემთხვევითი სახელი გაქვთ ({name})", "ready.change": "შეცვლა"
+  "ready.name": "თქვენი სახელი თამაშში: {name}", "ready.nameBad": "ჯერ კიდევ RedM-ის შემთხვევითი სახელი გაქვთ ({name})", "ready.change": "შეცვლა",
+  "ready.mod": "ვიზუალური მოდი: {name}, {server}-ზე დაშვებულია", "ready.modBad": "RedM-ში არის {n} გრაფიკული ფაილი, რომელსაც {server} არ ცნობს. ანტიჩიტმა შეიძლება მონიშნოს.",
+  "ready.remove": "ამოღება", "ready.modRemoved": "{n} ფაილი ამოღებულია RedM-იდან. ისინი ინახება RedM-ის removed-mods საქაღალდეში.",
+  "ready.modFailed": "ფაილების გადატანა ვერ მოხერხდა. დახურეთ RedM და სცადეთ თავიდან."
 });
 
 function detectLanguage() {
@@ -1084,6 +1090,11 @@ function readyItems() {
     var okD = r.freeBytes > 15 * GB
     items.push({ ok: okD, text: t(okD ? "ready.disk" : "ready.diskBad").replace("{size}", fmtBytes(r.freeBytes)), fix: "free-space", fixLabel: t("ready.freeUp") })
   }
+  // Visual mods in RedM's data folders: an approved one is fine, anything else the server's anticheat may flag.
+  if (r.mod && r.mod.state !== "none") {
+    var okM = r.mod.state === "approved"
+    items.push({ ok: okM, text: t(okM ? "ready.mod" : "ready.modBad").replace("{name}", r.mod.name).replace("{server}", brand.name).replace("{n}", r.mod.files.length), fix: "remove-mods", fixLabel: t("ready.remove") })
+  }
   return items
 }
 
@@ -1115,6 +1126,11 @@ async function readyFix(what) {
   if (what === "open-redm") return window.launcher.openGame()
   if (what === "free-space") { toggleReady(false); return switchNav("tools") }
   if (what === "name") { toggleReady(false); switchNav("settings"); return document.getElementById("settings-name").focus() }
+  if (what === "remove-mods") {
+    var res = await window.launcher.removeMods()
+    say(res.success ? t("ready.modRemoved").replace("{n}", res.moved) : t(res.error === "running" ? "tools.running" : "ready.modFailed"))
+    return refreshReady()
+  }
   if (what === "set-branch") await window.launcher.setChannel(config.recommendedBranch)
   if (what === "repair-links") await window.launcher.repairLinks()
   say(t("tools.done"))
