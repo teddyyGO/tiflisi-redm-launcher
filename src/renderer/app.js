@@ -43,6 +43,7 @@ Object.assign(i18nTranslations.en, {
   "upd.restart": "Restart now", "upd.check": "Check now", "upd.done": "Updated to {v}.",
   "usage.title": "Share anonymous launcher stats",
   "usage.desc": "Tells {server} that the launcher is open and whether you're playing, with its version, language and a random install ID. No names, no files.",
+  "dev.desc": "Test server.",
   "about.title": "About", "about.desc": "Version {v}. Free and open source (MIT license).", "about.source": "Source code",
   "join.full": "Join when a slot opens", "join.waiting": "Waiting for a slot… (click to cancel)",
   "join.waitingToast": "The server is full. You'll join as soon as a slot opens. Click again to stop waiting.",
@@ -99,7 +100,69 @@ Object.assign(i18nTranslations.en, {
   "welcome.todo": "Still to do: see the list under Join.",
   "name.none": "Pick the name other players will see.", "name.failed": "Couldn't save the name. Check that redm.cfg isn't read-only.",
   "panel.down": "News and rules couldn't be loaded. The launcher keeps trying.",
-  "crash.openLogs": "Open logs", "crash.resetGfx": "Reset graphics settings"
+  "crash.openLogs": "Open logs", "crash.resetGfx": "Reset graphics settings",
+  "risk.safe": "Safe",
+  "risk.safeTip": "Only clears files the game rebuilds by itself, or makes a change you can undo in Tools.",
+  "risk.careful": "Careful",
+  "risk.carefulTip": "Closes RedM or changes the game version. Anything not saved in game is lost.",
+  "gfx.power": "High performance power plan while playing",
+  "gfx.powerDesc": "Windows switches to it when RedM starts, and back to your own plan when RedM closes. Uses more power.",
+  "gfx.powerNone": "This PC has no High performance power plan, so this can't be used.",
+  "gfx.powerOwn": "You already use High performance or a power plan of your own, so the launcher leaves it alone.",
+  "win.title": "Windows game settings",
+  "win.desc": "Windows' own settings for games. The launcher only shows them; you change them in Windows.",
+  "win.gameMode": "Game Mode",
+  "win.gameModeOn": "On: Windows puts the game ahead of background work.",
+  "win.gameModeOff": "Off. Turning it on usually helps.",
+  "win.rec": "Background recording",
+  "win.recOn": "On: Windows keeps recording the last minutes, which costs some FPS. Turn it off unless you use it.",
+  "win.recOff": "Off.",
+  "win.gpu": "Hardware-accelerated GPU scheduling",
+  "win.gpuOn": "On.",
+  "win.gpuOff": "Off.",
+  "win.gpuNone": "Left to Windows and your graphics driver.",
+  "win.open": "Open in Windows",
+  "pc.title": "Your PC",
+  "pc.desc": "What RedM runs on. Added to the crash report you copy for staff.",
+  "pc.loading": "Reading your PC…",
+  "pc.failed": "Couldn't read the graphics cards.",
+  "pc.cpuLabel": "Processor",
+  "pc.ramLabel": "Memory",
+  "pc.gpuLabel": "Graphics card",
+  "pc.winLabel": "Windows",
+  "pc.cpu": "{cpu}, {n} threads",
+  "pc.ramLow": "{size}. RedM needs at least 8 GB: close other programs while you play.",
+  "pc.gpu": "{name}, driver {v} from {date}",
+  "pc.gpuNoDate": "{name}, driver {v}",
+  "pc.gpuOld": "{name}: the driver is from {date}, over a year old. New drivers fix many crashes.",
+  "pc.update": "Update driver",
+  "pc.windows": "Windows {n}, build {b}",
+  "undo.title": "Changes made by the launcher",
+  "undo.desc": "Everything the launcher changed on this PC, and the way back.",
+  "undo.none": "Nothing to undo: the launcher hasn't changed anything here.",
+  "undo.btn": "Undo",
+  "undo.done": "Undone.",
+  "undo.branch": "Client branch is {b}. It was {was} before the launcher changed it.",
+  "undo.branchBtn": "Back to {was}",
+  "undo.branchWarn": "{server} uses the {b} game version. On {was} you can't join it until you switch back.",
+  "undo.fso": "Fullscreen optimizations are off for RedM.",
+  "undo.prio": "RedM runs at high priority while the launcher is open.",
+  "undo.power": "Windows switches to the High performance power plan while you play.",
+  "undo.gfx": "Graphics settings were reset on {date}. Your old settings are saved.",
+  "undo.gfxBtn": "Restore old settings",
+  "undo.gfxMsg": "Your graphics settings from before {date} come back. The ones RedM made since are kept as a backup.",
+  "undo.mods": "{n} graphics files were moved out of RedM on {date}.",
+  "undo.mods1": "1 graphics file was moved out of RedM on {date}.",
+  "undo.modsBtn": "Put back",
+  "undo.modsTitle": "Put the files back?",
+  "undo.modsMsg": "{server}'s anticheat may flag these files again.",
+  "undo.modsKept": "Some files stayed in the backup: RedM now has a file with the same name.",
+  "ready.hooks": "{apps} is running. It hooks into games and often shows up in RedM crash reports: close it if RedM crashes.",
+  "ready.storyMods": "Story-mode mod files in your RDR2 folder ({files}). If RedM crashes or won't start, move them out to test.",
+  "ready.openFolder": "Open folder",
+  "about.build": "Built by GitHub Actions from commit {c}.",
+  "about.local": "Built on this PC, not by GitHub Actions.",
+  "about.buildLog": "Build log"
 });
 
 Object.assign(i18nTranslations.ka, {
@@ -138,6 +201,7 @@ Object.assign(i18nTranslations.ka, {
   "upd.restart": "გადატვირთვა", "upd.check": "შემოწმება", "upd.done": "განახლდა {v}-მდე.",
   "usage.title": "ანონიმური სტატისტიკის გაზიარება",
   "usage.desc": "{server}-ს ატყობინებს, რომ ლაუნჩერი ღიაა და თამაშობთ თუ არა, ვერსიით, ენით და შემთხვევითი ინსტალაციის ID-ით. სახელები და ფაილები არ იგზავნება.",
+  "dev.desc": "სატესტო სერვერი.",
   "about.title": "შესახებ", "about.desc": "ვერსია {v}. უფასო და ღია კოდი (MIT ლიცენზია).", "about.source": "წყაროს კოდი",
   "join.full": "შესვლა, როცა ადგილი გათავისუფლდება", "join.waiting": "ადგილის მოლოდინი… (გასაუქმებლად დააჭირეთ)",
   "join.waitingToast": "სერვერი სავსეა. შეხვალთ, როგორც კი ადგილი გათავისუფლდება. მოლოდინის შესაწყვეტად ისევ დააჭირეთ.",
@@ -196,7 +260,69 @@ Object.assign(i18nTranslations.ka, {
   "panel.down": "სიახლეები და წესები ვერ ჩაიტვირთა. ლაუნჩერი ცდას განაგრძობს.",
   "crash.openLogs": "ლოგების გახსნა", "crash.resetGfx": "გრაფიკის პარამეტრების განულება",
   // The devlog is not "განახლებები": that word is the launcher's own updates.
-  "nav.changelog": "ცვლილებები", "section.changelog": "ცვლილებები"
+  "nav.changelog": "ცვლილებები", "section.changelog": "ცვლილებები",
+  "risk.safe": "უსაფრთხო",
+  "risk.safeTip": "შლის მხოლოდ ფაილებს, რომლებსაც თამაში თავად აღადგენს, ან აკეთებს ცვლილებას, რომლის გაუქმებაც ხელსაწყოებში შეგიძლიათ.",
+  "risk.careful": "ფრთხილად",
+  "risk.carefulTip": "ხურავს RedM-ს ან ცვლის თამაშის ვერსიას. თამაშში შეუნახავი პროგრესი დაიკარგება.",
+  "gfx.power": "მაღალი წარმადობის კვების რეჟიმი თამაშისას",
+  "gfx.powerDesc": "Windows მასზე გადადის RedM-ის გაშვებისას და RedM-ის დახურვისას თქვენს რეჟიმს უბრუნდება. მეტ ენერგიას მოიხმარს.",
+  "gfx.powerNone": "ამ კომპიუტერს მაღალი წარმადობის კვების რეჟიმი არ აქვს, ამიტომ ეს ვერ გამოიყენება.",
+  "gfx.powerOwn": "უკვე იყენებთ მაღალი წარმადობის ან საკუთარ კვების რეჟიმს, ამიტომ ლაუნჩერი მას არ ეხება.",
+  "win.title": "Windows-ის თამაშის პარამეტრები",
+  "win.desc": "Windows-ის საკუთარი პარამეტრები თამაშებისთვის. ლაუნჩერი მხოლოდ აჩვენებს მათ; შეცვლა Windows-ში შეგიძლიათ.",
+  "win.gameMode": "თამაშის რეჟიმი",
+  "win.gameModeOn": "ჩართულია: Windows თამაშს ფონურ საქმეებზე წინ აყენებს.",
+  "win.gameModeOff": "გამორთულია. ჩართვა ჩვეულებრივ ეხმარება.",
+  "win.rec": "ფონური ჩაწერა",
+  "win.recOn": "ჩართულია: Windows მუდმივად იწერს ბოლო წუთებს, რაც FPS-ს ამცირებს. გამორთეთ, თუ არ იყენებთ.",
+  "win.recOff": "გამორთულია.",
+  "win.gpu": "აპარატურულად დაჩქარებული GPU დაგეგმვა",
+  "win.gpuOn": "ჩართულია.",
+  "win.gpuOff": "გამორთულია.",
+  "win.gpuNone": "ამას Windows და გრაფიკის დრაივერი წყვეტს.",
+  "win.open": "Windows-ში გახსნა",
+  "pc.title": "თქვენი კომპიუტერი",
+  "pc.desc": "რაზეც RedM მუშაობს. ემატება ავარიის ანგარიშს, რომელსაც სტაფისთვის აკოპირებთ.",
+  "pc.loading": "კომპიუტერის შემოწმება…",
+  "pc.failed": "ვიდეობარათების წაკითხვა ვერ მოხერხდა.",
+  "pc.cpuLabel": "პროცესორი",
+  "pc.ramLabel": "მეხსიერება",
+  "pc.gpuLabel": "ვიდეობარათი",
+  "pc.winLabel": "Windows",
+  "pc.cpu": "{cpu}, {n} ნაკადი",
+  "pc.ramLow": "{size}. RedM-ს სჭირდება მინიმუმ 8 GB: თამაშისას დახურეთ სხვა პროგრამები.",
+  "pc.gpu": "{name}, დრაივერი {v}, {date}",
+  "pc.gpuNoDate": "{name}, დრაივერი {v}",
+  "pc.gpuOld": "{name}: დრაივერი ერთ წელზე ძველია ({date}). ახალი დრაივერები ბევრ ავარიას ასწორებს.",
+  "pc.update": "დრაივერის განახლება",
+  "pc.windows": "Windows {n}, build {b}",
+  "undo.title": "ლაუნჩერის ცვლილებები",
+  "undo.desc": "ყველაფერი, რაც ლაუნჩერმა ამ კომპიუტერზე შეცვალა, და დაბრუნების გზა.",
+  "undo.none": "გასაუქმებელი არაფერია: ლაუნჩერს აქ არაფერი შეუცვლია.",
+  "undo.btn": "გაუქმება",
+  "undo.done": "გაუქმდა.",
+  "undo.branch": "კლიენტის არხია {b}. ლაუნჩერის ცვლილებამდე იყო {was}.",
+  "undo.branchBtn": "{was}-ზე დაბრუნება",
+  "undo.branchWarn": "{server} იყენებს თამაშის ვერსიას {b}. {was}-ზე მასთან ვერ შეხვალთ, სანამ უკან არ გადართავთ.",
+  "undo.fso": "სრული ეკრანის ოპტიმიზაცია RedM-ისთვის გამორთულია.",
+  "undo.prio": "RedM მაღალი პრიორიტეტით მუშაობს, სანამ ლაუნჩერი ღიაა.",
+  "undo.power": "თამაშისას Windows მაღალი წარმადობის კვების რეჟიმზე გადადის.",
+  "undo.gfx": "გრაფიკის პარამეტრები განულდა: {date}. ძველი პარამეტრები შენახულია.",
+  "undo.gfxBtn": "ძველი პარამეტრების აღდგენა",
+  "undo.gfxMsg": "დაბრუნდება გრაფიკის პარამეტრები, რომლებიც {date}-მდე გქონდათ. რაც RedM-მა მას შემდეგ შექმნა, სარეზერვოდ შეინახება.",
+  "undo.mods": "{n} გრაფიკის ფაილი გადატანილია RedM-იდან: {date}.",
+  "undo.mods1": "1 გრაფიკის ფაილი გადატანილია RedM-იდან: {date}.",
+  "undo.modsBtn": "დაბრუნება",
+  "undo.modsTitle": "დავაბრუნოთ ფაილები?",
+  "undo.modsMsg": "{server}-ის ანტიჩიტმა ეს ფაილები შეიძლება ისევ შენიშნოს.",
+  "undo.modsKept": "ზოგი ფაილი სარეზერვოში დარჩა: RedM-ს ახლა იმავე სახელის ფაილი აქვს.",
+  "ready.hooks": "{apps} გაშვებულია. ის თამაშებს ერთვება და ხშირად ჩანს RedM-ის ავარიის ანგარიშებში: დახურეთ, თუ RedM ითიშება.",
+  "ready.storyMods": "სიუჟეტური რეჟიმის მოდების ფაილები RDR2-ის საქაღალდეში ({files}). თუ RedM ითიშება ან არ ირთვება, შესამოწმებლად გაიტანეთ.",
+  "ready.openFolder": "საქაღალდის გახსნა",
+  "about.build": "აწყობილია GitHub Actions-ით, commit {c}.",
+  "about.local": "აწყობილია ამ კომპიუტერზე და არა GitHub Actions-ით.",
+  "about.buildLog": "აწყობის ლოგი"
 });
 
 function detectLanguage() {
@@ -222,6 +348,9 @@ function applyLanguage() {
   });
   document.querySelectorAll("[data-i18n-placeholder]").forEach(function(el) {
     el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach(function(el) {
+    el.title = t(el.getAttribute("data-i18n-title"));
   });
   var joinBtn = document.getElementById("join-btn");
   if (joinBtn && !joining) {
@@ -251,6 +380,8 @@ function setLanguage(lang) {
   // Parts drawn by code (not data-i18n) need redrawing in the new language.
   if (cleanScan) renderCleanup()
   if (lastGfx) renderGraphics(lastGfx)
+  renderPc()
+  renderUndo()
   renderUpdate()
   renderAbout()
   syncUsage()
@@ -267,6 +398,8 @@ function getJoinBtnDefault() {
 }
 
 var launcherData = null
+// Bump when a release adds something to Tools worth a look: the Tools tab gets a dot until it's opened.
+var TOOLS_NEW = "1.3.0"
 var config = null
 var statusInterval = null
 var dataInterval = null
@@ -290,6 +423,7 @@ async function init() {
     initTools()
     initHelpers()
     applyLanguage()
+    document.querySelector('[data-nav="tools"]').classList.toggle("has-new", localStorage.getItem("toolsSeen") !== TOOLS_NEW)
     setStatus("checking")
     fetchLauncherData()
     fetchServerStatus()
@@ -613,7 +747,11 @@ function switchNav(nav) {
   document.querySelectorAll(".nav-item").forEach(function(n) { n.classList.toggle("active", n.dataset.nav === nav) })
   document.querySelectorAll(".content-area").forEach(function(c) { c.classList.toggle("active", c.id === "content-" + nav) })
   document.body.dataset.view = nav // blurs the art behind inner pages
-  if (nav === "tools") refreshTools()
+  if (nav === "tools") {
+    refreshTools()
+    localStorage.setItem("toolsSeen", TOOLS_NEW)
+    document.querySelector('[data-nav="tools"]').classList.remove("has-new")
+  }
 }
 
 var joining = false
@@ -787,8 +925,13 @@ function initUpdates() {
   })
 }
 
+// Which commit and GitHub Actions run built this copy (null: built locally, undefined: not read yet).
+var buildInfo
 function renderAbout() {
-  document.getElementById("about-desc").textContent = t("about.desc").replace("{v}", appVersion)
+  var b = buildInfo
+  document.getElementById("about-desc").textContent = t("about.desc").replace("{v}", appVersion) +
+    (b === undefined ? "" : " " + (b ? t("about.build").replace("{c}", b.commit.slice(0, 7)) : t("about.local")))
+  document.getElementById("build-log").hidden = !b
   document.getElementById("dev-join").hidden = !brand.devCfxCode
 }
 
@@ -814,6 +957,7 @@ function initSettings() {
   }
   if (config.sourceUrl && /^https:\/\//.test(config.sourceUrl)) SOURCE_URL = config.sourceUrl
   initUpdates()
+  window.launcher.buildInfo().then(function (b) { buildInfo = b; renderAbout() })
   document.getElementById("toggle-usage").addEventListener("change", function () {
     localStorage.setItem("usageStats", String(this.checked))
     syncUsage()
@@ -1080,6 +1224,8 @@ async function openGame() {
 async function refreshTools() {
   refreshCleanup() // draws its rows straight away; sizes fill in as they're measured
   refreshGraphics()
+  refreshPc()
+  refreshUndo()
   var info = await window.launcher.redmInfo()
   var known = CHANNELS.indexOf(info.channel) !== -1
   setBranchChoice(known ? info.channel : "custom")
@@ -1231,7 +1377,149 @@ function renderGraphics(g) {
   var desc = fso.closest(".switch-row").querySelector(".check-desc")
   desc.textContent = t("gfx.fsoDesc") + (g.exes ? "" : " " + t("gfx.fsoNone"))
   document.getElementById("gfx-prio").checked = localStorage.getItem("gfxPrio") === "true"
+  var power = document.getElementById("gfx-power")
+  power.checked = g.power === "ok" && localStorage.getItem("gfxPower") === "true"
+  power.disabled = g.power !== "ok"
+  document.getElementById("gfx-power-desc").textContent = g.power === "own" ? t("gfx.powerOwn") : t("gfx.powerDesc") + (g.power === "ok" ? "" : " " + t("gfx.powerNone"))
   document.getElementById("gfx-reset-row").hidden = !g.hasSettings
+  renderWindows(g.windows)
+  renderUndo()
+}
+
+// One row in the Tools lists: a label, a line under it, an optional button. warn: drawn as a problem.
+function infoRow(o) {
+  return '<div class="switch-row info-row' + (o.warn ? " warn" : "") + '">' +
+    (o.warn ? '<i class="ph ph-warning-circle"></i>' : "") +
+    '<span class="row-text">' + (o.label ? '<span class="check-label">' + esc(o.label) + '</span>' : "") +
+    (o.desc ? '<span class="check-desc">' + esc(o.desc) + '</span>' : "") + '</span>' +
+    (o.act && o.icon ? '<button type="button" class="btn glass icon-only" data-act="' + o.act + '" data-arg="' + esc(o.arg) + '" title="' + esc(o.btn) + '" aria-label="' + esc(o.btn) + '"><i class="ph ' + o.icon + '"></i></button>'
+      : o.act ? '<button type="button" class="btn glass" data-act="' + o.act + '" data-arg="' + esc(o.arg) + '">' + esc(o.btn) + '</button>' : "") + '</div>'
+}
+
+// "2026-11-26" or a backup's "2026-11-26-14-02-33", in the player's date order. Numbers only: Electron
+// has no month names for Georgian and would put English ones in a Georgian sentence.
+function fmtDate(stamp, withTime) {
+  var n = String(stamp || "").split("-").map(Number)
+  var d = new Date(n[0], n[1] - 1, n[2], n[3] || 0, n[4] || 0)
+  var opts = { year: "numeric", month: "2-digit", day: "2-digit" }
+  if (withTime) { opts.hour = "2-digit"; opts.minute = "2-digit" }
+  try { return d.toLocaleString(currentLang.replace("_", "-"), opts) } catch (e) { return d.toLocaleString() }
+}
+
+// Windows' own game settings: shown, never changed. Each opens its page in Windows Settings.
+function renderWindows(w) {
+  if (!w) return
+  var open = function (arg) { return { act: "win-settings", arg: arg, btn: t("win.open"), icon: "ph-arrow-square-out" } }
+  document.getElementById("win-list").innerHTML = [
+    infoRow(Object.assign({ label: t("win.gameMode"), desc: t(w.gameMode ? "win.gameModeOn" : "win.gameModeOff"), warn: !w.gameMode }, open("gameMode"))),
+    infoRow(Object.assign({ label: t("win.rec"), desc: t(w.recording ? "win.recOn" : "win.recOff"), warn: w.recording }, open("recording"))),
+    infoRow(Object.assign({ label: t("win.gpu"), desc: t(w.gpuScheduling === null ? "win.gpuNone" : w.gpuScheduling ? "win.gpuOn" : "win.gpuOff") }, open("gpuScheduling"))),
+  ].join("")
+}
+
+// ── Your PC ──
+
+var pcData = null
+var DRIVER_PAGES = {
+  nvidia: "https://www.nvidia.com/en-us/drivers/",
+  amd: "https://www.amd.com/en/support/download/drivers.html",
+  intel: "https://www.intel.com/content/www/us/en/support/detect.html",
+}
+
+async function refreshPc() {
+  if (pcData && pcData.gpus.length) return renderPc()
+  renderPc()
+  try { pcData = await window.launcher.pcInfo() } catch (e) { pcData = null }
+  renderPc()
+}
+
+function renderPc() {
+  var box = document.getElementById("pc-list")
+  if (!pcData) { box.innerHTML = infoRow({ desc: t("pc.loading") }); return }
+  var p = pcData, gb = Math.round(p.ramBytes / GB) + " GB"
+  var rows = [
+    infoRow({ label: t("pc.cpuLabel"), desc: t("pc.cpu").replace("{cpu}", p.cpu).replace("{n}", p.threads) }),
+    infoRow({ label: t("pc.ramLabel"), desc: p.ramBytes < 7.5 * GB ? t("pc.ramLow").replace("{size}", gb) : gb, warn: p.ramBytes < 7.5 * GB }),
+  ]
+  p.gpus.forEach(function (g) {
+    var date = g.date ? fmtDate(g.date) : ""
+    var desc = g.old ? t("pc.gpuOld") : g.date ? t("pc.gpu") : t("pc.gpuNoDate")
+    rows.push(infoRow({ label: t("pc.gpuLabel"), desc: desc.replace("{name}", g.name).replace("{v}", g.version).replace("{date}", date), warn: g.old,
+      act: g.old && DRIVER_PAGES[g.vendor] ? "pc-driver" : null, arg: g.vendor, btn: t("pc.update") }))
+  })
+  if (!p.gpus.length) rows.push(infoRow({ label: t("pc.gpuLabel"), desc: t("pc.failed") }))
+  if (p.windowsBuild) rows.push(infoRow({ label: t("pc.winLabel"), desc: t("pc.windows").replace("{n}", p.windowsBuild >= 22000 ? "11" : "10").replace("{b}", p.windowsBuild) }))
+  box.innerHTML = rows.join("")
+}
+
+// For "Copy report for staff".
+function pcReport() {
+  if (!pcData) return []
+  var p = pcData
+  return ["PC: " + p.cpu + " (" + p.threads + " threads), " + Math.round(p.ramBytes / GB) + " GB RAM, Windows build " + (p.windowsBuild || "?")]
+    .concat(p.gpus.map(function (g) { return "Graphics: " + g.name + ", driver " + g.version + (g.date ? " (" + g.date + ")" : "") }))
+}
+
+// ── Changes made by the launcher, each with its way back ──
+
+var changes = null
+
+async function refreshUndo() {
+  try { changes = await window.launcher.changesInfo() } catch (e) { return }
+  renderUndo()
+}
+
+function renderUndo() {
+  if (!changes) return
+  var c = changes, rows = []
+  var undo = function (arg, btn) { return { act: "undo", arg: arg, btn: btn || t("undo.btn") } }
+  if (c.channelWas && c.channelWas !== c.channel) {
+    rows.push(infoRow(Object.assign({ label: t("undo.branch").replace("{b}", branchLabel(c.channel)).replace("{was}", branchLabel(c.channelWas)) },
+      undo("branch", t("undo.branchBtn").replace("{was}", branchLabel(c.channelWas))))))
+  }
+  if (lastGfx && lastGfx.fsoOff) rows.push(infoRow(Object.assign({ label: t("undo.fso") }, undo("fso"))))
+  if (localStorage.getItem("gfxPrio") === "true") rows.push(infoRow(Object.assign({ label: t("undo.prio") }, undo("prio"))))
+  if (localStorage.getItem("gfxPower") === "true") rows.push(infoRow(Object.assign({ label: t("undo.power") }, undo("power"))))
+  if (c.gfxBackup) rows.push(infoRow(Object.assign({ label: t("undo.gfx").replace("{date}", fmtDate(c.gfxBackup, true)) }, undo("gfx", t("undo.gfxBtn")))))
+  c.modBackups.forEach(function (m) {
+    rows.push(infoRow(Object.assign({ label: t(m.files === 1 ? "undo.mods1" : "undo.mods").replace("{n}", m.files).replace("{date}", fmtDate(m.name, true)) },
+      undo("mods:" + m.name, t("undo.modsBtn")))))
+  })
+  document.getElementById("undo-list").innerHTML = rows.join("")
+  document.getElementById("undo-desc").textContent = t(rows.length ? "undo.desc" : "undo.none")
+}
+
+async function undoChange(what) {
+  // The switches undo through their own toggle, so the setting and its saved choice stay in step.
+  if (what === "fso" || what === "prio" || what === "power") {
+    var box = document.getElementById("gfx-" + what)
+    box.checked = false
+    box.dispatchEvent(new Event("change"))
+    return
+  }
+  if (what === "branch") {
+    var was = changes.channelWas, want = config.recommendedBranch
+    if (want && want === changes.channel && !(await confirmDialog(t("undo.branchBtn").replace("{was}", branchLabel(was)) + "?",
+      t("undo.branchWarn").replace("{server}", brand.name).replace("{b}", branchLabel(want)).replace("{was}", branchLabel(was)),
+      t("undo.branchBtn").replace("{was}", branchLabel(was))))) return
+    var r = await window.launcher.setChannel(was)
+    r.success ? say(r.running ? t("ready.restartHint").replace("{b}", branchLabel(was)) : t("undo.done")) : toolFail(r)
+    refreshTools()
+    return refreshReady()
+  }
+  if (what === "gfx") {
+    if (!(await confirmDialog(t("undo.gfxBtn"), t("undo.gfxMsg").replace("{date}", fmtDate(changes.gfxBackup, true)), t("undo.gfxBtn")))) return
+    var g = await window.launcher.restoreGraphics()
+    g.success ? say(t("undo.done")) : toolFail(g)
+    return refreshTools()
+  }
+  if (what.indexOf("mods:") === 0) {
+    if (!(await confirmDialog(t("undo.modsTitle"), t("undo.modsMsg").replace("{server}", brand.name), t("undo.modsBtn")))) return
+    var m = await window.launcher.restoreMods(what.slice(5))
+    m.success ? say(t("undo.done") + (m.kept ? " " + t("undo.modsKept") : "")) : toolFail(m)
+    refreshUndo()
+    refreshReady()
+  }
 }
 
 function initGraphics(fail) {
@@ -1241,15 +1529,18 @@ function initGraphics(fail) {
       var ok = await apply(this.checked)
       say(ok === false ? t("tools.failed").replace("{code}", "registry") : t("tools.done"))
       if (ok === false) refreshGraphics() // show what Windows really has
+      renderUndo()
     })
   }
   bind("gfx-fso", "gfxFso", window.launcher.setFso)
   bind("gfx-prio", "gfxPrio", window.launcher.setPriorityBoost)
+  bind("gfx-power", "gfxPower", window.launcher.setPowerBoost)
   document.getElementById("gfx-reset").onclick = async function () {
     if (!(await confirmDialog(t("gfx.reset"), t("gfx.resetDesc"), t("gfx.resetBtn")))) return
     var r = await window.launcher.resetGraphics()
     r.success ? say(t("tools.done")) : fail(r)
     refreshGraphics()
+    refreshUndo()
   }
   // Re-apply on every launch: a new RedM game build brings a new exe that needs the same settings.
   // Up to 1.1.6 the launcher could turn on "High performance GPU" for the game (see graphics.js undoGpu).
@@ -1258,6 +1549,7 @@ function initGraphics(fail) {
   if (localStorage.getItem("gfxGpu") === "true") window.launcher.undoGpu().then(function (ok) { if (ok) localStorage.removeItem("gfxGpu") })
   if (localStorage.getItem("gfxFso") === "true") window.launcher.setFso(true)
   if (localStorage.getItem("gfxPrio") === "true") window.launcher.setPriorityBoost(true)
+  if (localStorage.getItem("gfxPower") === "true") window.launcher.setPowerBoost(true)
 }
 
 // ── Helpers that solve player problems: ready-to-play checklist, Fix my game, crash helper,
@@ -1313,6 +1605,12 @@ function readyItems() {
     var okM = r.mod.state === "approved"
     items.push({ ok: okM, text: t(okM ? "ready.mod" : r.mod.files.length === 1 ? "ready.modBad1" : "ready.modBad").replace("{name}", r.mod.name).replace("{server}", brand.name).replace("{n}", r.mod.files.length), fix: "remove-mods", fixLabel: t("ready.remove") })
   }
+  // Hints, not problems: apps that hook into games, story-mode mods in the RDR2 folder.
+  if (r.hooks && r.hooks.length) items.push({ ok: true, info: true, text: t("ready.hooks").replace("{apps}", r.hooks.join(", ")) })
+  if (r.storyMods && r.storyMods.length) {
+    var files = r.storyMods.slice(0, 4).join(", ") + (r.storyMods.length > 4 ? ", …" : "")
+    items.push({ ok: true, info: true, text: t("ready.storyMods").replace("{files}", files), fix: "open-game-folder", fixLabel: t("ready.openFolder") })
+  }
   return items
 }
 
@@ -1326,9 +1624,9 @@ function renderReady() {
   btn.innerHTML = '<i class="ph ' + (bad ? "ph-warning-circle" : "ph-check-circle") + '"></i><span>' +
     esc(bad ? (bad === 1 ? t("ready.issue1") : t("ready.issues").replace("{n}", bad)) : t("ready.ok")) + '</span><i class="ph ph-caret-up"></i>'
   document.getElementById("ready-panel").innerHTML = items.map(function (i) {
-    return '<div class="ready-item ' + (i.ok ? "ok" : "bad") + '"><i class="ph ' + (i.ok ? "ph-check-circle" : "ph-warning-circle") + '"></i>' +
+    return '<div class="ready-item ' + (i.info ? "info" : i.ok ? "ok" : "bad") + '"><i class="ph ' + (i.info ? "ph-info" : i.ok ? "ph-check-circle" : "ph-warning-circle") + '"></i>' +
       '<span class="row-text">' + esc(i.text) + '</span>' +
-      (i.ok ? '' : '<button type="button" class="btn accent" data-act="ready-fix" data-arg="' + i.fix + '">' + esc(i.fixLabel) + '</button>') + '</div>'
+      (!i.fix || (i.ok && !i.info) ? '' : '<button type="button" class="btn accent" data-act="ready-fix" data-arg="' + i.fix + '">' + esc(i.fixLabel) + '</button>') + '</div>'
   }).join("") +
     '<div class="ready-foot"><span>' + esc(t("ready.trouble")) + '</span><button type="button" class="btn glass" data-act="fix-game"><i class="ph ph-first-aid-kit"></i>' + esc(t("fix.btn")) + '</button></div>'
   refreshJoinButton() // "Get RedM" while RedM is missing
@@ -1345,6 +1643,7 @@ async function readyFix(what) {
   if (what === "get-redm") return window.launcher.openExternal("https://redm.net")
   if (what === "open-redm") return openGame()
   if (what === "free-space") { toggleReady(false); return switchNav("tools") }
+  if (what === "open-game-folder") { if ((await window.launcher.openFolder("game")) === "missing") say(t("tools.noFolder")); return }
   if (what === "name") { toggleReady(false); switchNav("settings"); return document.getElementById("settings-name").focus() }
   if (what === "remove-mods") {
     var res = await window.launcher.removeMods()
@@ -1437,6 +1736,7 @@ async function fixMyGame() {
 var lastCrash = null
 function showCrash(c) {
   lastCrash = c
+  if (!pcData) window.launcher.pcInfo().then(function (p) { pcData = p }).catch(function () {})
   closeOverlays() // a dialog left open from before the game started (a pending join question) is stale now
   var o = document.createElement("div")
   o.className = "error-overlay crash"
@@ -1461,6 +1761,7 @@ function crashReport() {
     brand.name + " launcher " + appVersion,
     "Time: " + new Date().toString(),
     "RedM version (branch): " + (ready ? ready.channel : "?"),
+  ].concat(pcReport(), [
     "Log file: " + (c.log || "?"),
     "",
     "Crash message:",
@@ -1468,7 +1769,7 @@ function crashReport() {
     "",
     "Last log lines before the crash:",
     c.context || "",
-  ].join("\n")
+  ]).join("\n")
 }
 
 // Back-online alert + auto-join when full
@@ -1610,7 +1911,10 @@ function initHelpers() {
   setTimeout(firstRun, 1200)
   window.launcher.onGameCrashed(showCrash)
   // Re-check readiness when you come back to the launcher (you may have fixed something outside it).
-  window.addEventListener("focus", function () { if (Date.now() - readyAt > 30000) refreshReady() })
+  window.addEventListener("focus", function () {
+    if (Date.now() - readyAt > 30000) refreshReady()
+    if (document.body.dataset.view === "tools") { refreshGraphics(); refreshUndo() }
+  })
   // Close the checklist when clicking anywhere else.
   document.addEventListener("click", function (e) {
     var panel = document.getElementById("ready-panel")
@@ -1662,6 +1966,10 @@ document.addEventListener("click", function (e) {
     case "crash-logs": window.launcher.openFolder("logs"); break
     case "crash-reset-gfx": closeOverlay(el); window.launcher.resetGraphics().then(function (r) { r.success ? say(t("tools.done")) : toolFail(r) }); break
     case "source": window.launcher.openExternal(SOURCE_URL); break
+    case "build-log": if (buildInfo) window.launcher.openExternal(buildInfo.run); break
+    case "win-settings": window.launcher.openWindowsSettings(a); break
+    case "pc-driver": if (DRIVER_PAGES[a]) window.launcher.openExternal(DRIVER_PAGES[a]); break
+    case "undo": undoChange(a); break
   }
 })
 document.addEventListener("submit", function (e) { e.preventDefault() })

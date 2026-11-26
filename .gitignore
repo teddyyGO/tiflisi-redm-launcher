@@ -5,3 +5,4 @@ dist/
 
 config.local.json
 local-assets/
+src/build-info.json

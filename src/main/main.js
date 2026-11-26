@@ -12,6 +12,8 @@ const crash = require("./crash")
 const shortcuts = require("./shortcuts")
 const nickname = require("./nickname")
 const mods = require("./mods")
+const undo = require("./undo")
+const pc = require("./pc")
 
 // Same id the installer gives its shortcuts (build.appId): keeps taskbar pins, grouping and
 // Windows notifications tied to this app.
@@ -138,6 +140,15 @@ ipcMain.handle("set-auto-start", (_, enabled) => {
 // What Windows will actually do at sign-in (the player may have turned it off in Task Manager).
 ipcMain.handle("get-auto-start", () => !!app.getLoginItemSettings().openAtLogin)
 ipcMain.handle("get-app-version", () => app.getVersion())
+// Which commit and GitHub Actions run built this copy: src/build-info.json, written by the Release workflow.
+// Missing (a local build): Settings says so.
+ipcMain.handle("build-info", () => {
+  try {
+    const b = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "build-info.json"), "utf8"))
+    if (/^[0-9a-f]{40}$/.test(b.commit) && /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/actions\/runs\/\d+$/.test(b.run)) return { commit: b.commit, run: b.run }
+  } catch (e) {}
+  return null
+})
 
 // ── Server lookup (Cfx list + the server's own /info.json etc.) ──
 
@@ -369,6 +380,11 @@ ipcMain.handle("redm-info", async () => {
 
 // ── Cleanup (see cleanup.js) ──
 
+// A moving bar on the taskbar button while something long runs.
+function progress(on) {
+  if (mainWindow && !mainWindow.isDestroyed()) mainWindow.setProgressBar(on ? 1 : -1, { mode: on ? "indeterminate" : "none" })
+}
+
 const cleanEnv = { redmDir, local: process.env.LOCALAPPDATA || "", temp: app.getPath("temp") }
 
 ipcMain.handle("cleanup-meta", () => cleanup.meta())
@@ -379,7 +395,9 @@ ipcMain.handle("cleanup-run", async (_, ids) => {
   // RedM running: clean what it doesn't hold open, report the rest as locked.
   const locked = (await redmPids()).length ? ids.filter((id) => cleanup.needsRedmClosed(cleanEnv, [id])) : []
   if (locked.length && locked.length === ids.length) return { success: false, error: "running" }
-  return { success: true, locked, ...(await cleanup.clean(cleanEnv, ids.filter((id) => !locked.includes(id)))) }
+  progress(true)
+  try { return { success: true, locked, ...(await cleanup.clean(cleanEnv, ids.filter((id) => !locked.includes(id)))) } }
+  finally { progress(false) }
 })
 
 // ── Graphics and performance (see graphics.js) ──
@@ -393,10 +411,41 @@ ipcMain.handle("graphics-info", async () => ({
   ...(await graphics.state(exes())),
   exes: exes().length,
   hasSettings: fs.existsSync(systemXml()),
+  power: await power.status(),
+  windows: await graphics.windowsGaming(),
 }))
 ipcMain.handle("undo-gpu", () => graphics.undoGpu(path.dirname(redmDir), gameDir()))
 ipcMain.handle("set-fso", (_, on) => graphics.setFso(exes(), !!on))
 ipcMain.handle("set-priority-boost", (_, on) => graphics.setPriorityBoost(!!on))
+const power = graphics.powerPlan(path.join(app.getPath("userData"), "power-plan.json"))
+ipcMain.handle("set-power-boost", (_, on) => power.set(!!on))
+// Windows' own Settings pages, by name only: the page can't open any other ms-settings: link.
+ipcMain.handle("open-windows-settings", (_, which) => {
+  const pages = { gameMode: "ms-settings:gaming-gamemode", recording: "ms-settings:gaming-gamedvr", gpuScheduling: "ms-settings:display-advancedgraphics" }
+  if (pages[which]) return shell.openExternal(pages[which])
+})
+ipcMain.handle("pc-info", () => pc.info())
+
+// ── What the launcher changed, and the way back (see undo.js) ──
+
+const modBackupRoot = path.join(path.dirname(redmDir), "removed-mods")
+ipcMain.handle("changes-info", async () => {
+  const ini = readIni() || ""
+  return {
+    channel: ((ini.match(/^UpdateChannel=(.*)$/m) || [])[1] || "production").trim(),
+    channelWas: undo.originalChannel(iniPath),
+    gfxBackup: undo.graphicsBackup(systemXml())?.at || null,
+    modBackups: await undo.modBackups(modBackupRoot),
+  }
+})
+ipcMain.handle("restore-graphics", async () => {
+  if ((await redmPids()).length) return { success: false, error: "running" }
+  try { return undo.restoreGraphics(systemXml()) } catch (e) { return { success: false, error: e.code || "failed" } }
+})
+ipcMain.handle("restore-mods", async (_, name) => {
+  if ((await redmPids()).length) return { success: false, error: "running" }
+  try { return await undo.restoreMods(redmDir, modBackupRoot, name) } catch (e) { return { success: false, error: e.code || "failed" } }
+})
 
 // ── Ready to play: the checks behind the Home checklist ──
 
@@ -414,6 +463,8 @@ ipcMain.handle("readiness", async () => {
     channel,
     freeBytes,
     mod: await mods.scan(redmDir, config.mods).catch(() => ({ state: "none", files: [] })), // visual mods, see mods.js
+    hooks: await pc.runningHooks(), // hints only, see pc.js
+    storyMods: pc.storyMods(game),
   }
 })
 
@@ -456,7 +507,7 @@ function gameRunning() {
     resolve(!err && /"RedM_b\d+_GTAProcess\.exe"/i.test(out))))
 }
 
-let gameWasRunning = false
+let gameWasRunning = null // null: not checked yet, so the first check counts as a change
 const reported = new Set()
 function checkCrash() {
   const logs = path.join(redmDir, "logs")
@@ -485,6 +536,7 @@ function checkCrash() {
 setInterval(async () => {
   const running = await gameRunning()
   if (gameWasRunning && !running) setTimeout(checkCrash, 3000) // give the dump server a moment to write
+  if (running !== gameWasRunning) power.game(running) // also puts back a plan a closed launcher left switched
   gameWasRunning = running
 }, 5000)
 
@@ -534,6 +586,7 @@ ipcMain.handle("restart-redm", async () => {
 
 ipcMain.handle("open-folder", (_, which) => {
   const dirs = { logs: "logs", crashes: "crashes", redm: "" }
+  if (which === "game") return gameDir() && fs.existsSync(gameDir()) ? shell.openPath(gameDir()) : "missing"
   if (!(which in dirs)) return
   const dir = path.join(redmDir, dirs[which])
   if (!fs.existsSync(dir)) return "missing"

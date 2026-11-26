@@ -27,7 +27,10 @@ function log(level, msg) {
 
 function push(next) {
   state = { ...state, ...next }
-  if (win && !win.isDestroyed()) win.webContents.send("update-state", state)
+  if (!win || win.isDestroyed()) return
+  win.webContents.send("update-state", state)
+  // The download shows on the taskbar button too.
+  win.setProgressBar(state.state === "downloading" ? (state.percent || 0) / 100 : -1)
 }
 
 // GitHub release notes arrive as HTML; the launcher shows a short plain-text summary.

@@ -41,4 +41,11 @@ contextBridge.exposeInMainWorld("launcher", {
   focusWindow: call("focus-window"),
   onGameCrashed: (cb) => ipcRenderer.on("game-crashed", (_, c) => cb(c)),
   openFolder: call("open-folder"),
+  buildInfo: call("build-info"),
+  setPowerBoost: call("set-power-boost"),
+  openWindowsSettings: call("open-windows-settings"),
+  pcInfo: call("pc-info"),
+  changesInfo: call("changes-info"),
+  restoreGraphics: call("restore-graphics"),
+  restoreMods: call("restore-mods"),
 })

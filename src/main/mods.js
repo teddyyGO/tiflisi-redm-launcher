@@ -88,4 +88,4 @@ async function remove(redmDir, now = new Date(), approved) {
   return { success: true, moved: files.length, folder }
 }
 
-module.exports = { scan, remove }
+module.exports = { scan, remove, stamp, walk }

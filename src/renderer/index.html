@@ -124,7 +124,7 @@
         <div class="tool tool-wide tool-fix">
           <div class="tool-icon accent"><i class="ph ph-first-aid-kit"></i></div>
           <div class="tool-text">
-            <p class="tool-label" data-i18n="fix.title">Fix my game</p>
+            <p class="tool-label"><span data-i18n="fix.title">Fix my game</span><span class="risk careful" data-i18n="risk.careful" data-i18n-title="risk.carefulTip">Careful</span></p>
             <p class="tool-desc" data-i18n="fix.desc">Not loading, stuck or crashing? This closes RedM, clears the server and RedM caches and applies the recommended settings. Your game files and characters are not touched.</p>
           </div>
           <button type="button" class="btn accent" data-act="fix-game"><i class="ph ph-first-aid-kit"></i><span data-i18n="fix.btn">Fix my game</span></button>
@@ -132,7 +132,7 @@
         <div class="tool tool-wide">
           <div class="tool-icon"><i class="ph ph-git-branch"></i></div>
           <div class="tool-text">
-            <p class="tool-label" data-i18n="tools.branch">Client branch</p>
+            <p class="tool-label"><span data-i18n="tools.branch">Client branch</span><span class="risk careful" data-i18n="risk.careful" data-i18n-title="risk.carefulTip">Careful</span></p>
             <p class="tool-desc" data-i18n="tools.branchDesc">Switch RedM update channel.</p>
           </div>
           <div class="tool-ctl branch-ctl">
@@ -152,7 +152,7 @@
         <div class="tool tool-wide tool-panel">
           <div class="tool-icon"><i class="ph ph-broom"></i></div>
           <div class="tool-text">
-            <p class="tool-label" data-i18n="clean.title">Clean up</p>
+            <p class="tool-label"><span data-i18n="clean.title">Clean up</span><span class="risk safe" data-i18n="risk.safe" data-i18n-title="risk.safeTip">Safe</span></p>
             <p class="tool-desc" data-i18n="clean.desc">Frees space and fixes most loading, texture and stutter problems.</p>
           </div>
           <button class="btn accent" id="clean-btn"><i class="ph ph-broom"></i><span id="clean-btn-label">Clean</span></button>
@@ -161,20 +161,48 @@
         <div class="tool tool-wide tool-panel">
           <div class="tool-icon"><i class="ph ph-monitor"></i></div>
           <div class="tool-text">
-            <p class="tool-label" data-i18n="gfx.title">Graphics and performance</p>
+            <p class="tool-label"><span data-i18n="gfx.title">Graphics and performance</span><span class="risk safe" data-i18n="risk.safe" data-i18n-title="risk.safeTip">Safe</span></p>
             <p class="tool-desc" data-i18n="gfx.desc">Settings Windows applies to the game.</p>
           </div>
           <span></span>
           <div class="switch-list">
             <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.fso">Turn off fullscreen optimizations</span><span class="check-desc" data-i18n="gfx.fsoDesc">Can reduce stutter and input lag in fullscreen.</span></span><span class="toggle"><input type="checkbox" id="gfx-fso"><span class="toggle-track"></span></span></label>
             <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.prio">High priority while playing</span><span class="check-desc" data-i18n="gfx.prioDesc">Gives the game more CPU time than background apps while the launcher is open.</span></span><span class="toggle"><input type="checkbox" id="gfx-prio"><span class="toggle-track"></span></span></label>
+            <label class="switch-row"><span class="row-text"><span class="check-label" data-i18n="gfx.power">High performance power plan while playing</span><span class="check-desc" id="gfx-power-desc"></span></span><span class="toggle"><input type="checkbox" id="gfx-power"><span class="toggle-track"></span></span></label>
             <div class="switch-row" id="gfx-reset-row" hidden><span class="row-text"><span class="check-label" data-i18n="gfx.reset">Reset graphics settings</span><span class="check-desc" data-i18n="gfx.resetDesc">Fixes crashes after a driver or settings change. Your old settings are kept as a backup.</span></span><button class="btn glass" id="gfx-reset" data-i18n="gfx.resetBtn">Reset</button></div>
           </div>
+        </div>
+        <div class="tool tool-wide tool-panel">
+          <div class="tool-icon"><i class="ph ph-arrow-counter-clockwise"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="undo.title"></p>
+            <p class="tool-desc" id="undo-desc" data-i18n="undo.desc"></p>
+          </div>
+          <span></span>
+          <div class="switch-list" id="undo-list"></div>
+        </div>
+        <div class="tool tool-wide tool-panel">
+          <div class="tool-icon"><i class="ph ph-windows-logo"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="win.title"></p>
+            <p class="tool-desc" data-i18n="win.desc"></p>
+          </div>
+          <span></span>
+          <div class="switch-list" id="win-list"></div>
+        </div>
+        <div class="tool tool-wide tool-panel">
+          <div class="tool-icon"><i class="ph ph-cpu"></i></div>
+          <div class="tool-text">
+            <p class="tool-label" data-i18n="pc.title"></p>
+            <p class="tool-desc" data-i18n="pc.desc"></p>
+          </div>
+          <span></span>
+          <div class="switch-list" id="pc-list"></div>
         </div>
         <div class="tool">
           <div class="tool-icon danger"><i class="ph ph-power"></i></div>
           <div class="tool-text">
-            <p class="tool-label" data-i18n="tools.process">RedM process</p>
+            <p class="tool-label"><span data-i18n="tools.process">RedM process</span><span class="risk careful" data-i18n="risk.careful" data-i18n-title="risk.carefulTip">Careful</span></p>
             <p class="tool-desc" data-i18n="tools.processDesc">Frozen game or stuck in the background.</p>
           </div>
           <div class="tool-ctl">
@@ -204,9 +232,9 @@
         <div class="row"><div class="row-text"><p class="row-label" data-i18n="settings.autoStart">Start with Windows</p><p class="row-desc" data-i18n="settings.autoStartDesc">Launch automatically when Windows starts</p></div><label class="toggle"><input type="checkbox" id="toggle-autostart"><span class="toggle-track"></span></label></div>
         <div class="row"><div class="row-text"><p class="row-label" data-i18n="upd.title">Updates</p><p class="row-desc" id="upd-desc"></p></div><button type="button" class="btn glass" id="upd-btn"></button></div>
         <div class="row" id="row-stats" hidden><div class="row-text"><p class="row-label" data-i18n="usage.title">Share anonymous launcher stats</p><p class="row-desc" id="usage-desc"></p></div><label class="toggle"><input type="checkbox" id="toggle-usage"><span class="toggle-track"></span></label></div>
-        <div class="row"><div class="row-text"><p class="row-label" data-i18n="about.title">About</p><p class="row-desc" id="about-desc"></p></div><button type="button" class="btn glass" data-act="source"><i class="ph ph-github-logo"></i><span data-i18n="about.source">Source code</span></button></div>
+        <div class="row"><div class="row-text"><p class="row-label" data-i18n="about.title">About</p><p class="row-desc" id="about-desc"></p></div><div class="tool-ctl"><button type="button" class="btn glass" id="build-log" data-act="build-log" hidden><i class="ph ph-scroll"></i><span data-i18n="about.buildLog">Build log</span></button><button type="button" class="btn glass" data-act="source"><i class="ph ph-github-logo"></i><span data-i18n="about.source">Source code</span></button></div></div>
+        <div class="row" id="dev-join" hidden><div class="row-text"><p class="row-label">Tiflisi DEV</p><p class="row-desc" data-i18n="dev.desc">Test server.</p></div><button type="button" class="btn glass" data-act="join-dev"><i class="ph ph-play"></i><span data-i18n="join.default">Join server</span></button></div>
       </div>
-      <button type="button" class="dev-link" id="dev-join" data-act="join-dev" hidden>Tiflisi DEV</button>
     </section>
   </main>
 

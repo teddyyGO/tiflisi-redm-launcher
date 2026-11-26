@@ -33,6 +33,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      # Settings > About names the commit and links this run, so players can see the installer came from
+      # this public workflow. Local builds have no such file and say so.
+      - name: Record which commit and run built this
+        shell: bash
+        run: printf '{"commit":"%s","run":"%s/%s/actions/runs/%s"}' "$GITHUB_SHA" "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" > src/build-info.json
       # Build only. electron-builder's own publisher is not used: it created two releases for one tag and
       # split the files between them (1.1.9 lost its blockmap, 1.2.0 was published without its installer).
       - name: Build

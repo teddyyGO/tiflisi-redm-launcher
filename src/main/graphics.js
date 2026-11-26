@@ -112,4 +112,63 @@ function setPriorityBoost(on) {
   if (on) boostTimer = setInterval(tick, 15000)
 }
 
-module.exports = { gameExes, state, gpuCandidates, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet }
+async function regDword(key, name) {
+  const m = String(await reg(["query", key, "/v", name])).match(/REG_DWORD\s+0x([0-9a-f]+)/i)
+  return m ? parseInt(m[1], 16) : null
+}
+
+// Windows' own game settings, read only: the launcher shows them and opens the Settings page for each.
+async function windowsGaming() {
+  const [mode, history, hags] = await Promise.all([
+    regDword("HKCU\\Software\\Microsoft\\GameBar", "AutoGameModeEnabled"),
+    regDword("HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR", "HistoricalCaptureEnabled"),
+    regDword("HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers", "HwSchMode"),
+  ])
+  return {
+    gameMode: mode !== 0, // no value: on, the Windows default
+    recording: history === 1, // "Record what happened": records the last minutes all the time
+    gpuScheduling: hags === null ? null : hags === 2, // no value: left to Windows and the driver
+  }
+}
+
+// High performance power plan while the game runs, then back to the player's own plan.
+// The plan to go back to is kept in a file, so a launcher that closed mid-game still puts it back on its
+// next start. Plans are never created: a PC without High performance (many laptops) just can't use this.
+const HIGH_PERF = "8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c"
+const GUID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i
+const powercfg = (args) => new Promise((r) => execFile("powercfg", args, { windowsHide: true }, (err, out) => r(err ? null : out)))
+// Only Windows' own everyday plans are switched. A plan the player picked or made (Ultimate Performance, an
+// optimizer's plan) is a choice: the launcher leaves it alone.
+const EVERYDAY = ["381b4222-f694-41f0-9685-ff5bb260df2e", "a1841308-3d3d-4a4b-ab8b-e3d6fec4f4a5"] // Balanced, Power saver
+const hasHighPerf = async () => String(await powercfg(["/list"])).toLowerCase().includes(HIGH_PERF)
+const activePlan = async () => ((((await powercfg(["/getactivescheme"])) || "").match(GUID)) || [""])[0].toLowerCase()
+
+function powerPlan(stateFile) {
+  let on = false, playing = false, chain = Promise.resolve()
+  const saved = () => { try { return JSON.parse(fs.readFileSync(stateFile, "utf8")).plan } catch (e) { return null } }
+  async function apply() {
+    const prev = saved()
+    if (on && playing && !prev) {
+      const cur = await activePlan()
+      if (!EVERYDAY.includes(cur) || !(await hasHighPerf())) return
+      try { fs.writeFileSync(stateFile, JSON.stringify({ plan: cur })) } catch (e) { return }
+      await powercfg(["/setactive", HIGH_PERF])
+    } else if (!(on && playing) && prev && (await powercfg(["/setactive", prev])) !== null) {
+      fs.rmSync(stateFile, { force: true })
+    }
+  }
+  // One change at a time: a click and the game starting can land together.
+  const run = () => (chain = chain.then(apply, apply))
+  return {
+    set: (v) => { on = !!v; return run() },
+    game: (v) => { playing = !!v; return run() },
+    // "ok"; "none": no High performance plan on this PC; "own": already on High performance or a plan of the player's own.
+    status: async () => {
+      if (saved()) return "ok" // switched right now, for a game that's running
+      if (!(await hasHighPerf())) return "none"
+      return EVERYDAY.includes(await activePlan()) ? "ok" : "own"
+    },
+  }
+}
+
+module.exports = { gameExes, state, gpuCandidates, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet, windowsGaming, powerPlan }

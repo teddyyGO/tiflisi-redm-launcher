@@ -29,13 +29,16 @@ app.on("browser-window-created", (_, win) => {
     try {
       const r = await win.webContents.executeJavaScript(`(async () => {
         const l = window.launcher
-        const [cfg, ver, ready, info, gfx, meta, upd, name] = await Promise.all([l.getConfig(), l.getVersion(),
-          l.readiness(), l.redmInfo(), l.graphicsInfo(), l.cleanupMeta(), l.updateState(), l.getName()])
+        const [cfg, ver, ready, info, gfx, meta, upd, name, chg, pc, build] = await Promise.all([l.getConfig(), l.getVersion(),
+          l.readiness(), l.redmInfo(), l.graphicsInfo(), l.cleanupMeta(), l.updateState(), l.getName(), l.changesInfo(), l.pcInfo(), l.buildInfo()])
         return { cfg: !!cfg.brand, ver, ready: typeof ready.redm, info: typeof info.channel, gfx: typeof gfx.exes,
           meta: meta.length, upd: upd.state, name: typeof name.name, joinBtn: !!document.getElementById("join-btn").textContent.trim(),
-          devLink: !document.getElementById("dev-join").hidden }
+          devLink: !document.getElementById("dev-join").hidden,
+          hooks: Array.isArray(ready.hooks), win: typeof gfx.windows.gameMode, power: typeof gfx.power,
+          chg: Array.isArray(chg.modBackups), pc: typeof pc.threads, build: build === null || typeof build.commit }
       })()`)
-      const want = { cfg: true, ver: app.getVersion(), ready: "boolean", info: "string", gfx: "number", meta: 7, upd: "dev", name: "string", joinBtn: true, devLink: true }
+      const want = { cfg: true, ver: app.getVersion(), ready: "boolean", info: "string", gfx: "number", meta: 7, upd: "dev", name: "string", joinBtn: true, devLink: true,
+        hooks: true, win: "boolean", power: "string", chg: true, pc: "number", build: true }
       for (const k in want) if (r[k] !== want[k]) errors.push(`ipc ${k}: got ${JSON.stringify(r[k])}, want ${JSON.stringify(want[k])}`)
     } catch (e) {
       errors.push("ipc: " + e.message)
