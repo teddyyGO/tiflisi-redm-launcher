@@ -24,7 +24,8 @@
     "secondaryColor": "#c41e1e",
     "accentColor": "#ffffff",
     "welcomeMessage": "",
-    "cfxCode": "dg346jd"
+    "cfxCode": "dg346jd",
+    "devCfxCode": "vqq8dje"
   },
   "branches": [
     { "label": "128", "channel": "specific/feature/redm-physical-player-extension" }

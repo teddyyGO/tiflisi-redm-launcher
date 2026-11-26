@@ -25,7 +25,7 @@ Object.assign(i18nTranslations.en, {
   "clean.server": "Server cache", "clean.serverDesc": "Downloaded server files. They download again when you join.",
   "clean.app": "RedM app cache", "clean.appDesc": "Temporary RedM files. Rebuilt on next start.",
   "clean.shaders": "GPU shader cache", "clean.shadersDesc": "Fixes stutter after a driver update. The first minutes may stutter while it rebuilds.",
-  "clean.crashes": "Crash dumps", "clean.crashesDesc": "Old crash reports.",
+  "clean.crashes": "Crash dumps", "clean.crashesDesc": "All crash reports.",
   "clean.logs": "Old logs", "clean.logsDesc": "Keeps the three newest.",
   "clean.nui": "In-game UI storage", "clean.nuiDesc": "Resets saved UI settings and web logins inside servers.",
   "clean.temp": "Windows temp files", "clean.tempDesc": "Leftovers older than 2 days, from any app.",
@@ -42,14 +42,14 @@ Object.assign(i18nTranslations.en, {
   "upd.error": "Couldn't check for updates. The launcher tries again later.", "upd.dev": "Updates work in the installed launcher.",
   "upd.restart": "Restart now", "upd.check": "Check now", "upd.done": "Updated to {v}.",
   "usage.title": "Share anonymous launcher stats",
-  "usage.desc": "Tells {server} that the launcher is open and whether you're playing, with its version and language. No names, no files.",
+  "usage.desc": "Tells {server} that the launcher is open and whether you're playing, with its version, language and a random install ID. No names, no files.",
   "about.title": "About", "about.desc": "Version {v}. Free and open source (MIT license).", "about.source": "Source code",
-  "join.full": "Join when a slot opens", "join.waiting": "Waiting for a slot…",
+  "join.full": "Join when a slot opens", "join.waiting": "Waiting for a slot… (click to cancel)",
   "join.waitingToast": "The server is full. You'll join as soon as a slot opens. Click again to stop waiting.",
   "alert.online": "{server} is back online", "alert.onlineBody": "Open the launcher to join.", "alert.slot": "A slot opened on {server}. Joining now.",
   "ready.ok": "Ready to play", "ready.issue1": "1 thing to fix before you play", "ready.issues": "{n} things to fix before you play",
   "ready.redm": "RedM is installed", "ready.redmBad": "RedM is not installed", "ready.get": "Get RedM",
-  "ready.game": "Red Dead Redemption 2 found", "ready.gameBad": "RedM doesn't know where your game is yet. Open RedM once and pick the game folder.",
+  "ready.game": "Red Dead Redemption 2 found", "ready.gameBad": "RedM needs Red Dead Redemption 2 (Steam, Rockstar or Epic). Installed? Open RedM once and pick the game folder.",
   "ready.branch": "Game version matches {server} ({b})", "ready.branchBad": "{server} uses the {b} game version", "ready.switch": "Switch",
   "ready.disk": "{size} free on the RedM drive", "ready.diskBad": "Only {size} free on the RedM drive. Server downloads can fail.", "ready.freeUp": "Free up space",
   "ready.trouble": "Still having trouble?",
@@ -67,8 +67,8 @@ Object.assign(i18nTranslations.en, {
   "crash.cause.files": "Some game files look damaged. Verify the game files in Steam, Epic or the Rockstar Games Launcher.",
   "crash.cause.start": "RedM didn't start correctly. Close RedM and the Rockstar Games Launcher fully, then join again from here.",
   "crash.cause.unknown": "We couldn't tell what caused it. Copy the report and send it to staff.",
-  "welcome.title": "Welcome to {server}", "welcome.sub": "Set up for you, nothing else to do:",
-  "welcome.lang": "Language: {lang}", "welcome.server": "{server} is your server, ready to join",
+  "welcome.title": "Welcome to {server}", "welcome.sub": "Set up for you:",
+  "welcome.lang": "Language: {lang}", "welcome.server": "{server} is set as your server",
   "welcome.links": "Join links from Discord and websites repaired",
   "welcome.shortcut": "Shortcuts on your Desktop and in the Start Menu",
   "name.label": "Your name in game", "name.desc": "What other players and staff see. Saved straight into RedM.", "name.save": "Save",
@@ -77,8 +77,29 @@ Object.assign(i18nTranslations.en, {
   "name.invalid": "Use 2 to 32 letters, numbers, spaces, - _ or .",
   "ready.name": "Your name in game: {name}", "ready.nameBad": "You still have RedM's random name ({name})", "ready.change": "Change",
   "ready.mod": "Visual mod: {name}, allowed on {server}", "ready.modBad": "{n} graphics files in RedM that {server} doesn't recognise. Its anticheat may flag them.",
-  "ready.remove": "Remove", "ready.modRemoved": "Moved {n} files out of RedM. They are kept in RedM's removed-mods folder.",
-  "ready.modFailed": "Couldn't move the files. Close RedM and try again."
+  "ready.remove": "Remove", "ready.modRemoved": "Moved {n} files out of RedM, to {folder}", "ready.modRemoved1": "Moved 1 file out of RedM, to {folder}",
+  "ready.modFailed": "Couldn't move the files. Close RedM and try again.",
+  "ready.modBad1": "1 graphics file in RedM that {server} doesn't recognise. Its anticheat may flag it.",
+  "ready.repairFailed": "Couldn't repair the links. Reinstalling RedM from redm.net fixes them.",
+  "ready.restartHint": "Done. Restart RedM to use {b}.", "ready.nameNone": "You haven't picked a name in RedM yet",
+  "status.checking": "Checking…", "status.noInternet": "No internet",
+  "status.offlineTip": "The server isn't answering right now. You'll get a notification when it's back.",
+  "status.noInternetTip": "Can't reach the internet. Check your connection; the launcher retries by itself.",
+  "join.stopped": "Stopped waiting.", "join.switching": "Switching version…",
+  "join.offlineTitle": "{server} looks offline", "join.offlineMsg": "The server isn't answering right now. Start RedM anyway?", "join.offlineOk": "Start RedM",
+  "join.modTitle": "Unrecognised graphics files", "join.modMsg": "{n} graphics files in RedM aren't approved by {server}. Its anticheat may flag them. They are moved aside, not deleted.",
+  "join.modMsg1": "1 graphics file in RedM isn't approved by {server}. Its anticheat may flag it. It is moved aside, not deleted.",
+  "join.modRemove": "Remove and join", "join.modAnyway": "Join anyway",
+  "tools.failed": "That didn't work ({code}).", "tools.badChannel": "Branch names can only use letters, numbers and - _ . /",
+  "tools.noFolder": "That folder doesn't exist yet. RedM creates it when it runs.",
+  "tools.killed": "RedM closed.", "tools.notRunning": "RedM wasn't running.", "tools.restarted": "RedM is starting.",
+  "tools.killTitle": "Close RedM?", "tools.killMsg": "RedM is running. Anything not saved in game is lost.", "tools.killOk": "Close RedM",
+  "clean.none": "Nothing to clean", "clean.locked": "{list} skipped: close RedM first.", "clean.lockedHint": "Needs RedM closed",
+  "gfx.noSettings": "No graphics settings to reset. RedM creates them on its next start.", "gfx.fsoNone": "Install RedM to use this.",
+  "welcome.todo": "Still to do: see the list under Join.",
+  "name.none": "Pick the name other players will see.", "name.failed": "Couldn't save the name. Check that redm.cfg isn't read-only.",
+  "panel.down": "News and rules couldn't be loaded. The launcher keeps trying.",
+  "crash.openLogs": "Open logs", "crash.resetGfx": "Reset graphics settings"
 });
 
 Object.assign(i18nTranslations.ka, {
@@ -99,7 +120,7 @@ Object.assign(i18nTranslations.ka, {
   "clean.server": "სერვერის ქეში", "clean.serverDesc": "სერვერიდან ჩამოტვირთული ფაილები. შესვლისას თავიდან ჩამოიტვირთება.",
   "clean.app": "RedM-ის ქეში", "clean.appDesc": "RedM-ის დროებითი ფაილები. შემდეგ გაშვებაზე აღდგება.",
   "clean.shaders": "ვიდეოკარტის შეიდერების ქეში", "clean.shadersDesc": "აგვარებს ლაგს დრაივერის განახლების შემდეგ. პირველ წუთებში შეიძლება ცოტა დაილაგოს.",
-  "clean.crashes": "კრაშის ფაილები", "clean.crashesDesc": "ძველი კრაშის ანგარიშები.",
+  "clean.crashes": "კრაშის ფაილები", "clean.crashesDesc": "ყველა კრაშის ანგარიში.",
   "clean.logs": "ძველი ლოგები", "clean.logsDesc": "სამი ბოლო ლოგი რჩება.",
   "clean.nui": "თამაშის UI მეხსიერება", "clean.nuiDesc": "აბრუნებს სერვერების UI პარამეტრებს და ვებ-ავტორიზაციებს საწყის მდგომარეობაში.",
   "clean.temp": "Windows-ის დროებითი ფაილები", "clean.tempDesc": "2 დღეზე ძველი ნარჩენები, ნებისმიერი პროგრამიდან.",
@@ -110,25 +131,25 @@ Object.assign(i18nTranslations.ka, {
   "gfx.fso": "სრული ეკრანის ოპტიმიზაციის გამორთვა", "gfx.fsoDesc": "შეიძლება შეამციროს ლაგი და შეყოვნება სრულ ეკრანზე.",
   "gfx.prio": "მაღალი პრიორიტეტი თამაშისას", "gfx.prioDesc": "სანამ ლაუნჩერი ღიაა, თამაში ფონურ პროგრამებზე მეტ პროცესორის დროს იღებს.",
   "gfx.reset": "გრაფიკის პარამეტრების განულება", "gfx.resetDesc": "აგვარებს კრაშებს დრაივერის ან პარამეტრების შეცვლის შემდეგ. ძველი პარამეტრები სარეზერვოდ შეინახება.", "gfx.resetBtn": "განულება",
-  "upd.title": "განახლებები", "upd.pill": "განახლება {v}-მდე", "upd.downloading": "ახლდება {p}%",
+  "upd.title": "ლაუნჩერის განახლება", "upd.pill": "განახლება {v}-მდე", "upd.downloading": "ახლდება {p}%",
   "upd.downloadingLong": "{v} ფონურად იტვირთება ({p}%).", "upd.ready": "{v} მზადაა. გადატვირთვას რამდენიმე წამი სჭირდება.",
   "upd.latest": "გაქვთ უახლესი ვერსია.", "upd.checking": "განახლებების შემოწმება…",
   "upd.error": "განახლებების შემოწმება ვერ მოხერხდა. ლაუნჩერი მოგვიანებით ისევ სცდის.", "upd.dev": "განახლებები დაინსტალირებულ ლაუნჩერში მუშაობს.",
   "upd.restart": "გადატვირთვა", "upd.check": "შემოწმება", "upd.done": "განახლდა {v}-მდე.",
   "usage.title": "ანონიმური სტატისტიკის გაზიარება",
-  "usage.desc": "{server}-ს ატყობინებს, რომ ლაუნჩერი ღიაა და თამაშობთ თუ არა, ვერსიითა და ენით. სახელები და ფაილები არ იგზავნება.",
+  "usage.desc": "{server}-ს ატყობინებს, რომ ლაუნჩერი ღიაა და თამაშობთ თუ არა, ვერსიით, ენით და შემთხვევითი ინსტალაციის ID-ით. სახელები და ფაილები არ იგზავნება.",
   "about.title": "შესახებ", "about.desc": "ვერსია {v}. უფასო და ღია კოდი (MIT ლიცენზია).", "about.source": "წყაროს კოდი",
-  "join.full": "შესვლა, როცა ადგილი გათავისუფლდება", "join.waiting": "ადგილის მოლოდინი…",
+  "join.full": "შესვლა, როცა ადგილი გათავისუფლდება", "join.waiting": "ადგილის მოლოდინი… (გასაუქმებლად დააჭირეთ)",
   "join.waitingToast": "სერვერი სავსეა. შეხვალთ, როგორც კი ადგილი გათავისუფლდება. მოლოდინის შესაწყვეტად ისევ დააჭირეთ.",
   "alert.online": "{server} ისევ ონლაინაა", "alert.onlineBody": "შესასვლელად გახსენით ლაუნჩერი.", "alert.slot": "{server}-ზე ადგილი გათავისუფლდა. შედიხართ.",
-  "ready.ok": "თამაშისთვის მზად ხართ", "ready.issue1": "თამაშამდე 1 რამ უნდა გასწორდეს", "ready.issues": "თამაშამდე {n} რამ უნდა გასწორდეს",
+  "ready.ok": "თამაშისთვის მზად ხართ", "ready.issue1": "თამაშამდე 1 პრობლემა უნდა მოგვარდეს", "ready.issues": "თამაშამდე {n} პრობლემა უნდა მოგვარდეს",
   "ready.redm": "RedM დაინსტალირებულია", "ready.redmBad": "RedM არ არის დაინსტალირებული", "ready.get": "RedM-ის ჩამოტვირთვა",
-  "ready.game": "Red Dead Redemption 2 ნაპოვნია", "ready.gameBad": "RedM-მა ჯერ არ იცის, სადაა თამაში. ერთხელ გახსენით RedM და მიუთითეთ თამაშის საქაღალდე.",
+  "ready.game": "Red Dead Redemption 2 ნაპოვნია", "ready.gameBad": "RedM-ს სჭირდება Red Dead Redemption 2 (Steam, Rockstar ან Epic). თუ დაყენებულია, ერთხელ გახსენით RedM და მიუთითეთ თამაშის საქაღალდე.",
   "ready.branch": "თამაშის ვერსია ემთხვევა {server}-ს ({b})", "ready.branchBad": "{server} იყენებს თამაშის {b} ვერსიას", "ready.switch": "გადართვა",
   "ready.disk": "RedM-ის დისკზე თავისუფალია {size}", "ready.diskBad": "RedM-ის დისკზე მხოლოდ {size} არის თავისუფალი. სერვერის ჩამოტვირთვა შეიძლება ჩავარდეს.", "ready.freeUp": "ადგილის გათავისუფლება",
   "ready.trouble": "ისევ პრობლემაა?",
   "ready.links": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ხსნის", "ready.linksBad": "Discord-ისა და საიტების შესვლის ბმულები RedM-ს ვერ ხსნის", "ready.repair": "შეკეთება",
-  "branch.switchTitle": "გადავიდეთ {b} ვერსიაზე?", "branch.switchMsg": "{server} იყენებს თამაშის {b} ვერსიას. RedM დაიხურება, გადაირთვება და შემდეგ შეხვალთ.", "branch.switchOk": "გადართვა და შესვლა",
+  "branch.switchTitle": "გადავიდეთ {b} ვერსიაზე?", "branch.switchMsg": "{server} იყენებს თამაშის {b} ვერსიას. RedM დაიხურება, ვერსია შეიცვლება და შემდეგ შეხვალთ.", "branch.switchOk": "გადართვა და შესვლა",
   "fix.title": "თამაშის გამოსწორება", "fix.btn": "გამოსწორება",
   "fix.desc": "არ იტვირთება, გაჭედა ან ითიშება? ეს დახურავს RedM-ს, გაასუფთავებს სერვერის და RedM-ის ქეშს და ჩართავს რეკომენდებულ პარამეტრებს. თამაშის ფაილები და პერსონაჟები ხელუხლებელი რჩება.",
   "fix.confirmTitle": "გამოვასწოროთ თამაში?", "fix.confirmMsg": "RedM დაიხურება. სერვერის ფაილები შემდეგ შესვლაზე თავიდან ჩამოიტვირთება.",
@@ -141,18 +162,41 @@ Object.assign(i18nTranslations.ka, {
   "crash.cause.files": "თამაშის ზოგიერთი ფაილი დაზიანებული ჩანს. შეამოწმეთ ფაილები Steam-ში, Epic-ში ან Rockstar Games Launcher-ში.",
   "crash.cause.start": "RedM სწორად ვერ ჩაირთო. სრულად დახურეთ RedM და Rockstar Games Launcher, შემდეგ ისევ შედით აქედან.",
   "crash.cause.unknown": "მიზეზი ვერ დავადგინეთ. დააკოპირეთ ანგარიში და გაუგზავნეთ ადმინისტრაციას.",
-  "welcome.title": "კეთილი იყოს თქვენი მობრძანება {server}-ში", "welcome.sub": "ყველაფერი მოწყობილია, სხვა არაფერია გასაკეთებელი:",
-  "welcome.lang": "ენა: {lang}", "welcome.server": "{server} თქვენი სერვერია, მზადაა შესასვლელად",
+  "welcome.title": "კეთილი იყოს თქვენი მობრძანება {server}-ში", "welcome.sub": "თქვენთვის მოეწყო:",
+  "welcome.lang": "ენა: {lang}", "welcome.server": "{server} არჩეულია თქვენს სერვერად",
   "welcome.links": "Discord-ისა და საიტების შესვლის ბმულები შეკეთდა",
   "welcome.shortcut": "მალსახმობები სამუშაო მაგიდაზე და Start მენიუში",
   "name.label": "თქვენი სახელი თამაშში", "name.desc": "რასაც სხვა მოთამაშეები და ადმინისტრაცია ხედავს. პირდაპირ RedM-ში ინახება.", "name.save": "შენახვა",
   "name.madeUp": "ეს სახელი RedM-მა შემთხვევით შეარჩია. შეცვალეთ იმ სახელით, რომლითაც გინდათ, რომ გიცნობდნენ.", "name.current": "ამ სახელს ხედავენ სხვა მოთამაშეები.",
   "name.saved": "შენახულია. თამაშში იქნებით {name}.", "name.running": "ჯერ დახურეთ RedM, მერე შეინახეთ, თორემ RedM გადაწერს.",
-  "name.invalid": "გამოიყენეთ 2-დან 32-მდე ასო, ციფრი, გამოტოვება, - _ ან .",
+  "name.invalid": "გამოიყენეთ 2-დან 32-მდე ასო, ციფრი, ჰარი, - _ ან .",
   "ready.name": "თქვენი სახელი თამაშში: {name}", "ready.nameBad": "ჯერ კიდევ RedM-ის შემთხვევითი სახელი გაქვთ ({name})", "ready.change": "შეცვლა",
   "ready.mod": "ვიზუალური მოდი: {name}, {server}-ზე დაშვებულია", "ready.modBad": "RedM-ში არის {n} გრაფიკული ფაილი, რომელსაც {server} არ ცნობს. ანტიჩიტმა შეიძლება მონიშნოს.",
-  "ready.remove": "ამოღება", "ready.modRemoved": "{n} ფაილი ამოღებულია RedM-იდან. ისინი ინახება RedM-ის removed-mods საქაღალდეში.",
-  "ready.modFailed": "ფაილების გადატანა ვერ მოხერხდა. დახურეთ RedM და სცადეთ თავიდან."
+  "ready.remove": "ამოღება", "ready.modRemoved": "{n} ფაილი გადატანილია RedM-იდან: {folder}", "ready.modRemoved1": "1 ფაილი გადატანილია RedM-იდან: {folder}",
+  "ready.modFailed": "ფაილების გადატანა ვერ მოხერხდა. დახურეთ RedM და სცადეთ თავიდან.",
+  "ready.modBad1": "RedM-ში არის 1 გრაფიკული ფაილი, რომელსაც {server} არ ცნობს. ანტიჩიტმა შეიძლება მონიშნოს.",
+  "ready.repairFailed": "ბმულები ვერ შეკეთდა. RedM-ის თავიდან დაყენება redm.net-იდან ამას გამოასწორებს.",
+  "ready.restartHint": "შესრულდა. {b} ვერსიისთვის გადატვირთეთ RedM.", "ready.nameNone": "RedM-ში სახელი ჯერ არ აგირჩევიათ",
+  "status.checking": "მოწმდება…", "status.noInternet": "ინტერნეტი არ არის",
+  "status.offlineTip": "სერვერი ახლა არ პასუხობს. როცა ჩაირთვება, შეტყობინებას მიიღებთ.",
+  "status.noInternetTip": "ინტერნეტთან კავშირი ვერ დამყარდა. შეამოწმეთ კავშირი; ლაუნჩერი თავად სცდის თავიდან.",
+  "join.stopped": "მოლოდინი შეწყდა.", "join.switching": "ვერსია იცვლება…",
+  "join.offlineTitle": "{server} გათიშული ჩანს", "join.offlineMsg": "სერვერი ახლა არ პასუხობს. მაინც გავუშვათ RedM?", "join.offlineOk": "RedM-ის გაშვება",
+  "join.modTitle": "უცნობი გრაფიკული ფაილები", "join.modMsg": "RedM-ში {n} გრაფიკული ფაილი {server}-ის მიერ დაშვებული არ არის. ანტიჩიტმა შეიძლება მონიშნოს. ფაილები გადაინაცვლებს, არ წაიშლება.",
+  "join.modMsg1": "RedM-ში 1 გრაფიკული ფაილი {server}-ის მიერ დაშვებული არ არის. ანტიჩიტმა შეიძლება მონიშნოს. ფაილი გადაინაცვლებს, არ წაიშლება.",
+  "join.modRemove": "ამოღება და შესვლა", "join.modAnyway": "მაინც შესვლა",
+  "tools.failed": "ვერ შესრულდა ({code}).", "tools.badChannel": "არხის სახელში დასაშვებია მხოლოდ ასოები, ციფრები და - _ . /",
+  "tools.noFolder": "ეს საქაღალდე ჯერ არ არსებობს. RedM მას გაშვებისას შექმნის.",
+  "tools.killed": "RedM დაიხურა.", "tools.notRunning": "RedM არ იყო ჩართული.", "tools.restarted": "RedM ირთვება.",
+  "tools.killTitle": "დავხუროთ RedM?", "tools.killMsg": "RedM ჩართულია. თამაშში შეუნახავი ყველაფერი დაიკარგება.", "tools.killOk": "RedM-ის დახურვა",
+  "clean.none": "გასასუფთავებელი არაფერია", "clean.locked": "{list} გამოტოვდა: ჯერ დახურეთ RedM.", "clean.lockedHint": "საჭიროა RedM-ის დახურვა",
+  "gfx.noSettings": "გრაფიკის პარამეტრები არ არის. RedM მათ შემდეგ გაშვებაზე შექმნის.", "gfx.fsoNone": "ამისთვის ჯერ დააყენეთ RedM.",
+  "welcome.todo": "დარჩენილი საქმეები: იხილეთ სია შესვლის ღილაკის ქვემოთ.",
+  "name.none": "აირჩიეთ სახელი, რომელსაც სხვა მოთამაშეები დაინახავენ.", "name.failed": "სახელი ვერ შეინახა. შეამოწმეთ, რომ redm.cfg მხოლოდ წასაკითხი არ არის.",
+  "panel.down": "სიახლეები და წესები ვერ ჩაიტვირთა. ლაუნჩერი ცდას განაგრძობს.",
+  "crash.openLogs": "ლოგების გახსნა", "crash.resetGfx": "გრაფიკის პარამეტრების განულება",
+  // The devlog is not "განახლებები": that word is the launcher's own updates.
+  "nav.changelog": "ცვლილებები", "section.changelog": "ცვლილებები"
 });
 
 function detectLanguage() {
@@ -183,6 +227,13 @@ function applyLanguage() {
   if (joinBtn && !joining) {
     joinBtn.innerHTML = getJoinBtnDefault();
   }
+  setStatus(statusNow);
+  // Icon-only nav (narrow window or long labels) keeps its names for tooltips and screen readers.
+  document.querySelectorAll(".nav-item").forEach(function (n) {
+    var s = n.querySelector("span");
+    if (s) { n.title = s.textContent; n.setAttribute("aria-label", s.textContent) }
+  });
+  fitNav();
   // Restore hardcoded name/logo that the data-i18n placeholders above would
   // otherwise overwrite with "Loading...".
   applyBranding();
@@ -209,6 +260,7 @@ function setLanguage(lang) {
 }
 
 function getJoinBtnDefault() {
+  if (ready && !ready.redm) return '<i class="ph ph-download-simple"></i><span>' + esc(t("ready.get")) + '</span>';
   if (waitingSlot) return '<span class="join-spinner"></span><span>' + esc(t("join.waiting")) + '</span>';
   if (serverFull()) return '<i class="ph ph-hourglass"></i><span>' + esc(t("join.full")) + '</span>';
   return '<i class="ph-fill ph-play"></i><span>' + esc(t("join.default")) + '</span>';
@@ -233,23 +285,30 @@ async function init() {
       setNavVisible("gallery", false)
       setNavVisible("staff", false)
     }
-    await fetchLauncherData()
+    // Everything local first: a slow or hanging panel API must not hold up the rest of the launcher.
     initSettings()
     initTools()
     initHelpers()
     applyLanguage()
+    setStatus("checking")
+    fetchLauncherData()
+    fetchServerStatus()
     dataInterval = setInterval(fetchLauncherData, 60000)
     statusInterval = setInterval(fetchServerStatus, 30000)
+    // Back online: refresh now instead of waiting for the next round.
+    window.addEventListener("online", function () { fetchLauncherData(); fetchServerStatus() })
+    window.addEventListener("resize", fitNav)
   } catch (err) {
     console.error("Init error:", err)
     document.getElementById("server-name").textContent = t("error.connection")
   }
 }
 
+var panelDownSaid = false
 async function fetchLauncherData() {
   try {
     if (config.apiUrl) {
-      var res = await fetch(config.apiUrl + "/" + config.slug)
+      var res = await fetch(config.apiUrl + "/" + config.slug, { signal: AbortSignal.timeout(10000) })
       if (!res.ok) throw new Error("API error")
       launcherData = await res.json()
     } else {
@@ -257,21 +316,29 @@ async function fetchLauncherData() {
       launcherData = { launcher: { rules_content: config.rules || "" }, news: config.news || [], changelogs: config.changelogs || [] }
     }
     renderContent()
-    fetchServerStatus()
   } catch (err) {
     console.error("Fetch error:", err)
     // Panel API unreachable and nothing loaded yet: hide what depends on it instead of showing errors.
     if (!launcherData) {
       ["news", "changelog", "rules", "gallery", "staff"].forEach(function (n) { setNavVisible(n, false) })
       document.querySelector(".home-columns").style.display = "none"
+      if (!panelDownSaid) { panelDownSaid = true; say(t("panel.down")) }
     }
-    fetchServerStatus() // server status doesn't depend on the panel API
   }
 }
 
 function setNavVisible(nav, show) {
   var b = document.querySelector('.nav-item[data-nav="' + nav + '"]')
   if (b) b.style.display = show ? "" : "none"
+}
+
+// Labels that don't fit (Georgian runs much longer than English): show the nav as icons only,
+// so the window buttons never get pushed off-screen.
+function fitNav() {
+  var tabs = document.querySelector(".tabs")
+  if (!tabs) return
+  document.body.classList.remove("nav-icons")
+  if (tabs.scrollWidth > tabs.clientWidth + 1) document.body.classList.add("nav-icons")
 }
 
 async function fetchServerStatus() {
@@ -293,11 +360,11 @@ async function fetchServerStatus() {
   }
   refreshArt()
   if (data && data.online) {
-    setStatusOnline()
+    setStatus("online")
     updatePing(data.endpoint)
   } else {
     setPing("--")
-    setStatusOffline()
+    setStatus(data && data.reason === "network" ? "noInternet" : "offline")
   }
 }
 
@@ -316,14 +383,15 @@ async function updatePing(endpoint) {
   }
 }
 
-function setStatusOnline() {
+// online | offline | noInternet | checking (before the first answer)
+var statusNow = "checking"
+function setStatus(s) {
+  statusNow = s
   var badge = document.getElementById("status-badge")
-  if (badge) { badge.classList.remove("offline"); badge.classList.add("online"); badge.querySelector("span:last-child").textContent = t("status.online") }
-}
-
-function setStatusOffline() {
-  var badge = document.getElementById("status-badge")
-  if (badge) { badge.classList.remove("online"); badge.classList.add("offline"); badge.querySelector("span:last-child").textContent = t("status.offline") }
+  if (!badge) return
+  badge.className = "status " + (s === "online" ? "online" : s === "checking" ? "checking" : "offline")
+  badge.querySelector("span:last-child").textContent = t("status." + s)
+  badge.title = s === "offline" ? t("status.offlineTip") : s === "noInternet" ? t("status.noInternetTip") : ""
 }
 
 // All launcher branding lives in config.json under "brand". The values below
@@ -429,7 +497,10 @@ function renderContent() {
   setNavVisible("news", hasNews)
   setNavVisible("changelog", hasLogs)
   setNavVisible("rules", !!(l.rules_content || l.rules_url))
+  setNavVisible("gallery", !!config.apiUrl) // hidden while the panel was down; back once it answers
+  setNavVisible("staff", !!config.apiUrl)
   document.querySelector(".home-columns").style.display = hasNews || hasLogs ? "" : "none"
+  fitNav()
 }
 
 // ── Expandable entry cards (shared by News + Devlog) ──
@@ -454,19 +525,21 @@ function firstLine(s) {
 function buildEntryCard(opts) {
   var openClass = openEntries[opts.key] ? " open" : ""
   var head =
-    '<div class="entry-head" data-act="entry" data-arg="' + esc(opts.key) + '">' +
+    '<button type="button" class="entry-head" data-act="entry" data-arg="' + esc(opts.key) + '">' +
     (opts.pinned ? '<span class="entry-pin">' + esc(t("news.pinned")) + '</span>' : '') +
     (opts.badge ? '<span class="entry-badge">' + esc(opts.badge) + '</span>' : '') +
     '<span class="entry-title">' + esc(opts.title || "") + '</span>' +
     '<span class="entry-date">' + opts.date + '</span>' +
     '<i class="ph ph-caret-down entry-arrow"></i>' +
-    '</div>'
+    '</button>'
   var body = '<div class="entry-body">' + esc(opts.body || "") + '</div>'
   return '<div class="entry-card' + openClass + '">' + head + body + '</div>'
 }
 
-function dateShort(iso) {
-  return new Date(iso).toLocaleDateString(currentLang.replace("_", "-"), { day: "numeric", month: "short" })
+// item: a news or devlog entry. Panels send published_at (some only created_at); no date shows nothing.
+function dateShort(item) {
+  var d = new Date(item.published_at || item.created_at)
+  return isNaN(d) ? "" : d.toLocaleDateString(currentLang.replace("_", "-"), { day: "numeric", month: "short" })
 }
 
 function renderNews() {
@@ -486,12 +559,12 @@ function renderNews() {
   // Home: the three latest as tiles; a click opens that story on the News page.
   if (homeContainer) homeContainer.innerHTML = news.slice(0, 3).map(function (n) {
     return '<button class="tile news-tile" data-act="story" data-arg="news|news-f-' + esc(String(n.id)) + '">' +
-      '<span class="tile-meta">' + (n.is_pinned ? '<span class="chip accent">' + esc(t("news.pinned")) + '</span>' : '') + esc(dateShort(n.published_at)) + '</span>' +
+      '<span class="tile-meta">' + (n.is_pinned ? '<span class="chip accent">' + esc(t("news.pinned")) + '</span>' : '') + esc(dateShort(n)) + '</span>' +
       '<span class="tile-title">' + esc(n.title || "") + '</span>' +
       '<span class="tile-excerpt">' + esc(n.content || "") + '</span></button>'
   }).join("")
   if (fullContainer) fullContainer.innerHTML = news.map(function (item) {
-    return buildEntryCard({ key: "news-f-" + item.id, title: item.title, date: dateShort(item.published_at), body: item.content, pinned: item.is_pinned })
+    return buildEntryCard({ key: "news-f-" + item.id, title: item.title, date: dateShort(item), body: item.content, pinned: item.is_pinned })
   }).join("")
 }
 
@@ -521,7 +594,7 @@ function renderChangelog() {
       '<span class="devlog-title">' + esc(l.title || firstLine(l.content)) + '</span></button>'
   }).join("")
   if (fullContainer) fullContainer.innerHTML = logs.map(function (item) {
-    return buildEntryCard({ key: "dev-f-" + item.id, badge: item.version, title: item.title || firstLine(item.content), date: dateShort(item.published_at), body: item.content })
+    return buildEntryCard({ key: "dev-f-" + item.id, badge: item.version, title: item.title || firstLine(item.content), date: dateShort(item), body: item.content })
   }).join("")
 }
 
@@ -544,37 +617,65 @@ function switchNav(nav) {
 }
 
 var joining = false
-async function joinServer() {
-  if (joining) return
-  // Full server: wait for a free slot instead; clicking again stops waiting.
-  if (waitingSlot) { stopWaiting(); return }
-  if (serverFull()) { startWaiting(); return }
-  if (!(await branchCheckBeforeJoin())) return
+function setJoinBusy(label) {
   var btn = document.getElementById("join-btn")
-  joining = true
-  btn.innerHTML = '<span class="join-spinner"></span><span>' + esc(t("join.connecting")) + '</span>'
+  btn.innerHTML = '<span class="join-spinner"></span><span>' + esc(label) + '</span>'
   btn.style.pointerEvents = "none"
   btn.style.opacity = "0.6"
+}
+function resetJoinBtn() {
+  joining = false
+  var btn = document.getElementById("join-btn")
+  btn.innerHTML = getJoinBtnDefault()
+  btn.style.pointerEvents = ""
+  btn.style.opacity = ""
+}
 
-  var timeout = setTimeout(function() {
-    joining = false
-    btn.innerHTML = getJoinBtnDefault()
-    btn.style.pointerEvents = ""
-    btn.style.opacity = ""
-  }, 10000)
-
+// opts.auto: the slot wait joining by itself; its checks ran when the wait started, so no dialogs now
+// (the player may have walked away).
+async function joinServer(opts) {
+  var auto = !!(opts && opts.auto)
+  if (joining) return
+  // Clicking while waiting for a slot stops waiting.
+  if (waitingSlot && !auto) { stopWaiting(); say(t("join.stopped")); return }
+  joining = true // from the first click: a second click while a dialog or the switch runs does nothing
+  var launched = false
   try {
+    await refreshReady() // fresh every time: a branch changed in Tools, a mod, a RedM installed just now
+    if (ready && !ready.redm) { window.launcher.openExternal("https://redm.net"); return } // the button says Get RedM
+    if (!auto) {
+      if (!(await offlineCheckBeforeJoin())) return
+      if (!(await modCheckBeforeJoin())) return
+      if (!(await branchCheckBeforeJoin())) return
+      // Full: wait for a slot, with every question already answered.
+      if (serverFull()) { startWaiting(); return }
+    }
+    if (ready && !ready.game) say(t("ready.gameBad")) // RedM asks for the game folder itself
+    setJoinBusy(t("join.connecting"))
     await joinAddress(getCfxCode(), featuredEndpoint, brand.name)
-    clearTimeout(timeout)
+    launched = true
   } catch (e) {
-    clearTimeout(timeout)
+    console.error("join:", e)
+  } finally {
+    if (launched) setTimeout(resetJoinBtn, 3000)
+    else resetJoinBtn()
   }
-  setTimeout(function() {
-    joining = false
-    btn.innerHTML = getJoinBtnDefault()
-    btn.style.pointerEvents = ""
-    btn.style.opacity = ""
-  }, 3000)
+}
+
+async function offlineCheckBeforeJoin() {
+  if (!featuredLive || featuredLive.online) return true // unknown yet, or online
+  return !!(await confirmDialog(t("join.offlineTitle").replace("{server}", brand.name), t("join.offlineMsg"), t("join.offlineOk")))
+}
+
+// Unrecognised graphics files: offer to move them aside first (the server is told about them at join).
+async function modCheckBeforeJoin() {
+  if (!ready || !ready.mod || ready.mod.state !== "unknown") return true
+  var n = ready.mod.files.length
+  var choice = await confirmDialog(t("join.modTitle"), t(n === 1 ? "join.modMsg1" : "join.modMsg").replace("{n}", n).replace("{server}", brand.name),
+    t("join.modRemove"), { cancelLabel: t("join.modAnyway") })
+  if (choice === null) return false // closed: don't join
+  if (choice) { await readyFix("remove-mods"); if (ready && ready.mod && ready.mod.state === "unknown") return false }
+  return true
 }
 
 async function joinAddress(address, endpoint, name) {
@@ -592,14 +693,46 @@ async function joinAddress(address, endpoint, name) {
 function showErrorDialog(title, message, downloadUrl) {
   var overlay = document.createElement("div")
   overlay.className = "error-overlay"
-  overlay.innerHTML = '<div class="error-dialog">' +
+  overlay.innerHTML = '<div class="error-dialog" role="alertdialog" aria-modal="true">' +
     '<h3 class="error-title">' + esc(title) + '</h3>' +
     '<p class="error-msg">' + esc(message) + '</p>' +
     '<div class="error-actions">' +
     (downloadUrl ? '<button class="error-btn secondary" data-act="dialog-download" data-arg="' + esc(downloadUrl) + '">' + esc(t("dialog.download")) + '</button>' : '') +
     '<button class="error-btn" data-act="dialog-close">' + esc(t("dialog.ok")) + '</button>' +
     '</div></div>'
-  document.body.appendChild(overlay)
+  showOverlay(overlay, '[data-act="dialog-close"]')
+}
+
+// Every dialog: on top, keyboard focus inside it (Tab cycles, Escape closes), and closable by
+// closeOverlays(). onDismiss runs for Escape and closeOverlays (a confirm resolves, for example).
+function showOverlay(o, focusSel, onDismiss) {
+  var back = document.activeElement
+  o.dismiss = function () {
+    if (!o.isConnected) return
+    o.remove()
+    if (back && back.isConnected) back.focus()
+    if (onDismiss) onDismiss()
+  }
+  o.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { e.stopPropagation(); o.dismiss(); return }
+    if (e.key !== "Tab") return
+    var f = [].filter.call(o.querySelectorAll("button, input, [tabindex]"), function (x) { return !x.disabled && x.offsetParent !== null })
+    if (!f.length) return
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus() }
+    else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus() }
+  })
+  document.body.appendChild(o)
+  var first = focusSel && o.querySelector(focusSel)
+  if (first) first.focus()
+}
+
+function closeOverlay(el) {
+  var o = el.closest(".error-overlay")
+  if (o) o.dismiss ? o.dismiss() : o.remove()
+}
+
+function closeOverlays() {
+  document.querySelectorAll(".error-overlay").forEach(function (x) { x.dismiss ? x.dismiss() : x.remove() })
 }
 
 // ── Updates (GitHub Releases via electron-updater in the main process) ──
@@ -656,6 +789,7 @@ function initUpdates() {
 
 function renderAbout() {
   document.getElementById("about-desc").textContent = t("about.desc").replace("{v}", appVersion)
+  document.getElementById("dev-join").hidden = !brand.devCfxCode
 }
 
 // Anonymous launcher stats for the featured server (see main.js heartbeat). Owners can switch the
@@ -676,7 +810,7 @@ function syncUsage() {
 function initSettings() {
   var openGameBtn = document.getElementById("open-game-btn")
   if (openGameBtn) {
-    openGameBtn.addEventListener("click", function () { window.launcher.openGame() })
+    openGameBtn.addEventListener("click", function () { openGame() })
   }
   if (config.sourceUrl && /^https:\/\//.test(config.sourceUrl)) SOURCE_URL = config.sourceUrl
   initUpdates()
@@ -684,19 +818,22 @@ function initSettings() {
     localStorage.setItem("usageStats", String(this.checked))
     syncUsage()
   })
-  var autoStart = localStorage.getItem("autoStart") === "true"
+  // Shows what Windows will really do at sign-in, not what was last clicked here.
   var autoStartToggle = document.getElementById("toggle-autostart")
-  if (autoStartToggle) { autoStartToggle.checked = autoStart }
   if (autoStartToggle) {
+    window.launcher.getAutoStart().then(function (on) { autoStartToggle.checked = on })
     autoStartToggle.addEventListener("change", function() {
-      localStorage.setItem("autoStart", this.checked)
       window.launcher.setAutoStart(this.checked)
     })
   }
-  // Language selector
+  // Language selector: only languages that are (nearly) fully translated; the rest would be mostly English.
+  var full = Object.keys(i18nTranslations.en).length
+  var langs = i18nLanguageList.filter(function (l) {
+    return l.code === currentLang || Object.keys(i18nTranslations[l.code] || {}).length >= full * 0.9
+  })
   var langSelect = document.getElementById("lang-select")
   if (langSelect) {
-    langSelect.innerHTML = i18nLanguageList.map(function(l) {
+    langSelect.innerHTML = langs.map(function(l) {
       return '<option value="' + l.code + '"' + (l.code === currentLang ? ' selected' : '') + '>' + l.name + '</option>'
     }).join("")
     langSelect.addEventListener("change", function() {
@@ -723,7 +860,7 @@ function renderGalleryPage() {
   var container = document.getElementById("gallery-grid")
   if (!container || !config.apiUrl) return
   container.innerHTML = '<div class="news-empty">' + esc(t("loading.gallery")) + '</div>'
-  fetch(config.apiUrl + "/" + config.slug + "/gallery")
+  fetch(config.apiUrl + "/" + config.slug + "/gallery", { signal: AbortSignal.timeout(10000) })
     .then(function(res) { return res.json() })
     .then(function(data) {
       var images = data.gallery || []
@@ -739,7 +876,7 @@ function renderGalleryPage() {
             (img.author_avatar ? '<img src="' + esc(img.author_avatar) + '" alt="">' : '') +
             '<span>' + esc(img.author_name) + '</span></div>'
           : ''
-        return '<div class="gallery-grid-item" data-act="lightbox-open" data-arg="' + i + '">' +
+        return '<div class="gallery-grid-item" role="button" tabindex="0" data-act="lightbox-open" data-arg="' + i + '">' +
           '<img src="' + esc(img.url) + '" alt="' + esc(img.caption || '') + '">' +
           authorHtml + '</div>'
       }).join("")
@@ -814,7 +951,7 @@ function renderStaff() {
   var container = document.getElementById("staff-grid")
   if (!container || !config.apiUrl) return
   container.innerHTML = '<div class="news-empty">' + esc(t("loading.staff")) + '</div>'
-  fetch(config.apiUrl + "/" + config.slug + "/staff")
+  fetch(config.apiUrl + "/" + config.slug + "/staff", { signal: AbortSignal.timeout(10000) })
     .then(function(res) { return res.json() })
     .then(function(data) {
       var staff = data.staff || []
@@ -875,22 +1012,69 @@ function initTools() {
   document.querySelectorAll("#branch-seg button").forEach(function (b) {
     b.onclick = function () { setBranchChoice(b.dataset.channel); if (b.dataset.channel === "custom") custom.focus() }
   })
-  var fail = function (r) {
-    say(r.error === "running" ? t("tools.running") : r.error === "not_installed" ? t("tools.notInstalled") : r.error === "cancelled" ? "" : String(r.error || ""))
-  }
-
-  document.getElementById("branch-apply").onclick = async function () {
+  var fail = toolFail
+  var apply = document.getElementById("branch-apply")
+  apply.onclick = busy(apply, async function () {
     var ch = branchChoice === "custom" ? custom.value.trim() : branchChoice
     var r = await window.launcher.setChannel(ch)
-    r.success ? say(t("tools.done") + " " + ch) : fail(r)
+    if (!r.success) {
+      fail(r)
+      if (branchChoice === "custom") { custom.focus(); custom.select() } // keep what was typed, to fix it
+      return
+    }
+    say(r.running ? t("ready.restartHint").replace("{b}", branchLabel(ch)) : t("tools.done") + " " + branchLabel(ch))
     refreshTools()
-  }
-  document.getElementById("restart-btn").onclick = async function () { await window.launcher.restartRedm(); say(t("tools.done")) }
-  document.getElementById("kill-btn").onclick = async function () { var r = await window.launcher.killRedm(); say(t("tools.done") + " (" + r.killed + ")"); refreshTools() }
-  document.getElementById("logs-btn").onclick = function () { window.launcher.openFolder("logs") }
-  document.getElementById("crashes-btn").onclick = function () { window.launcher.openFolder("crashes") }
+    refreshReady() // Home and Join see the new branch at once
+  })
+  var restart = document.getElementById("restart-btn")
+  restart.onclick = busy(restart, async function () {
+    if ((await window.launcher.redmInfo()).running && !(await confirmDialog(t("tools.killTitle"), t("tools.killMsg"), t("tools.restartBtn"), { danger: true }))) return
+    var r = await window.launcher.restartRedm()
+    r && r.success ? say(t("tools.restarted")) : fail(r || {})
+  })
+  var kill = document.getElementById("kill-btn")
+  kill.onclick = busy(kill, async function () {
+    if (!(await window.launcher.redmInfo()).running) { say(t("tools.notRunning")); return }
+    if (!(await confirmDialog(t("tools.killTitle"), t("tools.killMsg"), t("tools.killOk"), { danger: true }))) return
+    var r = await window.launcher.killRedm()
+    say(r.killed ? t("tools.killed") : t("tools.notRunning"))
+    refreshTools()
+  })
+  var folder = async function (which) { if ((await window.launcher.openFolder(which)) === "missing") say(t("tools.noFolder")) }
+  document.getElementById("logs-btn").onclick = function () { folder("logs") }
+  document.getElementById("crashes-btn").onclick = function () { folder("crashes") }
   initCleanup(fail)
   initGraphics(fail)
+}
+
+// A readable message for a failed tool call. Error codes from Windows (EPERM, EBUSY...) stay as a hint for staff.
+function toolFail(r) {
+  var e = (r && r.error) || "failed"
+  var known = { running: "tools.running", not_installed: "tools.notInstalled", bad_channel: "tools.badChannel", no_settings: "gfx.noSettings" }
+  if (e === "cancelled") return
+  say(known[e] ? t(known[e]) : t("tools.failed").replace("{code}", e))
+}
+
+// Wraps a click handler: the button is disabled until it finishes, so repeated clicks don't run it twice.
+function busy(btn, fn) {
+  return async function () {
+    if (btn.disabled) return
+    btn.disabled = true
+    try { await fn.apply(this, arguments) } finally { btn.disabled = false }
+  }
+}
+
+var openingGame = false
+async function openGame() {
+  if (openingGame) return
+  openingGame = true
+  try {
+    var r = await window.launcher.openGame()
+    if (r && !r.success) showErrorDialog(t("dialog.notFound").replace("{game}", "RedM"), t("dialog.notFoundMsg").replace("{game}", "RedM"), "https://redm.net")
+    readyAt = 0 // the player may pick the game folder now: re-check when they come back
+  } finally {
+    setTimeout(function () { openingGame = false }, 3000) // RedM takes a moment to show a window
+  }
 }
 
 async function refreshTools() {
@@ -902,27 +1086,32 @@ async function refreshTools() {
   document.getElementById("branch-custom").value = known ? "" : info.channel
 }
 
-// Confirmation in the launcher's own (translated) style. Resolves true when confirmed.
-function confirmDialog(title, message, okLabel) {
+// Confirmation in the launcher's own (translated) style. Resolves true (OK), false (the cancel button)
+// or null (closed: Escape, a click outside). opts: { cancelLabel, danger } (danger: Cancel has the focus).
+function confirmDialog(title, message, okLabel, opts) {
+  opts = opts || {}
   return new Promise(function (resolve) {
     var o = document.createElement("div")
     o.className = "error-overlay"
     o.innerHTML = '<div class="error-dialog" role="dialog" aria-modal="true"><h3 class="error-title">' + esc(title) + '</h3>' +
       '<p class="error-msg">' + esc(message) + '</p><div class="error-actions">' +
-      '<button class="error-btn secondary" data-a="0">' + esc(t("dialog.cancel")) + '</button>' +
+      '<button class="error-btn secondary" data-a="0">' + esc(opts.cancelLabel || t("dialog.cancel")) + '</button>' +
       '<button class="error-btn" data-a="1">' + esc(okLabel) + '</button></div></div>'
+    var opened = Date.now()
     o.addEventListener("click", function (e) {
       var b = e.target.closest("[data-a]")
       if (!b && e.target !== o) return
+      // The second click of a double-click on the button that opened this lands on the backdrop: ignore it.
+      if (!b && Date.now() - opened < 500) return
       o.remove()
-      resolve(!!b && b.dataset.a === "1")
+      resolve(b ? b.dataset.a === "1" : null)
     })
-    document.body.appendChild(o)
-    o.querySelector('[data-a="1"]').focus()
+    showOverlay(o, opts.danger ? '[data-a="0"]' : '[data-a="1"]', function () { resolve(null) })
   })
 }
 
 function fmtBytes(b) {
+  if (!b) return "0 KB"
   if (b >= 1073741824) return (b / 1073741824).toFixed(1) + " GB"
   if (b >= 1048576) return Math.round(b / 1048576) + " MB"
   return Math.max(1, Math.round(b / 1024)) + " KB"
@@ -933,11 +1122,17 @@ function fmtBytes(b) {
 var CLEAN_ORDER = ["server", "app", "shaders", "crashes", "logs", "nui", "temp"]
 var cleanScan = null
 var cleaning = false
+var cleanRunning = false // RedM open: rows it holds open get a lock and are skipped
+// Server cache is ticked for this visit only: remembered, every later clean would wipe every server's files.
+var serverPicked = false
 
 function cleanPicked() {
   var saved = null
   try { saved = JSON.parse(localStorage.getItem("cleanPicked")) } catch (e) {}
-  return (cleanScan || []).filter(function (c) { return saved ? saved.indexOf(c.id) !== -1 : c.on }).map(function (c) { return c.id })
+  return (cleanScan || []).filter(function (c) {
+    if (c.id === "server") return serverPicked
+    return saved ? saved.indexOf(c.id) !== -1 : c.on
+  }).sort(function (a, b) { return CLEAN_ORDER.indexOf(a.id) - CLEAN_ORDER.indexOf(b.id) }).map(function (c) { return c.id })
 }
 
 function renderCleanup() {
@@ -947,10 +1142,11 @@ function renderCleanup() {
   var rows = cleanScan.slice().sort(function (a, b) { return CLEAN_ORDER.indexOf(a.id) - CLEAN_ORDER.indexOf(b.id) })
   box.innerHTML = rows.map(function (c) {
     var size = c.bytes == null ? "…" : c.bytes ? fmtBytes(c.bytes) : esc(t("clean.empty"))
+    var lock = cleanRunning && c.redm ? '<i class="ph ph-lock-simple" title="' + esc(t("clean.lockedHint")) + '" aria-label="' + esc(t("clean.lockedHint")) + '"></i> ' : ''
     return '<label class="check' + (c.bytes === 0 ? " is-empty" : "") + '"><input type="checkbox" data-clean="' + c.id + '"' + (picked.indexOf(c.id) !== -1 ? " checked" : "") + '>' +
       '<span class="check-box"></span><span class="check-text"><span class="check-label">' + esc(t("clean." + c.id)) + '</span>' +
       '<span class="check-desc">' + esc(t("clean." + c.id + "Desc")) + '</span></span>' +
-      '<span class="check-size">' + size + '</span></label>'
+      '<span class="check-size">' + lock + size + '</span></label>'
   }).join("")
   updateCleanButton()
 }
@@ -962,7 +1158,7 @@ function cleanTotal() {
 
 function updateCleanButton() {
   var total = cleanTotal()
-  document.getElementById("clean-btn-label").textContent = cleaning ? t("clean.running") : total ? t("clean.btn").replace("{size}", fmtBytes(total)) : t("clean.nothing")
+  document.getElementById("clean-btn-label").textContent = cleaning ? t("clean.running") : total ? t("clean.btn").replace("{size}", fmtBytes(total)) : t(cleanPicked().length ? "clean.none" : "clean.nothing")
   document.getElementById("clean-btn").disabled = cleaning || !total
   document.getElementById("clean-list").setAttribute("aria-busy", String(cleaning))
 }
@@ -970,6 +1166,7 @@ function updateCleanButton() {
 // Rows appear at once; each size fills in as its folder finishes measuring (temp is the slow one).
 async function refreshCleanup() {
   var meta = await window.launcher.cleanupMeta()
+  cleanRunning = (await window.launcher.redmInfo()).running
   cleanScan = meta.map(function (m) {
     var old = (cleanScan || []).find(function (c) { return c.id === m.id })
     return Object.assign({}, m, { bytes: old ? old.bytes : null })
@@ -986,7 +1183,9 @@ async function refreshCleanup() {
 function initCleanup(fail) {
   document.getElementById("clean-list").addEventListener("change", function (e) {
     if (!e.target.dataset.clean) return
+    if (e.target.dataset.clean === "server") serverPicked = e.target.checked
     var ids = [].map.call(document.querySelectorAll("#clean-list input:checked"), function (i) { return i.dataset.clean })
+      .filter(function (id) { return id !== "server" })
     localStorage.setItem("cleanPicked", JSON.stringify(ids))
     updateCleanButton()
   })
@@ -994,13 +1193,21 @@ function initCleanup(fail) {
     var ids = cleanPicked(), total = cleanTotal()
     if (!ids.length || cleaning) return
     var names = ids.map(function (id) { return t("clean." + id) }).join(", ")
-    if (!(await confirmDialog(t("clean.confirmTitle").replace("{size}", fmtBytes(total)), names + ". " + t("clean.confirmMsg"), t("clean.confirmOk")))) return
+    // RedM open: say before deleting which rows will be skipped, not after.
+    cleanRunning = (await window.launcher.redmInfo()).running
+    var locked = cleanRunning ? ids.filter(function (id) { var c = cleanScan.find(function (x) { return x.id === id }); return c && c.redm }) : []
+    if (locked.length === ids.length) { say(t("tools.running")); renderCleanup(); return }
+    var lockedNames = locked.map(function (id) { return t("clean." + id) }).join(", ")
+    if (!(await confirmDialog(t("clean.confirmTitle").replace("{size}", fmtBytes(total)), names + ". " + t("clean.confirmMsg") +
+      (locked.length ? " " + t("clean.locked").replace("{list}", lockedNames) : ""), t("clean.confirmOk"), { danger: true }))) return
     cleaning = true
     updateCleanButton()
     var r = await window.launcher.cleanupRun(ids)
     cleaning = false
-    if (r.success) say(t("clean.done").replace("{size}", fmtBytes(r.freed || 0)) + (r.failed ? " " + t("clean.skipped").replace("{n}", r.failed) : ""))
-    else fail(r)
+    if (r.success) {
+      say(t("clean.done").replace("{size}", fmtBytes(r.freed || 0)) + (r.failed ? " " + t("clean.skipped").replace("{n}", r.failed) : "") +
+        (r.locked && r.locked.length ? " " + t("clean.locked").replace("{list}", r.locked.map(function (id) { return t("clean." + id) }).join(", ")) : ""))
+    } else fail(r)
     refreshCleanup()
   }
 }
@@ -1009,13 +1216,20 @@ function initCleanup(fail) {
 
 var lastGfx = null
 async function refreshGraphics() {
-  renderGraphics(await window.launcher.graphicsInfo())
+  var g = await window.launcher.graphicsInfo()
+  // Turned on here, but a new RedM build brought a new game exe without it: apply it to that one too.
+  if (g.exes && !g.fsoOff && localStorage.getItem("gfxFso") === "true" && (await window.launcher.setFso(true))) g = await window.launcher.graphicsInfo()
+  renderGraphics(g)
 }
 
 function renderGraphics(g) {
   lastGfx = g
-  document.getElementById("gfx-fso").checked = g.fsoOff
-  document.getElementById("gfx-fso").disabled = !g.exes
+  var fso = document.getElementById("gfx-fso")
+  fso.checked = g.fsoOff
+  fso.disabled = !g.exes
+  // Disabled: say why, on the row's description.
+  var desc = fso.closest(".switch-row").querySelector(".check-desc")
+  desc.textContent = t("gfx.fsoDesc") + (g.exes ? "" : " " + t("gfx.fsoNone"))
   document.getElementById("gfx-prio").checked = localStorage.getItem("gfxPrio") === "true"
   document.getElementById("gfx-reset-row").hidden = !g.hasSettings
 }
@@ -1024,8 +1238,9 @@ function initGraphics(fail) {
   var bind = function (id, key, apply) {
     document.getElementById(id).addEventListener("change", async function () {
       localStorage.setItem(key, String(this.checked))
-      await apply(this.checked)
-      say(t("tools.done"))
+      var ok = await apply(this.checked)
+      say(ok === false ? t("tools.failed").replace("{code}", "registry") : t("tools.done"))
+      if (ok === false) refreshGraphics() // show what Windows really has
     })
   }
   bind("gfx-fso", "gfxFso", window.launcher.setFso)
@@ -1085,7 +1300,10 @@ function readyItems() {
     var okB = r.channel === config.recommendedBranch
     items.push({ ok: okB, text: t(okB ? "ready.branch" : "ready.branchBad").replace("{server}", brand.name).replace("{b}", branchLabel(config.recommendedBranch)), fix: "set-branch", fixLabel: t("ready.switch") })
   }
-  if (nameInfo && r.redm) items.push({ ok: !nameInfo.madeUp, text: nameInfo.madeUp ? t("ready.nameBad").replace("{name}", nameInfo.name || "?") : t("ready.name").replace("{name}", nameInfo.name), fix: "name", fixLabel: t("ready.change") })
+  if (nameInfo && r.redm) {
+    var madeUp = nameMadeUp()
+    items.push({ ok: !madeUp, text: !nameInfo.name ? t("ready.nameNone") : madeUp ? t("ready.nameBad").replace("{name}", nameInfo.name) : t("ready.name").replace("{name}", nameInfo.name), fix: "name", fixLabel: t("ready.change") })
+  }
   if (r.freeBytes != null) {
     var okD = r.freeBytes > 15 * GB
     items.push({ ok: okD, text: t(okD ? "ready.disk" : "ready.diskBad").replace("{size}", fmtBytes(r.freeBytes)), fix: "free-space", fixLabel: t("ready.freeUp") })
@@ -1093,7 +1311,7 @@ function readyItems() {
   // Visual mods in RedM's data folders: an approved one is fine, anything else the server's anticheat may flag.
   if (r.mod && r.mod.state !== "none") {
     var okM = r.mod.state === "approved"
-    items.push({ ok: okM, text: t(okM ? "ready.mod" : "ready.modBad").replace("{name}", r.mod.name).replace("{server}", brand.name).replace("{n}", r.mod.files.length), fix: "remove-mods", fixLabel: t("ready.remove") })
+    items.push({ ok: okM, text: t(okM ? "ready.mod" : r.mod.files.length === 1 ? "ready.modBad1" : "ready.modBad").replace("{name}", r.mod.name).replace("{server}", brand.name).replace("{n}", r.mod.files.length), fix: "remove-mods", fixLabel: t("ready.remove") })
   }
   return items
 }
@@ -1113,6 +1331,8 @@ function renderReady() {
       (i.ok ? '' : '<button type="button" class="btn accent" data-act="ready-fix" data-arg="' + i.fix + '">' + esc(i.fixLabel) + '</button>') + '</div>'
   }).join("") +
     '<div class="ready-foot"><span>' + esc(t("ready.trouble")) + '</span><button type="button" class="btn glass" data-act="fix-game"><i class="ph ph-first-aid-kit"></i>' + esc(t("fix.btn")) + '</button></div>'
+  refreshJoinButton() // "Get RedM" while RedM is missing
+  renderWelcome()
 }
 
 function toggleReady(open) {
@@ -1123,40 +1343,52 @@ function toggleReady(open) {
 
 async function readyFix(what) {
   if (what === "get-redm") return window.launcher.openExternal("https://redm.net")
-  if (what === "open-redm") return window.launcher.openGame()
+  if (what === "open-redm") return openGame()
   if (what === "free-space") { toggleReady(false); return switchNav("tools") }
   if (what === "name") { toggleReady(false); switchNav("settings"); return document.getElementById("settings-name").focus() }
   if (what === "remove-mods") {
     var res = await window.launcher.removeMods()
-    say(res.success ? t("ready.modRemoved").replace("{n}", res.moved) : t(res.error === "running" ? "tools.running" : "ready.modFailed"))
+    say(res.success ? t(res.moved === 1 ? "ready.modRemoved1" : "ready.modRemoved").replace("{n}", res.moved).replace("{folder}", res.folder || "")
+      : t(res.error === "running" ? "tools.running" : "ready.modFailed"))
     return refreshReady()
   }
-  if (what === "set-branch") await window.launcher.setChannel(config.recommendedBranch)
-  if (what === "repair-links") await window.launcher.repairLinks()
-  say(t("tools.done"))
+  if (what === "set-branch") {
+    var b = await window.launcher.setChannel(config.recommendedBranch)
+    if (!b.success) toolFail(b)
+    else say(b.running ? t("ready.restartHint").replace("{b}", branchLabel(config.recommendedBranch)) : t("tools.done")) // a running RedM keeps its old version
+  }
+  if (what === "repair-links") {
+    var l = await window.launcher.repairLinks()
+    say(l && l.success ? t("tools.done") : l && l.error === "not_installed" ? t("tools.notInstalled") : t("ready.repairFailed"))
+  }
   refreshReady()
 }
 
 // Before joining: offer to switch to the server's game version if it's set and different.
+// `ready` is fresh here (joinServer refreshed it).
 async function branchCheckBeforeJoin() {
   var want = config.recommendedBranch
-  if (!want) return true
-  if (!ready || Date.now() - readyAt > 30000) await refreshReady()
-  if (!ready || ready.channel === want) return true
+  if (!want || !ready || ready.channel === want) return true
   var label = branchLabel(want)
   if (!(await confirmDialog(t("branch.switchTitle").replace("{b}", label), t("branch.switchMsg").replace("{server}", brand.name).replace("{b}", label), t("branch.switchOk")))) return false
-  await window.launcher.setChannel(want)
-  await window.launcher.killRedm() // a running RedM keeps its old version until restarted
-  await wait(1500)
-  refreshReady()
+  setJoinBusy(t("join.switching"))
+  var r = await window.launcher.setChannel(want)
+  if (!r.success) { toolFail(r); return false }
+  if (r.running) {
+    await window.launcher.killRedm() // a running RedM keeps its old version until restarted
+    await wait(1500)
+  }
+  await refreshReady()
   return true
 }
 
 // Fix my game: the safe fixes, in order, with a visible list of what happened.
 
 async function fixMyGame() {
-  if (!(await confirmDialog(t("fix.confirmTitle"), t("fix.confirmMsg"), t("fix.btn")))) return
   var r = ready || await window.launcher.readiness()
+  // Nothing to fix without RedM: say what's missing instead of failing every step.
+  if (!r.redm) { showErrorDialog(t("dialog.notFound").replace("{game}", "RedM"), t("dialog.notFoundMsg").replace("{game}", "RedM"), "https://redm.net"); return }
+  if (!(await confirmDialog(t("fix.confirmTitle"), t("fix.confirmMsg"), t("fix.btn")))) return
   var steps = [
     { label: t("fix.stepClose"), run: async function () { await window.launcher.killRedm(); await wait(2000) } },
     { label: t("fix.stepCache"), run: async function () {
@@ -1178,7 +1410,7 @@ async function fixMyGame() {
     '<p class="error-msg" data-role="result" aria-live="polite"></p>' +
     '<div class="error-actions" data-role="actions" hidden><button class="error-btn secondary" data-act="dialog-close">' + esc(t("dialog.ok")) + '</button>' +
     '<button class="error-btn" data-act="fix-join">' + esc(t("join.default")) + '</button></div></div>'
-  document.body.appendChild(o)
+  showOverlay(o)
   var lis = o.querySelectorAll(".steps li"), failed = 0
   for (var i = 0; i < steps.length; i++) {
     lis[i].firstChild.outerHTML = '<span class="join-spinner"></span>'
@@ -1195,6 +1427,7 @@ async function fixMyGame() {
   }
   o.querySelector('[data-role="result"]').textContent = failed ? t("fix.partly") : t("fix.done")
   o.querySelector('[data-role="actions"]').hidden = false
+  o.querySelector('[data-act="fix-join"]').focus()
   refreshReady()
   if (document.body.dataset.view === "tools") refreshTools()
 }
@@ -1204,16 +1437,21 @@ async function fixMyGame() {
 var lastCrash = null
 function showCrash(c) {
   lastCrash = c
-  document.querySelectorAll(".error-overlay.crash").forEach(function (x) { x.remove() })
+  closeOverlays() // a dialog left open from before the game started (a pending join question) is stale now
   var o = document.createElement("div")
   o.className = "error-overlay crash"
+  // A graphics crash gets the fix its message recommends, one click away.
+  var fix = c.cause === "graphics"
+    ? '<button class="error-btn" data-act="crash-reset-gfx">' + esc(t("crash.resetGfx")) + '</button>'
+    : '<button class="error-btn" data-act="fix-game">' + esc(t("fix.btn")) + '</button>'
   o.innerHTML = '<div class="error-dialog wide" role="alertdialog" aria-modal="true"><h3 class="error-title">' + esc(t("crash.title")) + '</h3>' +
     '<p class="error-msg">' + esc(t("crash.cause." + c.cause)) + '</p>' +
     '<div class="crash-msg">' + esc(c.message) + '</div>' +
     '<div class="error-actions"><button class="error-btn secondary" data-act="dialog-close">' + esc(t("dialog.ok")) + '</button>' +
+    '<button class="error-btn secondary" data-act="crash-logs"><i class="ph ph-folder-open"></i> ' + esc(t("crash.openLogs")) + '</button>' +
     '<button class="error-btn secondary" data-act="crash-copy"><i class="ph ph-copy"></i> ' + esc(t("crash.copy")) + '</button>' +
-    '<button class="error-btn" data-act="fix-game">' + esc(t("fix.btn")) + '</button></div></div>'
-  document.body.appendChild(o)
+    fix + '</div></div>'
+  showOverlay(o, '[data-act="dialog-close"]')
   notify(t("crash.title"), t("crash.cause." + c.cause))
 }
 
@@ -1251,7 +1489,9 @@ function refreshJoinButton() {
 function onFeaturedStatus(data) {
   var online = !!(data && data.online)
   if (lastOnline === false && online) notify(t("alert.online").replace("{server}", brand.name), t("alert.onlineBody"))
-  if (data) lastOnline = online
+  // Only a real "down" counts as offline: a Cfx rate limit or our own lost internet says nothing about
+  // the server, and would end in a false "back online" alert.
+  if (online || (data && data.reason === "down")) lastOnline = online
   refreshJoinButton()
 }
 
@@ -1264,7 +1504,7 @@ function startWaiting() {
     if (featuredLive && featuredLive.online && !serverFull()) {
       stopWaiting()
       notify(t("alert.slot").replace("{server}", brand.name))
-      joinServer()
+      joinServer({ auto: true })
     }
   }, 10000)
 }
@@ -1307,15 +1547,18 @@ async function firstRun() {
 
 function renderWelcome() {
   var done = []
+  if (!localStorage.getItem("firstRunDone")) return // first start still being set up (firstRun draws it)
   try { done = JSON.parse(localStorage.getItem("firstRunDone")) || [] } catch (e) {}
   if (!Array.isArray(done) || localStorage.getItem("welcomeClosed")) return
   done = done.filter(function (k) { return k !== "gpu" }) // listed by 1.1.4–1.1.6; undone since
   document.getElementById("welcome-title").textContent = t("welcome.title").replace("{server}", brand.name)
+  // Open checklist items other than the name (asked for right below): point at them, don't claim all is done.
+  var todo = ready ? readyItems().filter(function (i) { return !i.ok && i.fix !== "name" }).length : 0
   document.getElementById("welcome-done").innerHTML = done.map(function (k) {
     // Native name from the launcher's own list (the system's language names don't cover Georgian).
     var lang = (i18nLanguageList.find(function (l) { return l.code === currentLang }) || {}).name || currentLang
     return '<li><i class="ph ph-check-circle"></i>' + esc(t("welcome." + k).replace("{server}", brand.name).replace("{lang}", lang)) + '</li>'
-  }).join("")
+  }).join("") + (todo ? '<li class="todo"><i class="ph ph-warning-circle"></i>' + esc(t("welcome.todo")) + '</li>' : '')
   renderWelcomeHint()
   document.getElementById("welcome").hidden = false
 }
@@ -1323,7 +1566,13 @@ function renderWelcome() {
 function renderWelcomeHint() {
   var hint = document.getElementById("welcome-hint")
   if (!hint) return
-  hint.textContent = !nameInfo ? "" : nameInfo.madeUp ? t("name.madeUp") : t("name.current")
+  hint.textContent = !nameInfo ? "" : !nameInfo.name ? t("name.none") : nameMadeUp() ? t("name.madeUp") : t("name.current")
+}
+
+// RedM's own random names look like BoldMoth3983, but so can a name a player picks on purpose:
+// one saved through the launcher never counts as random.
+function nameMadeUp() {
+  return !!nameInfo && (!nameInfo.name || (nameInfo.madeUp && localStorage.getItem("namePicked") !== nameInfo.name))
 }
 
 function closeWelcome() {
@@ -1335,11 +1584,16 @@ async function saveName(inputId) {
   var input = document.getElementById(inputId)
   var r = await window.launcher.setName(input.value)
   if (r.success) {
+    input.setCustomValidity("")
+    input.value = r.name // as saved: trimmed, single spaces
+    localStorage.setItem("namePicked", r.name)
     say(t("name.saved").replace("{name}", r.name))
     if (inputId === "welcome-name") closeWelcome()
     loadName()
   } else {
-    say(t(r.error === "running" ? "name.running" : "name.invalid"))
+    // Shown next to the field and kept until the text changes (the toast alone was easy to miss).
+    input.setCustomValidity(t(r.error === "running" ? "name.running" : r.error === "invalid" ? "name.invalid" : "name.failed"))
+    input.reportValidity()
     input.focus()
   }
 }
@@ -1348,7 +1602,9 @@ function initHelpers() {
   refreshReady()
   loadName()
   ;["welcome-name", "settings-name"].forEach(function (id) {
-    document.getElementById(id).addEventListener("keydown", function (e) { if (e.key === "Enter") saveName(id) })
+    var el = document.getElementById(id)
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") saveName(id) })
+    el.addEventListener("input", function () { el.setCustomValidity("") })
   })
   // Let readiness and the update state arrive first, so the setup knows what this PC needs.
   setTimeout(firstRun, 1200)
@@ -1359,6 +1615,19 @@ function initHelpers() {
   document.addEventListener("click", function (e) {
     var panel = document.getElementById("ready-panel")
     if (!panel.hidden && !e.target.closest(".ready")) toggleReady(false)
+  })
+  // Keyboard: Escape closes the checklist and the gallery viewer; arrows move through the gallery;
+  // Enter/Space work on the few clickable things that aren't buttons (gallery images).
+  document.addEventListener("keydown", function (e) {
+    var lightboxOpen = document.getElementById("lightbox").style.display === "flex"
+    if (e.key === "Escape") {
+      if (lightboxOpen) return closeLightbox()
+      if (!document.getElementById("ready-panel").hidden) { toggleReady(false); document.getElementById("ready-btn").focus() }
+      return
+    }
+    if (lightboxOpen && (e.key === "ArrowLeft" || e.key === "ArrowRight")) return lightboxNav(e.key === "ArrowLeft" ? -1 : 1)
+    var el = e.target
+    if ((e.key === "Enter" || e.key === " ") && el.dataset && el.dataset.act && !/^(BUTTON|A|INPUT)$/.test(el.tagName)) { e.preventDefault(); el.click() }
   })
 }
 
@@ -1374,21 +1643,24 @@ document.addEventListener("click", function (e) {
     case "max": window.launcher.maximize(); break
     case "close": window.launcher.close(); break
     case "join": joinServer(); break
+    case "join-dev": joinAddress(brand.devCfxCode, null, "Tiflisi DEV"); break
     case "entry": toggleEntry(el, a); break
     case "story": openStory(a.split("|")[0], a.split("|")[1]); break
     case "lightbox-open": openLightbox(+a); break
     case "lightbox-close": closeLightbox(); break
     case "lightbox-nav": lightboxNav(+a); break
-    case "dialog-close": el.closest(".error-overlay").remove(); break
-    case "dialog-download": window.launcher.openExternal(a); el.closest(".error-overlay").remove(); break
+    case "dialog-close": closeOverlay(el); break
+    case "dialog-download": window.launcher.openExternal(a); closeOverlay(el); break
     case "update": window.launcher.installUpdate(); break
     case "ready-toggle": toggleReady(); break
     case "welcome-close": closeWelcome(); break
     case "name-save": saveName(a); break
     case "ready-fix": readyFix(a); break
-    case "fix-game": { var ov = el.closest(".error-overlay"); if (ov) ov.remove(); toggleReady(false); fixMyGame(); break }
-    case "fix-join": el.closest(".error-overlay").remove(); joinServer(); break
+    case "fix-game": closeOverlays(); toggleReady(false); fixMyGame(); break
+    case "fix-join": closeOverlay(el); switchNav("home"); joinServer(); break // Home shows "Connecting…"
     case "crash-copy": window.launcher.copyText(crashReport()).then(function () { say(t("crash.copied")) }); break
+    case "crash-logs": window.launcher.openFolder("logs"); break
+    case "crash-reset-gfx": closeOverlay(el); window.launcher.resetGraphics().then(function (r) { r.success ? say(t("tools.done")) : toolFail(r) }); break
     case "source": window.launcher.openExternal(SOURCE_URL); break
   }
 })
