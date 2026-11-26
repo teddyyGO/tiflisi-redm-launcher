@@ -48,15 +48,33 @@ async function scan(redmDir, approved) {
     }
     if (intact) return { state: "approved", id: String(mod.id), name: String(mod.name || mod.id), files }
   }
-  return { state: "unknown", files }
+  return { state: "unknown", files: await unrecognised(citizen, files, approved) }
 }
 
-// Moves every added file to <RedM folder>\removed-mods\<time>\ (nothing is deleted) and tidies the empty folders.
-async function remove(redmDir, now = new Date()) {
-  const files = await added(redmDir)
-  if (!files.length) return { success: true, moved: 0 }
+// Of the added files, the ones no approved mod has with this exact content. An approved pack with one
+// file changed or added then names (and removes) only that file. None left (a pack with files missing):
+// every file counts, so the pack isn't half-removed into something new.
+async function unrecognised(citizen, files, approved) {
+  const known = new Map()
+  for (const mod of Array.isArray(approved) ? approved : []) {
+    for (const [f, h] of Object.entries((mod && mod.files) || {})) known.set(f.toLowerCase() + "|" + String(h).toLowerCase(), true)
+  }
+  if (!known.size) return files
+  const out = []
+  for (const f of files) if (!known.has(f.toLowerCase() + "|" + (await sha256(path.join(citizen, f))))) out.push(f)
+  return out.length ? out : files
+}
+
+const stamp = (d) => d.getFullYear() + "-" + [d.getMonth() + 1, d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds()].map((n) => String(n).padStart(2, "0")).join("-")
+
+// Moves the unrecognised files (see scan) to <RedM folder>\removed-mods\<local time>\ (nothing is deleted)
+// and tidies the empty folders. Without an approved list, every added file.
+async function remove(redmDir, now = new Date(), approved) {
   const citizen = path.join(redmDir, "citizen")
-  const folder = path.join(path.dirname(redmDir), "removed-mods", now.toISOString().slice(0, 19).replace(/[:T]/g, "-"))
+  const scanned = await scan(redmDir, approved)
+  const files = scanned.state === "unknown" ? scanned.files : []
+  if (!files.length) return { success: true, moved: 0 }
+  const folder = path.join(path.dirname(redmDir), "removed-mods", stamp(now))
   for (const f of files) {
     const to = path.join(folder, f)
     await fs.promises.mkdir(path.dirname(to), { recursive: true })

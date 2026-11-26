@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld("launcher", {
   openExternal: call("open-external"),
   joinServer: call("join-server"),
   setAutoStart: call("set-auto-start"),
+  getAutoStart: call("get-auto-start"),
   pingServer: call("ping-server"),
   serverStatus: call("server-status"),
   getVersion: call("get-app-version"),

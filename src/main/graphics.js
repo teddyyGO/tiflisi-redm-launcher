@@ -72,12 +72,16 @@ async function undoGpu(redmRoot, gamePath) {
   return ok
 }
 
+// true when every exe got the change (reg.exe answered for each write).
 async function setFso(exes, on) {
+  let ok = exes.length > 0
   for (const e of exes) {
-    const next = mergeLayers(await regGet(LAYERS_KEY, e), FSO_FLAG, on)
-    if (next) await regSet(LAYERS_KEY, e, next)
-    else await regDel(LAYERS_KEY, e)
+    const cur = await regGet(LAYERS_KEY, e)
+    const next = mergeLayers(cur, FSO_FLAG, on)
+    if (next) { if ((await regSet(LAYERS_KEY, e, next)) === null) ok = false }
+    else if (cur !== null && (await regDel(LAYERS_KEY, e)) === null) ok = false // nothing there: nothing to delete
   }
+  return ok
 }
 
 // URL-protocol registration (e.g. redm://), per user: the same keys RedM writes itself.
@@ -90,21 +94,22 @@ async function registerProtocol(name, title, exe) {
 
 // High priority while playing: every 15 s, raise any running RedM game process.
 let boostTimer = null
+// Turning it off puts a running game back to normal priority.
 function setPriorityBoost(on) {
   clearInterval(boostTimer)
   boostTimer = null
-  if (!on) return
+  const level = on ? os.constants.priority.PRIORITY_HIGH : os.constants.priority.PRIORITY_NORMAL
   const tick = () => exec("tasklist /fo csv /nh", { windowsHide: true }, (err, out) => {
     if (err) return
     for (const line of out.split(/\r?\n/)) {
       const c = line.split('","')
       if (/^"?RedM_b\d+_GTAProcess\.exe$/i.test(c[0] || "")) {
-        try { os.setPriority(parseInt(c[1], 10), os.constants.priority.PRIORITY_HIGH) } catch (e) {}
+        try { os.setPriority(parseInt(c[1], 10), level) } catch (e) {}
       }
     }
   })
   tick()
-  boostTimer = setInterval(tick, 15000)
+  if (on) boostTimer = setInterval(tick, 15000)
 }
 
 module.exports = { gameExes, state, gpuCandidates, undoGpu, setFso, setPriorityBoost, mergeLayers, registerProtocol, regGet }

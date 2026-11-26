@@ -59,6 +59,7 @@ function createWindow() {
       contextIsolation: true, // the page can't reach Node or Electron internals
       nodeIntegration: false,
       sandbox: true, // renderer runs in Chromium's OS sandbox
+      backgroundThrottling: false, // waiting for a server slot keeps its 10 s pace while minimized
     },
   })
   // The window only ever shows the launcher itself: no pop-ups, no navigating away.
@@ -134,6 +135,8 @@ ipcMain.handle("set-auto-start", (_, enabled) => {
   app.setLoginItemSettings({ openAtLogin: !!enabled })
   return { success: true }
 })
+// What Windows will actually do at sign-in (the player may have turned it off in Task Manager).
+ipcMain.handle("get-auto-start", () => !!app.getLoginItemSettings().openAtLogin)
 ipcMain.handle("get-app-version", () => app.getVersion())
 
 // ── Server lookup (Cfx list + the server's own /info.json etc.) ──
@@ -146,38 +149,59 @@ function normalise(a) {
   return /^[a-z0-9]{6,8}$/i.test(a) ? "cfx.re/join/" + a.toLowerCase() : a
 }
 
+// null: the server answered with an error. undefined: no answer at all (offline, DNS, timeout).
 async function getJson(url, ms) {
-  try {
-    const r = await fetch(url, { signal: AbortSignal.timeout(ms || 4000) })
-    return r.ok ? await r.json() : null
-  } catch (e) {
-    return null
-  }
+  let r
+  try { r = await fetch(url, { signal: AbortSignal.timeout(ms || 4000) }) } catch (e) { return undefined }
+  try { return r.ok ? await r.json() : null } catch (e) { return null }
 }
 
 const httpsOnly = (u) => (/^https:\/\/[^\s"'()<>]+$/i.test(String(u || "")) ? u : null)
 const clean = (s) => String(s || "").replace(/\^\d|~[a-zA-Z0-9_]+~/g, "").trim()
-const cfxCache = new Map() // last good Cfx answer per code, used while Cfx rate-limits
+// Last good Cfx answer per code, used while Cfx rate-limits. The game endpoint per code is also kept on
+// disk, so a launcher that starts while Cfx rate-limits still finds the server (and can send join's hello).
+const cfxCache = new Map()
+const endpointsFile = path.join(app.getPath("userData"), "endpoints.json")
+let endpoints = {}
+try { endpoints = JSON.parse(fs.readFileSync(endpointsFile, "utf8")) || {} } catch (e) {}
+function rememberEndpoint(code, ep) {
+  if (endpoints[code] === ep) return
+  endpoints[code] = ep
+  try { fs.writeFileSync(endpointsFile, JSON.stringify(endpoints)) } catch (e) {}
+}
+const codeOf = (addr) => (addr.match(/^cfx\.re\/join\/([a-z0-9]+)$/i) || [])[1]
+const knownEndpoint = (addr) => (IP_PORT.test(addr) ? addr : endpoints[codeOf(addr)] || null)
 
 ipcMain.handle("server-status", async (_, address) => {
   const addr = normalise(address)
-  const code = (addr.match(/^cfx\.re\/join\/([a-z0-9]+)$/i) || [])[1]
+  const code = codeOf(addr)
   let direct = IP_PORT.test(addr) ? addr : null
 
-  let c = code ? (await getJson("https://frontend.cfx-services.net/api/servers/single/" + code))?.Data : null
+  // Slow links: the Cfx list gets 8 s before the server counts as unreachable.
+  const res = code ? await getJson("https://frontend.cfx-services.net/api/servers/single/" + code, 8000) : null
+  let c = res?.Data || null
+  const fresh = !!c
   if (code && c) cfxCache.set(code, c)
   else if (code) c = cfxCache.get(code) || null
 
   const ep = c?.connectEndPoints?.[0]
   if (!direct && IP_PORT.test(ep || "")) direct = ep
+  if (!direct && code) direct = endpoints[code] || null
+  if (code && direct) rememberEndpoint(code, direct)
 
   const [dyn, info, players] = direct
     ? await Promise.all(["dynamic", "info", "players"].map((f) => getJson("http://" + direct + "/" + f + ".json", 2500)))
     : [null, null, null]
 
   const vars = { ...(c?.vars || {}), ...(info?.vars || {}) } // Cfx adds metadata (icon, banner) the server's own vars lack
-  const d = dyn || c
-  if (!d) return { online: false, address: addr }
+  // Live data only: the server's own answer, or a fresh Cfx answer. A cached Cfx answer just fills in
+  // names and art; on its own it would keep a server that went down "online" forever.
+  const d = dyn || (fresh ? c : null)
+  if (!d) {
+    // network: nothing answered at all (no internet). lookup: Cfx refused (rate limit) and no endpoint known.
+    const reason = res === undefined && !dyn ? "network" : !direct ? "lookup" : "down"
+    return { online: false, address: addr, endpoint: direct, reason }
+  }
   let list = (players || c?.players || []).map((p) => ({ name: clean(p.name) || "?", id: p.id, ping: p.ping || 0 }))
   if (list.every((p) => p.name === "Player" && !p.ping)) list = [] // Cfx anonymises names on many servers
   return {
@@ -228,9 +252,13 @@ ipcMain.handle("ping-server", async (_, endpoint) => {
 // ── Join ──
 
 ipcMain.handle("join-server", async (_, opts) => {
-  const { address, endpoint, name } = opts || {}
+  const { address, name } = opts || {}
   const addr = normalise(address)
   if (!addr) return { success: false, error: "not_configured" }
+  const exe = await redmExe()
+  if (!exe) return { success: false, error: "not_installed" }
+  // Joining before the status loaded (or while Cfx rate-limits): use the endpoint seen last time.
+  const endpoint = IP_PORT.test(opts?.endpoint || "") ? opts.endpoint : knownEndpoint(addr)
   // Tell the server's launcher_check resource (if it runs one) that this IP joins via the launcher.
   if (IP_PORT.test(endpoint || "")) {
     // No install id: launcher_check matches the join by IP, so other servers never learn it.
@@ -247,8 +275,7 @@ ipcMain.handle("join-server", async (_, opts) => {
   // is broken (then joining from websites fails, but the launcher still joins).
   const url = "redm://connect/" + addr
   try {
-    const exe = await redmExe()
-    if (!exe || !(await launch(exe, [url]))) await shell.openExternal(url)
+    if (!(await launch(exe, [url]))) await shell.openExternal(url)
     rpc.setActivity({ details: "Playing on " + (name || addr), startTimestamp: Date.now() })
     return { success: true }
   } catch (e) {
@@ -273,10 +300,11 @@ async function heartbeat() {
 setInterval(heartbeat, 60000)
 
 ipcMain.handle("set-usage", (_, opts) => {
+  const before = usage.enabled + "|" + usage.endpoint
   usage.enabled = !!(opts && opts.enabled)
   usage.endpoint = opts && IP_PORT.test(opts.endpoint || "") ? opts.endpoint : null
   usage.lang = String((opts && opts.lang) || "").slice(0, 8)
-  heartbeat()
+  if (usage.enabled + "|" + usage.endpoint !== before) heartbeat() // a language change waits for the next beat
 })
 
 // ── RedM install, client branch, fixes ──
@@ -319,7 +347,8 @@ function redmPids() {
 
 async function openGame() {
   const exe = await redmExe()
-  if (exe && (await launch(exe, []))) return { success: true }
+  if (!exe) return { success: false, error: "not_installed" }
+  if (await launch(exe, [])) return { success: true }
   try { await shell.openExternal("redm://"); return { success: true } } catch (e) { return { success: false, error: "not_installed" } }
 }
 ipcMain.handle("open-game", openGame)
@@ -347,8 +376,10 @@ ipcMain.handle("cleanup-scan-one", (_, id) => cleanup.scanOne(cleanEnv, String(i
 
 ipcMain.handle("cleanup-run", async (_, ids) => {
   ids = (Array.isArray(ids) ? ids : []).filter((id) => cleanup.ids().includes(id))
-  if (cleanup.needsRedmClosed(cleanEnv, ids) && (await redmPids()).length) return { success: false, error: "running" }
-  return { success: true, ...(await cleanup.clean(cleanEnv, ids)) }
+  // RedM running: clean what it doesn't hold open, report the rest as locked.
+  const locked = (await redmPids()).length ? ids.filter((id) => cleanup.needsRedmClosed(cleanEnv, [id])) : []
+  if (locked.length && locked.length === ids.length) return { success: false, error: "running" }
+  return { success: true, locked, ...(await cleanup.clean(cleanEnv, ids.filter((id) => !locked.includes(id)))) }
 })
 
 // ── Graphics and performance (see graphics.js) ──
@@ -388,7 +419,7 @@ ipcMain.handle("readiness", async () => {
 
 ipcMain.handle("mods-remove", async () => {
   if ((await redmPids()).length) return { success: false, error: "running" }
-  try { return await mods.remove(redmDir) } catch (e) { return { success: false, error: e.code || "failed" } }
+  try { return await mods.remove(redmDir, new Date(), config.mods) } catch (e) { return { success: false, error: e.code || "failed" } }
 })
 
 // Rewrite the redm:// link registration the way RedM itself does (per user, HKCU).
@@ -396,7 +427,8 @@ ipcMain.handle("repair-links", async () => {
   const exe = await redmExe()
   if (!exe) return { success: false, error: "not_installed" }
   await graphics.registerProtocol("redm", "RedM", exe)
-  return { success: !!(await getProtocolExe()) }
+  const now = await getProtocolExe()
+  return { success: !!now && fs.existsSync(now) } // same test as readiness().links
 })
 
 // The player's name in RedM (%APPDATA%\CitizenFX\redm.cfg). RedM rewrites that file when it closes,
@@ -461,25 +493,30 @@ ipcMain.handle("reset-graphics", async () => {
   if ((await redmPids()).length) return { success: false, error: "running" }
   const f = systemXml()
   if (!fs.existsSync(f)) return { success: false, error: "no_settings" }
-  try { fs.renameSync(f, f + ".backup-" + new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")) } catch (e) { return { success: false, error: e.code || "failed" } }
+  // Local time to the second, and never over an older backup: two resets keep both.
+  const d = new Date(), p = (n) => String(n).padStart(2, "0")
+  let to = f + ".backup-" + d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "-" + p(d.getHours()) + "-" + p(d.getMinutes()) + "-" + p(d.getSeconds())
+  for (let i = 2; fs.existsSync(to); i++) to = to.replace(/(-\d+)?$/, "") + "-" + i
+  try { fs.renameSync(f, to) } catch (e) { return { success: false, error: e.code || "failed" } }
   return { success: true }
 })
 
 ipcMain.handle("set-channel", async (_, channel) => {
   channel = String(channel || "").trim()
-  if (!/^[\w./-]+$/.test(channel)) return { success: false, error: "bad_channel" }
+  if (!/^[\w./-]{1,100}$/.test(channel) || channel.split("/").includes("..")) return { success: false, error: "bad_channel" }
   // latin1 in and out keeps every byte as it was: the file can be ANSI (a Georgian or Cyrillic IVPath
   // would be mangled by a UTF-8 round trip), and only the ASCII UpdateChannel line changes.
   let ini
   try { ini = fs.readFileSync(iniPath, "latin1") } catch (e) { return { success: false, error: "not_installed" } }
   if (/^UpdateChannel=.*$/m.test(ini)) ini = ini.replace(/^UpdateChannel=.*$/m, "UpdateChannel=" + channel)
-  else if (/^\[Game\]\s*$/m.test(ini)) ini = ini.replace(/^\[Game\]\s*$/m, "[Game]\r\nUpdateChannel=" + channel)
+  // [ \t]* (not \s*): \s would eat the line's \r and leave a bare LF in a CRLF file.
+  else if (/^\[Game\][ \t]*$/m.test(ini.replace(/\r/g, ""))) ini = ini.replace(/^\[Game\][ \t]*(?=\r?$)/m, "[Game]\r\nUpdateChannel=" + channel)
   else ini = "[Game]\r\nUpdateChannel=" + channel + "\r\n" + ini
   try {
-    fs.copyFileSync(iniPath, iniPath + ".bak")
+    if (!fs.existsSync(iniPath + ".bak")) fs.copyFileSync(iniPath, iniPath + ".bak") // the player's original, kept once
     fs.writeFileSync(iniPath, ini, "latin1")
   } catch (e) { return { success: false, error: e.code || "failed" } }
-  return { success: true }
+  return { success: true, running: (await redmPids()).length > 0 }
 })
 
 ipcMain.handle("kill-redm", async () => {
@@ -498,5 +535,7 @@ ipcMain.handle("restart-redm", async () => {
 ipcMain.handle("open-folder", (_, which) => {
   const dirs = { logs: "logs", crashes: "crashes", redm: "" }
   if (!(which in dirs)) return
-  return shell.openPath(path.join(redmDir, dirs[which]))
+  const dir = path.join(redmDir, dirs[which])
+  if (!fs.existsSync(dir)) return "missing"
+  return shell.openPath(dir)
 })
